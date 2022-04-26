@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'add/add.dart';
 import 'mgt/mgt.dart';
 import 'template/header.dart';
-import 'camera.dart';
 
 void main() {
   runApp(const MyApp());
@@ -86,7 +85,7 @@ class WidgetsView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return const CameraPage();
+                    return const Mgt();
                   }),
                 );
               },
