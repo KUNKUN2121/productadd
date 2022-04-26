@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'add/add.dart';
 import 'mgt/mgt.dart';
+import 'template/header.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '在庫管理システム',
+      //テーマ設定
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      //ホーム読み込み
       home: const WidgetsView(),
     );
   }
@@ -24,9 +29,21 @@ class WidgetsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ホーム'),
-      ),
+      appBar: Header(),
+      // appBar: AppBar(
+      //   title: const Text('ホーム'),
+
+      //   // ホームアイコン
+      //   leading: Icon(Icons.home),
+
+      //   //さんぼんせん
+      //   actions: <Widget>[
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: Icon(Icons.more_vert),
+      //     ),
+      //   ],
+      // ),
       body: Center(
         child: Column(
           children: [
