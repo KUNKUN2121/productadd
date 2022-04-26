@@ -58,7 +58,7 @@ class WidgetsView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return const Add();
+                    return Add();
                   }),
                 );
               },
@@ -80,18 +80,6 @@ class WidgetsView extends StatelessWidget {
             //以上
 
             //カメラ
-
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return const Mgt();
-                  }),
-                );
-              },
-              child: Image.asset('assets/images/mgg.png'),
-            ),
-            //以上
           ],
         ),
       ),
