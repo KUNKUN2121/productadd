@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'add/add.dart';
 import 'mgt/mgt.dart';
 import 'template/header.dart';
+import 'camera.dart';
 
 void main() {
   runApp(const MyApp());
@@ -72,6 +73,20 @@ class WidgetsView extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
                     return const Mgt();
+                  }),
+                );
+              },
+              child: Image.asset('assets/images/mgg.png'),
+            ),
+            //以上
+
+            //カメラ
+
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return const CameraPage();
                   }),
                 );
               },
