@@ -29,21 +29,9 @@ class WidgetsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //AppBar読み込み
       appBar: Header(),
-      // appBar: AppBar(
-      //   title: const Text('ホーム'),
 
-      //   // ホームアイコン
-      //   leading: Icon(Icons.home),
-
-      //   //さんぼんせん
-      //   actions: <Widget>[
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: Icon(Icons.more_vert),
-      //     ),
-      //   ],
-      // ),
       body: Center(
         child: Column(
           children: [

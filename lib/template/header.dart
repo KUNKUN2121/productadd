@@ -8,7 +8,7 @@ class Header extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('ホーム'),
-
+      centerTitle: true,
       // ホームアイコン
       leading: Icon(Icons.home),
 
