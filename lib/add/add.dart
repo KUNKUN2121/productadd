@@ -20,10 +20,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State {
-  String qrCode = '';
+  String qrCode = '0';
   String productURL = '';
   @override
   Widget build(BuildContext context) {
+    final String productURL =
+        'https://tech.ru-kun.net/upload/up/' + qrCode + '.jpg';
     return Scaffold(
       appBar: AppBar(
         title: Text('バーコードスキャン'),
@@ -32,9 +34,7 @@ class _MyHomePageState extends State {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image(
-                image: NetworkImage(
-                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')),
+            Image(image: NetworkImage(productURL)),
             Text(
               '$qrCode',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -45,6 +45,8 @@ class _MyHomePageState extends State {
               onPressed: () => scanQrCode(),
             ),
             SizedBox(height: 10),
+            Text('個数 X個 ＋'),
+            //Card
           ],
         ),
       ),
