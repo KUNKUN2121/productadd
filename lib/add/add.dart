@@ -21,6 +21,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State {
   String qrCode = '';
+  String productURL = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +30,18 @@ class _MyHomePageState extends State {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image(
+                image: NetworkImage(
+                    'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg')),
             Text(
               '$qrCode',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             ElevatedButton(
-              child: Text('Start QRCode Scan'),
+              child: Text('スキャン'),
               onPressed: () => scanQrCode(),
             ),
             SizedBox(height: 10),
@@ -50,14 +54,15 @@ class _MyHomePageState extends State {
   Future scanQrCode() async {
     final qrCode = await FlutterBarcodeScanner.scanBarcode(
       '#EB394B',
-      'Cancel',
+      'キャンセル',
       true,
-      ScanMode.QR,
+      ScanMode.BARCODE,
     );
     if (!mounted) return;
 
     setState(() {
       this.qrCode = qrCode;
+      this.productURL = qrCode;
     });
   }
 }
