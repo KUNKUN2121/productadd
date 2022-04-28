@@ -47,6 +47,38 @@ class _MyHomePageState extends State {
             SizedBox(height: 10),
             Text('個数 X個 ＋'),
             //Card
+            Card(
+              color: Colors.yellow,
+              child: Text(
+                'Hello World',
+                style: TextStyle(
+                  fontSize: 50,
+                ),
+              ),
+            ),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  AspectRatio(
+                    aspectRatio: 18.0 / 11.0,
+                    child: Image.asset('assets/images/add.png'),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Title'),
+                        SizedBox(height: 8.0),
+                        Text('Secondry Text'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
