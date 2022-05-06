@@ -25,7 +25,7 @@ class _MyHomePageState extends State {
   @override
   Widget build(BuildContext context) {
     final String productURL =
-        'https://tech.ru-kun.net/upload/up/' + qrCode + '.jpg';
+        'https://store-project.f5.si/img/' + qrCode + '.png';
     return Scaffold(
       appBar: AppBar(
         title: Text('バーコードスキャン'),
