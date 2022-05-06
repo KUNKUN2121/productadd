@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'add/add.dart';
+import 'package:productadd/add/add.dart';
+import 'add/addPage.dart';
 import 'mgt/mgt.dart';
 import 'template/header.dart';
 
@@ -58,7 +59,7 @@ class WidgetsView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return Add();
+                    return addPage();
                   }),
                 );
               },
@@ -72,6 +73,18 @@ class WidgetsView extends StatelessWidget {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
                     return const Mgt();
+                  }),
+                );
+              },
+              child: Image.asset('assets/images/mgg.png'),
+            ),
+
+            //テスト用
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return const addPop();
                   }),
                 );
               },
