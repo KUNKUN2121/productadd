@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'add/main.dart';
+import 'add/AddApp.dart';
 import 'mgt/mgt.dart';
 import 'template/header.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,7 +59,7 @@ class WidgetsView extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return Add();
+                    return AddApp();
                   }),
                 );
               },
