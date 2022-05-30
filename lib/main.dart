@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'mainpage.dart';
+import 'package:productadd/add/AddPage.dart';
+import 'package:productadd/mgt/mgt.dart';
+import 'MainPage.dart';
+import 'add/CameraPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +20,11 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       //ホーム読み込み
       home: const MainPage(),
+      routes: {
+        "/add": (BuildContext context) => AddPage(),
+        "/mgt": (BuildContext context) => Mgt(),
+        "/camera": (BuildContext context) => CameraPage(),
+      },
     );
   }
 }
