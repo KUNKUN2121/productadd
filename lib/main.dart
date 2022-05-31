@@ -3,6 +3,7 @@ import 'package:productadd/add/AddPage.dart';
 import 'package:productadd/mgt/mgt.dart';
 import 'MainPage.dart';
 import 'add/CameraPage.dart';
+import 'add/OldAdd.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         "/add": (BuildContext context) => AddPage(),
         "/mgt": (BuildContext context) => Mgt(),
         "/camera": (BuildContext context) => CameraPage(),
+        "/oldadd": (BuildContext context) => OldAdd(),
       },
     );
   }

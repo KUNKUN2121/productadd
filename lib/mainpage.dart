@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
               icon: Icons.add_box_sharp,
               key: const Key("add"),
               onPressed: () {
-                Navigator.of(context).pushNamed("/add");
+                Navigator.of(context).pushNamed("/oldadd");
               },
             ),
             getCard(
