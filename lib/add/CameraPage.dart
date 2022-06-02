@@ -29,6 +29,7 @@ class CamerapageState extends State<CameraPage> {
 
   final PanelController _pc = PanelController();
 
+//アイテム一覧
   Widget getItemCard(String code) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -47,11 +48,32 @@ class CamerapageState extends State<CameraPage> {
               ],
             ),
           ),
+          //長押しで商品削除
           onLongPress: () {
-            Clipboard.setData(ClipboardData(text: code));
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("クリップボードにコピーしました。")),
+            showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                  title: Text("削除"),
+                  content: Text("この商品を削除しますか。"),
+                  actions: <Widget>[
+                    // ボタン領域
+                    FlatButton(
+                      child: Text("キャンセル"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    FlatButton(
+                      child: Text("削除する"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                );
+              },
             );
+            // Clipboard.setData(ClipboardData(text: code));
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(content: Text("クリップボードにコピーしました。")),
+            // );
           },
           onTap: () {
             var regex =
@@ -95,27 +117,32 @@ class CamerapageState extends State<CameraPage> {
     );
   }
 
+  //読み込み後の処理
+
   void update() {
     setState(() {
       _counts = codes.length;
       wg = [];
       for (var element in codes) {
         if (element.rawValue == null) continue;
+        //アイテム追加処理
         wg.add(getItemCard(element.rawValue!));
       }
     });
   }
 
+//アプリ構築
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("読み込み"),
+        title: const Text("商品追加"),
       ),
       body: Stack(
         children: [
           Column(
             children: [
+              //QRコード
               Expanded(
                 child: _buildQrView(context),
               ),
@@ -124,6 +151,8 @@ class CamerapageState extends State<CameraPage> {
               ),
             ],
           ),
+
+          //スライド表示
           LayoutBuilder(
             builder: (key, builder) => SlidingUpPanel(
               controller: _pc,
@@ -144,6 +173,7 @@ class CamerapageState extends State<CameraPage> {
                         ],
                       ),
                     ),
+                    //ボタン参照
                     _bottomButtons(),
                   ],
                 ),
@@ -156,6 +186,7 @@ class CamerapageState extends State<CameraPage> {
     );
   }
 
+  //ボタン
   Widget _bottomButtons() {
     return Container(
       margin: const EdgeInsets.only(
