@@ -6,9 +6,13 @@ class Barcode {
   String? name;
   int? barcode;
   String? imgURL;
-  Key? key;
+  //Key? key;
 
-  Barcode({this.name, this.barcode, this.imgURL, this.key});
+  Barcode({
+    this.name,
+    this.barcode,
+    this.imgURL,
+  });
 
   static Future<Barcode> getProcutImg(String barcode) async {
     Barcode result = Barcode(barcode: 1, imgURL: 'a');

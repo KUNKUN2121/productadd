@@ -23,22 +23,23 @@ class OldAdd extends StatefulWidget {
 class _OldAddState extends State {
   List<Barcode> products = [
     Barcode(
-      name: 'まっちゃん',
-      barcode: 1,
-      imgURL: 'hello.com',
-      key: const Key("product-1"),
+      name: 'コーラ',
+      barcode: 4902102072618,
+      imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+      //key: const Key("product-1"),
     ),
     Barcode(
-      name: 'aaa2',
+      name: 'ファンタ',
       barcode: 2,
       imgURL: 'hello.com',
-      key: const Key("product-2"),
+      //key: const Key("product-2"),
     ),
     Barcode(
-      name: 'aaa2',
+      name: 'iPhone',
       barcode: 3,
-      imgURL: 'hello.com',
-      key: const Key("product-3"),
+      imgURL:
+          'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
+      //key: const Key("product-3"),
     ),
   ];
 
@@ -84,34 +85,17 @@ class _OldAddState extends State {
           SlidingUpPanel(
             panel: Column(
               children: [
-                // getCard(
-                //   title: "商品１",
-                //   description: "00000000000000",
-                //   icon: Icons.cake_outlined,
-                //   key: const Key("product-1"),
-                //   onPressed: () {
-                //     // Navigator.of(context).pushNamed("/camera");
-                //   },
-                // ),
-                // getCard(
-                //   title: "商品2",
-                //   description: "00000000000000",
-                //   icon: Icons.cake_outlined,
-                //   key: const Key("product-2"),
-                //   onPressed: () {
-                //     // Navigator.of(context).pushNamed("/camera");
-                //   },
-                // ),
-                //test
                 Column(
                   children: products.map((productsloop) {
                     return Column(
                       children: [
                         testCard(
-                            title: '${productsloop.name}',
-                            description: '${productsloop.barcode}',
-                            key: Key('${productsloop.key}'),
-                            icon: Icons.abc),
+                          title: '${productsloop.name}',
+                          description: '${productsloop.barcode}',
+                          imgURL: '${productsloop.imgURL}',
+                          //key: Key('${productsloop.key}'),
+                          //icon: Icons.abc
+                        ),
                       ],
                     );
                   }).toList(), //リストにするよ。
@@ -207,12 +191,13 @@ Card getCard({
 Card testCard({
   required String title,
   required String description,
-  required IconData icon,
-  required Key key,
+  //required IconData icon,
+  required String imgURL,
+  //required Key key,
   //required Function()? onPressed,
 }) {
   return Card(
-    key: key,
+    //key: key,
     child: Padding(
       padding: const EdgeInsets.all(10.0),
       child: ConstrainedBox(
@@ -220,9 +205,14 @@ Card testCard({
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 50.0,
+            // Icon(
+            //   icon,
+            //   size: 50.0,
+            // ),
+            Container(
+              width: 50,
+              height: 50,
+              child: Image.network(imgURL),
             ),
             const SizedBox(
               width: 10.0,
