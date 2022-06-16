@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'Barcode.dart';
+
 // class OldAdd extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
@@ -15,7 +16,6 @@ import 'Barcode.dart';
 //     );
 //   }
 // }
-
 class OldAdd extends StatefulWidget {
   @override
   _OldAddState createState() => _OldAddState();
@@ -101,28 +101,57 @@ class _OldAddState extends State {
           ),
           //スライドウィンド
           SlidingUpPanel(
-            panel: Column(
-              children: [
-                Column(
-                  children: products.map((productsloop) {
-                    return Column(
-                      children: [
-                        testCard(
-                          title: '${productsloop.name}',
-                          description: '${productsloop.barcode}',
-                          imgURL: '${productsloop.imgURL}',
-                          //key: Key('${productsloop.key}'),
-                          //icon: Icons.abc
-                        ),
-                      ],
-                    );
-                  }).toList(), //リストにするよ。
-                ),
-              ],
+            panel: SafeArea(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 100.0,
+                    child: Center(
+                      child: Text("件読み込みました"),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: products.map((productsloop) {
+                        return Column(
+                          children: [
+                            testCard(
+                              title: '${productsloop.name}',
+                              description: '${productsloop.barcode}',
+                              imgURL: '${productsloop.imgURL}',
+                              //key: Key('${productsloop.key}'),
+                              //icon: Icons.abc
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  //ボタン参照
+                  _bottomButtons(),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  //ボタン
+  Widget _bottomButtons() {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 20,
+        left: 10,
+        right: 10.0,
+      ),
+      child: Row(children: [
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('続行する'),
+        ),
+      ]),
     );
   }
 
