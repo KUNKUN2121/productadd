@@ -23,31 +23,31 @@ class OldAdd extends StatefulWidget {
 
 class _OldAddState extends State {
   List<Barcode> products = [
-    Barcode(
-      name: 'コーラ',
-      barcode: 4902102072618,
-      imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-      Price: 200,
-      Category: 'hello',
-      //key: const Key("product-1"),
-    ),
-    Barcode(
-      name: 'ファンタ',
-      barcode: 2,
-      imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-      Price: 200,
-      Category: 'hello',
-      //key: const Key("product-2"),
-    ),
-    Barcode(
-      name: 'iPhone',
-      barcode: 3,
-      imgURL:
-          'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
-      Price: 200,
-      Category: 'hello',
-      //key: const Key("product-3"),
-    ),
+    // Barcode(
+    //   name: 'コーラ',
+    //   barcode: '4902102072618',
+    //   imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+    //   price: '200',
+    //   category: 'hello',
+    //   //key: const Key("product-1"),
+    // ),
+    // Barcode(
+    //   name: 'ファンタ',
+    //   barcode: 2,
+    //   imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+    //   Price: 200,
+    //   Category: 'hello',
+    //   //key: const Key("product-2"),
+    // ),
+    // Barcode(
+    //   name: 'iPhone',
+    //   barcode: '3',
+    //   imgURL:
+    //       'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
+    //   price: '200',
+    //   category: 'hello',
+    //   //key: const Key("product-3"),
+    // ),
   ];
 
   String qrCode = '0';
@@ -87,26 +87,12 @@ class _OldAddState extends State {
                   key: const Key("product-0"),
                   onPressed: () {},
                 ),
-                // Container(
-                //     width: 200,
-                //     child: TextField(
-                //       //入力情報取得
-                //       onSubmitted: (value) async {
-                //         print(value);
-
-                //         products.add(await Barcode.addProduct(4549131970258));
-
-                //         setState(() {});
-                //       },
-                //       //キーボード数字
-                //       keyboardType: TextInputType.number,
-                //       //後ろの文字
-                //       decoration: InputDecoration(hintText: '郵便番号入力'),
-                //     )),
                 ElevatedButton(
                   onPressed: () async {
                     /* ボタンがタップされた時の処理 */
                     products.add(await Barcode.addProduct(4549131970258));
+                    print(products);
+                    setState(() {});
                   },
                   child: Text('click here'),
                 )
@@ -148,11 +134,13 @@ class _OldAddState extends State {
       ScanMode.BARCODE,
     );
     if (!mounted) return;
-
+    //products.add(await Barcode.addProduct(this.qrCode));
     setState(() {
       this.qrCode = qrCode;
       this.productURL = qrCode;
     });
+    products.add(await Barcode.addProduct(qrCode));
+    setState(() {});
   }
 }
 
