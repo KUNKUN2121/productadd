@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -26,12 +27,16 @@ class _OldAddState extends State {
       name: 'コーラ',
       barcode: 4902102072618,
       imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+      Price: 200,
+      Category: 'hello',
       //key: const Key("product-1"),
     ),
     Barcode(
       name: 'ファンタ',
       barcode: 2,
-      imgURL: 'hello.com',
+      imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+      Price: 200,
+      Category: 'hello',
       //key: const Key("product-2"),
     ),
     Barcode(
@@ -39,6 +44,8 @@ class _OldAddState extends State {
       barcode: 3,
       imgURL:
           'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
+      Price: 200,
+      Category: 'hello',
       //key: const Key("product-3"),
     ),
   ];
@@ -47,8 +54,10 @@ class _OldAddState extends State {
   String productURL = '';
   @override
   Widget build(BuildContext context) {
+    // final String productURL =
+    //     'https://store-project.f5.si/img/' + qrCode + '.png';
     final String productURL =
-        'https://store-project.f5.si/img/' + qrCode + '.png';
+        'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01';
     return Scaffold(
       appBar: AppBar(
         title: Text('バーコードスキャン'),
@@ -59,7 +68,7 @@ class _OldAddState extends State {
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: NetworkImage(productURL)),
+                //Image(image: NetworkImage(productURL)),
                 Text(
                   '$qrCode',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -78,6 +87,29 @@ class _OldAddState extends State {
                   key: const Key("product-0"),
                   onPressed: () {},
                 ),
+                // Container(
+                //     width: 200,
+                //     child: TextField(
+                //       //入力情報取得
+                //       onSubmitted: (value) async {
+                //         print(value);
+
+                //         products.add(await Barcode.addProduct(4549131970258));
+
+                //         setState(() {});
+                //       },
+                //       //キーボード数字
+                //       keyboardType: TextInputType.number,
+                //       //後ろの文字
+                //       decoration: InputDecoration(hintText: '郵便番号入力'),
+                //     )),
+                ElevatedButton(
+                  onPressed: () async {
+                    /* ボタンがタップされた時の処理 */
+                    products.add(await Barcode.addProduct(4549131970258));
+                  },
+                  child: Text('click here'),
+                )
               ],
             ),
           ),
