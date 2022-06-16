@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'Barcode.dart';
+import 'Post.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // class OldAdd extends StatelessWidget {
 //   @override
@@ -16,6 +19,7 @@ import 'Barcode.dart';
 //     );
 //   }
 // }
+
 class OldAdd extends StatefulWidget {
   @override
   _OldAddState createState() => _OldAddState();
@@ -49,7 +53,7 @@ class _OldAddState extends State {
     //   //key: const Key("product-3"),
     // ),
   ];
-
+  var postBarcode = [];
   String qrCode = '0';
   String productURL = '';
   @override
@@ -139,6 +143,28 @@ class _OldAddState extends State {
   }
 
   //ボタン
+  void _request() async {
+    String url = "https://httpbin.org/post";
+    Map<String, String> headers = {'content-type': 'application/json'};
+    String body = json.encode({'name': 'moke'});
+
+    http.Response resp =
+        await http.post(Uri.parse(url), headers: headers, body: body);
+    if (resp.statusCode != 200) {
+      // setState(() {
+      //   int statusCode = resp.statusCode;
+      //   _content = "Failed to post $statusCode";
+      // });
+      print('ok');
+      return;
+    }
+    print('222');
+    print(resp.body);
+    // setState(() {
+    //   _content = resp.body;
+    // });
+  }
+
   Widget _bottomButtons() {
     return Container(
       margin: const EdgeInsets.only(
@@ -148,7 +174,10 @@ class _OldAddState extends State {
       ),
       child: Row(children: [
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            print('aaa');
+            _request();
+          },
           child: Text('続行する'),
         ),
       ]),
@@ -168,6 +197,7 @@ class _OldAddState extends State {
       this.qrCode = qrCode;
       this.productURL = qrCode;
     });
+    postBarcode.add(qrCode);
     products.add(await Barcode.addProduct(qrCode));
     setState(() {});
   }
