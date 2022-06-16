@@ -143,27 +143,6 @@ class _OldAddState extends State {
   }
 
   //ボタン
-  void _request() async {
-    String url = "https://httpbin.org/post";
-    Map<String, String> headers = {'content-type': 'application/json'};
-    String body = json.encode({'name': 'moke'});
-
-    http.Response resp =
-        await http.post(Uri.parse(url), headers: headers, body: body);
-    if (resp.statusCode != 200) {
-      // setState(() {
-      //   int statusCode = resp.statusCode;
-      //   _content = "Failed to post $statusCode";
-      // });
-      print('ok');
-      return;
-    }
-    print('222');
-    print(resp.body);
-    // setState(() {
-    //   _content = resp.body;
-    // });
-  }
 
   Widget _bottomButtons() {
     return Container(
@@ -175,8 +154,9 @@ class _OldAddState extends State {
       child: Row(children: [
         ElevatedButton(
           onPressed: () {
-            print('aaa');
-            _request();
+            //print('aaa');
+            //_request();
+            PostRequest.request();
           },
           child: Text('続行する'),
         ),
