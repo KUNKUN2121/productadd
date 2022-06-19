@@ -6,6 +6,7 @@ import 'Barcode.dart';
 import 'Post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'AlertDialog.dart';
 
 // class OldAdd extends StatelessWidget {
 //   @override
@@ -26,32 +27,31 @@ class OldAdd extends StatefulWidget {
 }
 
 class _OldAddState extends State {
+  _myDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Dialog!"),
+        content: const Text("Text of Something"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("close"),
+          )
+        ],
+      ),
+    );
+  }
+
   List<Barcode> products = [
     // Barcode(
-    //   name: 'コーラ',
-    //   barcode: '4902102072618',
-    //   imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-    //   price: '200',
-    //   category: 'hello',
-    //   //key: const Key("product-1"),
-    // ),
-    // Barcode(
-    //   name: 'ファンタ',
-    //   barcode: 2,
-    //   imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-    //   Price: 200,
-    //   Category: 'hello',
-    //   //key: const Key("product-2"),
-    // ),
-    // Barcode(
-    //   name: 'iPhone',
-    //   barcode: '3',
-    //   imgURL:
-    //       'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
-    //   price: '200',
-    //   category: 'hello',
-    //   //key: const Key("product-3"),
-    // ),
+    //     name: 'コーラ',
+    //     barcode: '4902102072618',
+    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+    //     price: '200',
+    //     category: 'hello'),
   ];
   var postBarcode = [];
   String qrCode = '0';
@@ -99,7 +99,7 @@ class _OldAddState extends State {
                     setState(() {});
                   },
                   child: Text('click here'),
-                )
+                ),
               ],
             ),
           ),
@@ -181,7 +181,22 @@ class _OldAddState extends State {
 
     //products.add(await Barcode.addProduct(qrCode));
     Barcode addProduct = await Barcode.addProduct(qrCode);
-    if (addProduct.barcode == '-400') {}
+    if (addProduct.barcode == '-400') {
+      _myDialog;
+      print('aaaaa');
+      showDialog(
+        context: context,
+        builder: (context) => CustomTextFieldDialog(
+          title: 'この商品は登録されていません。',
+          contentWidget: const Text('この商品を登録しますか？ Barcode:ToDo'),
+          cancelActionText: 'キャンセル',
+          cancelAction: () {},
+          defaultActionText: '登録する',
+          action: () {},
+        ),
+      );
+      return;
+    }
     print(addProduct);
     products.add(addProduct);
     setState(() {});
