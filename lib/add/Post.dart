@@ -14,7 +14,7 @@ class PostRequest {
         'name': quantity,
       };
   List<int> numbers = [1, 2, 3, 4, 5];
-  var numJson = jsonEncode(numbers);
+  //var numJson = jsonEncode(numbers);
 
   static void request() async {
     //var body = new PostRequest(barcode: '1234', quantity: '大和賢一郎');

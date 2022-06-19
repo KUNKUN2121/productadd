@@ -28,27 +28,41 @@ class Barcode {
     print('url');
     try {
       var result = await get(Uri.parse(url));
-      Map<String, dynamic> data = jsonDecode(result.body);
-      print('data');
-      Barcode ThisProduct = Barcode(
-        name: data['itemname'],
-        barcode: data['barcode'],
-        imgURL: data['imgURL'],
-        category: data['category'],
-        price: data['prise'],
-      );
-      print(data);
-      print(data['itemname']);
-      print(data['barcode']);
-      print(data['imgURL']);
-      // Barcode ThisProduct = Barcode(
-      //   name: '0',
-      //   barcode: 0,
-      //   imgURL: '0',
-      //   Category: '0',
-      //   Price: 0,
-      // );
-      return ThisProduct;
+      print('Response status: ${result.statusCode}');
+      // レスポンス確認
+      if (result.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(result.body);
+        print('data');
+        Barcode ThisProduct = Barcode(
+          name: data['itemname'],
+          barcode: data['barcode'],
+          imgURL: data['imgURL'],
+          category: data['category'],
+          price: data['prise'],
+        );
+        return ThisProduct;
+        // 登録なし
+      } else if (result.statusCode == 400) {
+        Barcode ThisProduct = Barcode(
+          name: '-400',
+          barcode: '-400',
+          imgURL:
+              'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
+          category: '-400',
+          price: '-400',
+        );
+        return ThisProduct;
+      } else {
+        Barcode ThisProduct = Barcode(
+          name: '内部エラー',
+          barcode: '0',
+          imgURL:
+              'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
+          category: '0',
+          price: '0',
+        );
+        return ThisProduct;
+      }
     } catch (e) {
       print(e);
       print('error');

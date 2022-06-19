@@ -178,7 +178,12 @@ class _OldAddState extends State {
       this.productURL = qrCode;
     });
     postBarcode.add(qrCode);
-    products.add(await Barcode.addProduct(qrCode));
+
+    //products.add(await Barcode.addProduct(qrCode));
+    Barcode addProduct = await Barcode.addProduct(qrCode);
+    if (addProduct.barcode == '-400') {}
+    print(addProduct);
+    products.add(addProduct);
     setState(() {});
   }
 }
