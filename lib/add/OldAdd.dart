@@ -53,7 +53,11 @@ class _OldAddState extends State {
     //     price: '200',
     //     category: 'hello'),
   ];
-  var postBarcode = [];
+  // var postBarcode = [];
+  List postBarcode = [
+    [4549131970255, 1000],
+    [4549131970258, 1000],
+  ];
   String qrCode = '0';
   String productURL = '';
   @override
@@ -156,7 +160,7 @@ class _OldAddState extends State {
           onPressed: () {
             //print('aaa');
             //_request();
-            PostRequest.request();
+            PostRequest.postMethod(postBarcode);
           },
           child: Text('続行する'),
         ),

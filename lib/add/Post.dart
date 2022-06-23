@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:productadd/add/Barcode.dart';
+
 class PostRequest {
   final String barcode;
   final String quantity;
@@ -16,20 +18,11 @@ class PostRequest {
   List<int> numbers = [1, 2, 3, 4, 5];
   //var numJson = jsonEncode(numbers);
 
-  static void request() async {
-    //json test https://www.educative.io/answers/how-to-convert-a-list-to-a-json-string-in-dart
-
-    List colors = [
-      [4549131970255, 999],
-      [4549131970258, 999],
-    ];
-    String jsonColors = jsonEncode(colors);
-    print(jsonColors);
-
-    // String url = "https://jsonplaceholder.typicode.com/posts";
+  static Future postMethod(_barcode) async {
+    String jsonBarcode = jsonEncode(_barcode);
     String url = "https://store-project.f5.si/database/api/input.php";
     Map<String, String> headers = {'content-type': 'application/json'};
-    String body = jsonColors;
+    String body = jsonBarcode;
 
     http.Response resp =
         await http.post(Uri.parse(url), headers: headers, body: body);
@@ -45,8 +38,5 @@ class PostRequest {
     }
     print(resp.body);
     print('レスポンスOK');
-    // setState(() {
-    //   _content = resp.body;
-    // });
   }
 }
