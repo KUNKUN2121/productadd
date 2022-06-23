@@ -17,26 +17,34 @@ class PostRequest {
   //var numJson = jsonEncode(numbers);
 
   static void request() async {
-    //var body = new PostRequest(barcode: '1234', quantity: '大和賢一郎');
-    String url = "https://httpbin.org/post";
+    //json test https://www.educative.io/answers/how-to-convert-a-list-to-a-json-string-in-dart
+
+    List colors = [
+      [4549131970255, 999],
+      [4549131970258, 999],
+    ];
+    String jsonColors = jsonEncode(colors);
+    print(jsonColors);
+
+    // String url = "https://jsonplaceholder.typicode.com/posts";
+    String url = "https://store-project.f5.si/database/api/input.php";
     Map<String, String> headers = {'content-type': 'application/json'};
-    String body = json.encode({
-      'barcode': '3333',
-      'name': 'moke',
-    });
+    String body = jsonColors;
 
     http.Response resp =
         await http.post(Uri.parse(url), headers: headers, body: body);
-    if (resp.statusCode != 200) {
+    if (resp.statusCode != 201) {
       // setState(() {
       //   int statusCode = resp.statusCode;
       //   _content = "Failed to post $statusCode";
       // });
-      print('ok');
+      print(resp.statusCode);
+      print(resp.body);
+      print('エラー');
       return;
     }
-    print('222');
     print(resp.body);
+    print('レスポンスOK');
     // setState(() {
     //   _content = resp.body;
     // });
