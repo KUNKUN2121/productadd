@@ -46,12 +46,13 @@ class _OldAddState extends State {
   }
 
   List<Barcode> products = [
-    // Barcode(
-    //     name: 'コーラ',
-    //     barcode: '4902102072618',
-    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-    //     price: '200',
-    //     category: 'hello'),
+    Barcode(
+        name: 'コーラ',
+        barcode: '4902102072618',
+        imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+        price: '200',
+        quantity: 1,
+        category: 'hello'),
   ];
   // var postBarcode = [];
   List postBarcode = [
@@ -127,6 +128,7 @@ class _OldAddState extends State {
                               title: '${productsloop.name}',
                               description: '${productsloop.barcode}',
                               imgURL: '${productsloop.imgURL}',
+                              quantity: productsloop.quantity,
                               //key: Key('${productsloop.key}'),
                               //icon: Icons.abc
                             ),
@@ -274,6 +276,7 @@ Card getCard({
 Card testCard({
   required String title,
   required String description,
+  required int quantity,
   //required IconData icon,
   required String imgURL,
   //required Key key,
@@ -332,7 +335,7 @@ Card testCard({
                 ],
               ),
             ),
-            Text("個数"),
+            Text('${quantity} 個'),
             Icon(Icons.cancel)
           ],
         ),

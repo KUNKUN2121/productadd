@@ -12,10 +12,12 @@ class Barcode {
   String? imgURL;
   String? price;
   String? category;
+  int quantity;
   //Key? key;
 
   Barcode({
     this.name,
+    required this.quantity,
     this.barcode,
     this.imgURL,
     this.price,
@@ -36,6 +38,7 @@ class Barcode {
         Barcode ThisProduct = Barcode(
           name: data['itemname'],
           barcode: data['barcode'],
+          quantity: 1,
           imgURL: data['imgURL'],
           category: data['category'],
           price: data['prise'],
@@ -50,6 +53,7 @@ class Barcode {
               'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
           category: '-400',
           price: '-400',
+          quantity: -400,
         );
         return ThisProduct;
       } else {
@@ -60,6 +64,7 @@ class Barcode {
               'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
           category: '0',
           price: '0',
+          quantity: 0,
         );
         return ThisProduct;
       }
@@ -73,6 +78,7 @@ class Barcode {
             'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
         category: '0',
         price: '0',
+        quantity: 0,
       );
       print(ThisProduct);
       return ThisProduct;

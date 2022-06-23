@@ -26,7 +26,7 @@ class PostRequest {
 
     http.Response resp =
         await http.post(Uri.parse(url), headers: headers, body: body);
-    if (resp.statusCode != 201) {
+    if (resp.statusCode != 200) {
       // setState(() {
       //   int statusCode = resp.statusCode;
       //   _content = "Failed to post $statusCode";
