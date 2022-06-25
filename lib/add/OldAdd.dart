@@ -46,13 +46,13 @@ class _OldAddState extends State {
   }
 
   List<Barcode> products = [
-    // Barcode(
-    //     name: 'コーラ',
-    //     barcode: '4902102072618',
-    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-    //     price: '200',
-    //     quantity: 1,
-    //     category: 'hello'),
+    Barcode(
+        name: 'コーラ',
+        barcode: '4902102072618',
+        imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+        price: '200',
+        quantity: 1,
+        category: 'hello'),
   ];
 
   // var postBarcode = [];
@@ -100,7 +100,8 @@ class _OldAddState extends State {
                 ElevatedButton(
                   onPressed: () async {
                     /* ボタンがタップされた時の処理 */
-                    products.add(await Barcode.addProduct(4549131970258));
+                    products.insert(
+                        0, (await Barcode.addProduct(4549131970258)));
                     print(products);
                     setState(() {});
                   },
