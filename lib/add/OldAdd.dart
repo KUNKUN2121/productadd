@@ -131,7 +131,7 @@ class _OldAddState extends State {
                   SizedBox(
                     height: 100.0,
                     child: Center(
-                      child: testCard(
+                      child: addListCard(
                           title: 'aa',
                           barcode: '0000000',
                           imgURL:
@@ -144,7 +144,7 @@ class _OldAddState extends State {
                       children: products.map((productsloop) {
                         return Column(
                           children: [
-                            testCard(
+                            addListCard(
                               title: '${productsloop.name}',
                               barcode: '${productsloop.barcode}',
                               imgURL: '${productsloop.imgURL}',
@@ -294,7 +294,7 @@ Card getCard({
   );
 }
 
-Card testCard({
+Card addListCard({
   required String title,
   required String barcode,
   required int quantity,
