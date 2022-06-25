@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:productadd/add/Barcode.dart';
+import 'AlertDialog.dart';
 
 class PostRequest {
   final String barcode;
@@ -11,32 +12,42 @@ class PostRequest {
     required this.quantity,
   });
 
-  Map<String, dynamic> toJson() => {
-        'id': barcode,
-        'name': quantity,
-      };
-  List<int> numbers = [1, 2, 3, 4, 5];
-  //var numJson = jsonEncode(numbers);
+  static Future postMethod(_postBarcode) async {
+    try {
+      String url = "https://store-project.f5.si/database/api/input.php";
 
-  static Future postMethod(_barcode) async {
-    String jsonBarcode = jsonEncode(_barcode);
-    String url = "https://store-project.f5.si/database/api/input.php";
-    Map<String, String> headers = {'content-type': 'application/json'};
-    String body = jsonBarcode;
+      // Post用List
+      List postBarcode = [];
+      for (int i = 0; i < _postBarcode.length; i++) {
+        String barcodeloop;
+        int quantityloop;
+        barcodeloop = _postBarcode[i].barcode;
+        quantityloop = _postBarcode[i].quantity;
+        postBarcode.add([barcodeloop, quantityloop]);
+      }
 
-    http.Response resp =
-        await http.post(Uri.parse(url), headers: headers, body: body);
-    if (resp.statusCode != 200) {
-      // setState(() {
-      //   int statusCode = resp.statusCode;
-      //   _content = "Failed to post $statusCode";
-      // });
-      print(resp.statusCode);
+      // print(postBarcode);
+
+      //postBarcode を Json に変換
+      String jsonBarcode = jsonEncode(postBarcode);
+      Map<String, String> headers = {'content-type': 'application/json'};
+      String body = jsonBarcode;
+
+      http.Response resp =
+          await http.post(Uri.parse(url), headers: headers, body: body);
+      if (resp.statusCode != 200) {
+        // setState(() {
+        //   int statusCode = resp.statusCode;
+        //   _content = "Failed to post $statusCode";
+        // });
+        print(resp.statusCode);
+        print(resp.body);
+        print('エラー');
+      }
       print(resp.body);
-      print('エラー');
-      return;
+      print('レスポンスOK');
+    } catch (e) {
+      print(e);
     }
-    print(resp.body);
-    print('レスポンスOK');
   }
 }

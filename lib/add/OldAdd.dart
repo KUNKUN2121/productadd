@@ -46,14 +46,15 @@ class _OldAddState extends State {
   }
 
   List<Barcode> products = [
-    Barcode(
-        name: 'コーラ',
-        barcode: '4902102072618',
-        imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-        price: '200',
-        quantity: 1,
-        category: 'hello'),
+    // Barcode(
+    //     name: 'コーラ',
+    //     barcode: '4902102072618',
+    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+    //     price: '200',
+    //     quantity: 1,
+    //     category: 'hello'),
   ];
+
   // var postBarcode = [];
   List postBarcode = [
     [4549131970255, 1000],
@@ -103,7 +104,14 @@ class _OldAddState extends State {
                     print(products);
                     setState(() {});
                   },
-                  child: Text('click here'),
+                  child: Text('テスト追加'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    print(products[0].barcode);
+                    print(products.length);
+                  },
+                  child: Text('print test'),
                 ),
               ],
             ),
@@ -113,10 +121,21 @@ class _OldAddState extends State {
             panel: SafeArea(
               child: Column(
                 children: <Widget>[
+                  // SizedBox(
+                  //   height: 100.0,
+                  //   child: Center(
+                  //     child: Text("ここに表示"),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 100.0,
                     child: Center(
-                      child: Text("件読み込みました"),
+                      child: testCard(
+                          title: 'ここに今読み込んだの',
+                          description: '0yen',
+                          imgURL:
+                              'https://sm.r10s.jp/item/31/4902102073431.jpg',
+                          quantity: 1),
                     ),
                   ),
                   Expanded(
@@ -162,7 +181,8 @@ class _OldAddState extends State {
           onPressed: () {
             //print('aaa');
             //_request();
-            PostRequest.postMethod(postBarcode);
+            print(PostRequest.postMethod(products));
+            print('hello');
           },
           child: Text('続行する'),
         ),
