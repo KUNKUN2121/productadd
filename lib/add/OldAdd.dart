@@ -67,11 +67,6 @@ class _OldAddState extends State {
     //     category: 'hello'),
   ];
 
-  // var postBarcode = [];
-  List postBarcode = [
-    [4549131970255, 1000],
-    [4549131970258, 1000],
-  ];
   String qrCode = '0';
   String productURL = '';
   @override
@@ -100,15 +95,7 @@ class _OldAddState extends State {
                   child: Text('スキャン'),
                   onPressed: () => scanQrCode(),
                 ),
-                SizedBox(height: 10),
-                Text('個数 X個 ＋'),
-                getCard(
-                  title: "商品１",
-                  barcode: "00000000000000",
-                  icon: Icons.cake_outlined,
-                  key: const Key("product-0"),
-                  onPressed: () {},
-                ),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     /* ボタンがタップされた時の処理 */
@@ -118,6 +105,7 @@ class _OldAddState extends State {
                   },
                   child: Text('テスト追加'),
                 ),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     print(products.length);
@@ -132,13 +120,6 @@ class _OldAddState extends State {
             panel: SafeArea(
               child: Column(
                 children: <Widget>[
-                  // SizedBox(
-                  //   height: 100.0,
-                  //   child: Center(
-                  //     child: Text("ここに表示"),
-                  //   ),
-                  // ),
-                  // スライド一番上の部分
                   SizedBox(
                     height: 100.0,
                     child: Center(
@@ -146,22 +127,6 @@ class _OldAddState extends State {
                     ),
                   ),
                   Expanded(
-                    // child: ListView(
-                    //   children: products.map((productsloop) {
-                    //     return Column(
-                    //       children: [
-                    //         addListCard(
-                    //           title: '${productsloop.name}',
-                    //           barcode: '${productsloop.barcode}',
-                    //           imgURL: '${productsloop.imgURL}',
-                    //           quantity: productsloop.quantity,
-                    //           //key: Key('${productsloop.key}'),
-                    //           //icon: Icons.abc
-                    //         ),
-                    //       ],
-                    //     );
-                    //   }).toList(),
-                    // ),
                     child: ListView(children: [
                       for (int i = 1; i < products.length; i++) ...{
                         addListCard(
@@ -220,7 +185,6 @@ class _OldAddState extends State {
       this.qrCode = qrCode;
       this.productURL = qrCode;
     });
-    postBarcode.add(qrCode);
 
     //products.add(await Barcode.addProduct(qrCode));
     Barcode addProduct = await Barcode.addProduct(qrCode);
