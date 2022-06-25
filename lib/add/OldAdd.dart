@@ -320,7 +320,7 @@ Card addListCard({
                     barcode,
                     softWrap: true,
                   ),
-                  const Divider(),
+                  //const Divider(),
                   // SizedBox(
                   //   width: double.infinity,
                   //   child: OutlinedButton(
