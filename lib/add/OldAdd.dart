@@ -45,14 +45,26 @@ class _OldAddState extends State {
     );
   }
 
+  Widget _firstitemadd() {
+    if (products.length != 0) {
+      return addListCard(
+          title: products.first.name,
+          barcode: products.first.barcode,
+          imgURL: products.first.imgURL,
+          quantity: products.first.quantity);
+    }
+
+    return Text('スキャンを開始してください。');
+  }
+
   List<Barcode> products = [
-    Barcode(
-        name: 'コーラ',
-        barcode: '4902102072618',
-        imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-        price: '200',
-        quantity: 1,
-        category: 'hello'),
+    // Barcode(
+    //     name: 'コーラ',
+    //     barcode: '4902102072618',
+    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
+    //     price: 200,
+    //     quantity: 1,
+    //     category: 'hello'),
   ];
 
   // var postBarcode = [];
@@ -102,14 +114,12 @@ class _OldAddState extends State {
                     /* ボタンがタップされた時の処理 */
                     products.insert(
                         0, (await Barcode.addProduct(4549131970258)));
-                    print(products);
                     setState(() {});
                   },
                   child: Text('テスト追加'),
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    print(products[0].barcode);
                     print(products.length);
                   },
                   child: Text('print test'),
@@ -128,34 +138,40 @@ class _OldAddState extends State {
                   //     child: Text("ここに表示"),
                   //   ),
                   // ),
+                  // スライド一番上の部分
                   SizedBox(
                     height: 100.0,
                     child: Center(
-                      child: addListCard(
-                          title: 'aa',
-                          barcode: '0000000',
-                          imgURL:
-                              'https://sm.r10s.jp/item/31/4902102073431.jpg',
-                          quantity: 1),
+                      child: _firstitemadd(),
                     ),
                   ),
                   Expanded(
-                    child: ListView(
-                      children: products.map((productsloop) {
-                        return Column(
-                          children: [
-                            addListCard(
-                              title: '${productsloop.name}',
-                              barcode: '${productsloop.barcode}',
-                              imgURL: '${productsloop.imgURL}',
-                              quantity: productsloop.quantity,
-                              //key: Key('${productsloop.key}'),
-                              //icon: Icons.abc
-                            ),
-                          ],
-                        );
-                      }).toList(),
-                    ),
+                    // child: ListView(
+                    //   children: products.map((productsloop) {
+                    //     return Column(
+                    //       children: [
+                    //         addListCard(
+                    //           title: '${productsloop.name}',
+                    //           barcode: '${productsloop.barcode}',
+                    //           imgURL: '${productsloop.imgURL}',
+                    //           quantity: productsloop.quantity,
+                    //           //key: Key('${productsloop.key}'),
+                    //           //icon: Icons.abc
+                    //         ),
+                    //       ],
+                    //     );
+                    //   }).toList(),
+                    // ),
+                    child: ListView(children: [
+                      for (int i = 1; i < products.length; i++) ...{
+                        addListCard(
+                          title: products[i].name,
+                          barcode: products[i].barcode,
+                          quantity: products[i].quantity,
+                          imgURL: products[i].imgURL,
+                        )
+                      }
+                    ]),
                   ),
                   //ボタン参照
                   _bottomButtons(),
