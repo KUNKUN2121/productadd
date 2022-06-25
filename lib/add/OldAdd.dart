@@ -92,7 +92,7 @@ class _OldAddState extends State {
                 Text('個数 X個 ＋'),
                 getCard(
                   title: "商品１",
-                  description: "00000000000000",
+                  barcode: "00000000000000",
                   icon: Icons.cake_outlined,
                   key: const Key("product-0"),
                   onPressed: () {},
@@ -131,8 +131,8 @@ class _OldAddState extends State {
                     height: 100.0,
                     child: Center(
                       child: testCard(
-                          title: 'ここに今読み込んだの',
-                          description: '0yen',
+                          title: 'aa',
+                          barcode: '0000000',
                           imgURL:
                               'https://sm.r10s.jp/item/31/4902102073431.jpg',
                           quantity: 1),
@@ -145,7 +145,7 @@ class _OldAddState extends State {
                           children: [
                             testCard(
                               title: '${productsloop.name}',
-                              description: '${productsloop.barcode}',
+                              barcode: '${productsloop.barcode}',
                               imgURL: '${productsloop.imgURL}',
                               quantity: productsloop.quantity,
                               //key: Key('${productsloop.key}'),
@@ -231,7 +231,7 @@ class _OldAddState extends State {
 
 Card getCard({
   required String title,
-  required String description,
+  required String barcode,
   required IconData icon,
   required Key key,
   required Function()? onPressed,
@@ -265,7 +265,7 @@ Card getCard({
                     softWrap: true,
                   ),
                   Text(
-                    description,
+                    barcode,
                     softWrap: true,
                   ),
                   const Divider(),
@@ -295,7 +295,7 @@ Card getCard({
 
 Card testCard({
   required String title,
-  required String description,
+  required String barcode,
   required int quantity,
   //required IconData icon,
   required String imgURL,
@@ -336,7 +336,7 @@ Card testCard({
                     softWrap: true,
                   ),
                   Text(
-                    description,
+                    barcode,
                     softWrap: true,
                   ),
                   const Divider(),
