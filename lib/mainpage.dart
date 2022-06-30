@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
               key: const Key("test-2"),
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed("/ProductAdd", arguments: "次の画面へ渡す値だよ！");
+                    .pushNamed("/ProductAdd", arguments: 4903333187560);
               },
             ),
           ],

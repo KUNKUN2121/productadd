@@ -15,8 +15,24 @@ class ProductAdd extends StatelessWidget {
         title: Text('商品登録'),
       ),
       body: Stack(children: [
-        Text('商品追加'),
-        Text('${barcode}'),
+        Center(
+            child: Column(
+          children: [
+            Text('商品登録'),
+            Text('名前設定'),
+            Text('写真選択'),
+            Text('${barcode}'),
+            ElevatedButton(
+              child: Text('続行する'),
+              onPressed: () {
+                //Navigator.of(context).pushNamed("/MainAddPage");
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => ProductAdd()));
+                print('LOG:RegisterPage続行');
+              },
+            ),
+          ],
+        )),
       ]),
     );
   }

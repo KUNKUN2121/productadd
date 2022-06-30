@@ -195,23 +195,47 @@ class _MainAddPageState extends State {
       this.productURL = qrCode;
     });
 
-    //products.add(await Barcode.addProduct(qrCode));
     Barcode addProduct = await Barcode.addProduct(qrCode);
+
+    ///[products]に同じのがあったらreturn
+    for (int i = 0; i < products.length; i++) {
+      if (addProduct.barcode == products[i].barcode) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("同じ商品が読み込まれています。"),
+              content: Text(
+                  "この商品はすでに読み込まれています。\n読み込み一覧を確認してください。\n商品名 : ${products[i].name}\nコード ${addProduct.barcode}"),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text("閉じる"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
     if (addProduct.price == -400) {
       showDialog(
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: Text("タイトル"),
-            content: Text("メッセージメッセージメッセージメッセージメッセージメッセージ"),
+            title: Text("この商品は登録されていません。"),
+            content:
+                Text("この商品は登録されていません。登録処理をしてください\nコード ${addProduct.barcode}"),
             actions: <Widget>[
               // ボタン領域
               FlatButton(
-                child: Text("Cancel"),
+                child: Text("キャンセル"),
                 onPressed: () => Navigator.pop(context),
               ),
               FlatButton(
-                  child: Text("OK"),
+                  child: Text("登録"),
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.of(context).pushNamed("/ProductAdd",
