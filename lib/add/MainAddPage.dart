@@ -21,12 +21,12 @@ import 'AlertDialog.dart';
 //   }
 // }
 
-class OldAdd extends StatefulWidget {
+class MainAddPage extends StatefulWidget {
   @override
-  _OldAddState createState() => _OldAddState();
+  _MainAddPageState createState() => _MainAddPageState();
 }
 
-class _OldAddState extends State {
+class _MainAddPageState extends State {
   _myDialog() {
     showDialog(
       context: context,
