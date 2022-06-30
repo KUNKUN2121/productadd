@@ -3,7 +3,7 @@ import 'package:productadd/mgt/mgt.dart';
 import 'MainPage.dart';
 import 'add/CameraPage.dart';
 import 'add/MainAddPage.dart';
-import 'add/addition/ProductAdd.dart';
+import 'add/Register/RegisterPage.dart';
 
 void main() {
   runApp(const MyApp());
