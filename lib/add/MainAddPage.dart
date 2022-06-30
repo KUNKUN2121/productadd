@@ -7,7 +7,7 @@ import 'Post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'AlertDialog.dart';
-
+import 'addition/ProductAdd.dart';
 // class OldAdd extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
@@ -105,6 +105,15 @@ class _MainAddPageState extends State {
                   },
                   child: Text('テスト追加'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    //Navigator.of(context).pushNamed("/MainAddPage");
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ProductAdd()));
+                    print('LOG:画面水ボタン');
+                  },
+                  child: Text('画面推移テスト'),
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
@@ -188,19 +197,29 @@ class _MainAddPageState extends State {
 
     //products.add(await Barcode.addProduct(qrCode));
     Barcode addProduct = await Barcode.addProduct(qrCode);
-    if (addProduct.barcode == '-400') {
-      _myDialog;
-      print('aaaaa');
+    if (addProduct.price == -400) {
       showDialog(
         context: context,
-        builder: (context) => CustomTextFieldDialog(
-          title: 'この商品は登録されていません。',
-          contentWidget: const Text('この商品を登録しますか？ Barcode:ToDo'),
-          cancelActionText: 'キャンセル',
-          cancelAction: () {},
-          defaultActionText: '登録する',
-          action: () {},
-        ),
+        builder: (_) {
+          return AlertDialog(
+            title: Text("タイトル"),
+            content: Text("メッセージメッセージメッセージメッセージメッセージメッセージ"),
+            actions: <Widget>[
+              // ボタン領域
+              FlatButton(
+                child: Text("Cancel"),
+                onPressed: () => Navigator.pop(context),
+              ),
+              FlatButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.of(context).pushNamed("/ProductAdd",
+                        arguments: addProduct.barcode);
+                  }),
+            ],
+          );
+        },
       );
       return;
     }

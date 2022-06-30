@@ -34,12 +34,12 @@ class Barcode {
       // レスポンス確認
       if (result.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(result.body);
-        print('data');
-        print(data['itemname']);
-        print(data['barcode']);
-        print(data['imgURL']);
-        print(data['category']);
-        print(data['price']);
+        // print('data');
+        // print(data['itemname']);
+        // print(data['barcode']);
+        // print(data['imgURL']);
+        // print(data['category']);
+        // print(data['price']);
         Barcode ThisProduct = Barcode(
           name: data['itemname'],
           barcode: data['barcode'],
@@ -52,8 +52,8 @@ class Barcode {
         // 登録なし
       } else if (result.statusCode == 400) {
         Barcode ThisProduct = Barcode(
-          name: '-400',
-          barcode: '-400',
+          name: 'nullproduct',
+          barcode: _barcode,
           imgURL:
               'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01',
           category: '-400',
