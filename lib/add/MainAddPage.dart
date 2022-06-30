@@ -7,7 +7,7 @@ import 'Post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'AlertDialog.dart';
-import 'addition/ProductAdd.dart';
+import 'Register/RegisterPage.dart';
 // class OldAdd extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {

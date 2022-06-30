@@ -12,7 +12,7 @@ class ProductAdd extends StatelessWidget {
     print(barcode);
     return Scaffold(
       appBar: AppBar(
-        title: Text('バーコードスキャン'),
+        title: Text('商品登録'),
       ),
       body: Stack(children: [
         Text('商品追加'),
