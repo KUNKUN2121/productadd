@@ -26,10 +26,11 @@ class ProductAdd extends StatelessWidget {
             ElevatedButton(
               child: Text('続行する'),
               onPressed: () {
+                // 参考 https://minpro.net/future-value
                 Future<int> go = Register.registerPost('test', 2525);
                 go.then((value) {
                   print("get ${value}");
-                  int aa = value;
+                  int responsecode = value;
                 });
                 //Navigator.of(context).pushNamed("/MainAddPage");
                 // Navigator.push(context,
