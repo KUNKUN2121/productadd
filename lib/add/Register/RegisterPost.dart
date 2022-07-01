@@ -3,50 +3,38 @@ import 'dart:convert';
 
 import 'package:productadd/add/Barcode.dart';
 
-class PostRequest {
-  final String barcode;
-  final String quantity;
-  PostRequest({
+class Register {
+  final int barcode;
+  final String name;
+  Register({
+    required this.name,
     required this.barcode,
-    required this.quantity,
   });
 
-  static Future postMethod(_postBarcode) async {
+  static Future<int> registerPost(String itemName, int barcode) async {
+    // 設定
+    String url = "https://store-project.f5.si/database/api/register.php";
+    List regierstItem = [];
+
     try {
-      String url = "https://store-project.f5.si/database/api/input.php";
-
-      // Post用List
-      List postBarcode = [];
-      for (int i = 0; i < _postBarcode.length; i++) {
-        String barcodeloop;
-        int quantityloop;
-        barcodeloop = _postBarcode[i].barcode;
-        quantityloop = _postBarcode[i].quantity;
-        postBarcode.add([barcodeloop, quantityloop]);
-      }
-
-      // print(postBarcode);
-
-      //postBarcode を Json に変換
-      String jsonBarcode = jsonEncode(postBarcode);
+      ///[registerpost] を Json に変換
+      regierstItem.add([itemName, barcode]);
+      String jsonBarcode = jsonEncode(regierstItem);
       Map<String, String> headers = {'content-type': 'application/json'};
       String body = jsonBarcode;
 
       http.Response resp =
           await http.post(Uri.parse(url), headers: headers, body: body);
       if (resp.statusCode != 200) {
-        // setState(() {
-        //   int statusCode = resp.statusCode;
-        //   _content = "Failed to post $statusCode";
-        // });
-        print(resp.statusCode);
-        print(resp.body);
-        print('エラー');
+        print('RegisterPost Error Code : ${resp.statusCode}');
+        return resp.statusCode;
       }
       print(resp.body);
       print('レスポンスOK');
+      return 200;
     } catch (e) {
       print(e);
+      return 500;
     }
   }
 }

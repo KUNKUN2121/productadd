@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'RegisterPost.dart';
 
 class ProductAdd extends StatelessWidget {
   const ProductAdd({Key? key}) : super(key: key);
@@ -25,6 +26,11 @@ class ProductAdd extends StatelessWidget {
             ElevatedButton(
               child: Text('続行する'),
               onPressed: () {
+                Future<int> go = Register.registerPost('test', 2525);
+                go.then((value) {
+                  print("get ${value}");
+                  int aa = value;
+                });
                 //Navigator.of(context).pushNamed("/MainAddPage");
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => ProductAdd()));
