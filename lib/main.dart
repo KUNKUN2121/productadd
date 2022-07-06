@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/mgt/mgt.dart';
 import 'MainPage.dart';
-import 'add/CameraPage.dart';
+import 'add/Register/Camera.dart';
 import 'add/MainAddPage.dart';
 import 'add/Register/RegisterPage.dart';
+import 'package:camera/camera.dart';
 
-void main() {
+Future<void> main() async {
+  // main 関数内で非同期処理を呼び出すための設定
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // デバイスで使用可能なカメラのリストを取得
+  final cameras = await availableCameras();
+
+  // 利用可能なカメラのリストから特定のカメラを取得
+  final firstCamera = cameras.first;
+
+  // 取得できているか確認
+  print(firstCamera);
+
+// void main() {
   runApp(const MyApp());
 }
 
@@ -24,8 +38,8 @@ class MyApp extends StatelessWidget {
       routes: {
         "/MainAddPage": (BuildContext context) => MainAddPage(),
         "/mgt": (BuildContext context) => Mgt(),
-        "/camera": (BuildContext context) => CameraPage(),
-        "/ProductAdd": (BuildContext context) => new ProductAdd(),
+        "/camera": (BuildContext context) => CemeraPage(),
+        "/ProductAdd": (BuildContext context) => RegisterItemPage(),
       },
     );
   }

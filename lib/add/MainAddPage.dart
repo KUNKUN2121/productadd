@@ -108,8 +108,10 @@ class _MainAddPageState extends State {
                 ElevatedButton(
                   onPressed: () {
                     //Navigator.of(context).pushNamed("/MainAddPage");
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProductAdd()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterItemPage()));
                     print('LOG:画面水ボタン');
                   },
                   child: Text('画面推移テスト'),
