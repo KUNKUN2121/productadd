@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'AlertDialog.dart';
 import 'Register/RegisterPage.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 // class OldAdd extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
@@ -27,47 +28,41 @@ class MainAddPage extends StatefulWidget {
 }
 
 class _MainAddPageState extends State {
-  _myDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Dialog!"),
-        content: const Text("Text of Something"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("close"),
-          )
-        ],
-      ),
-    );
-  }
+  List<Barcode> products = [];
 
   Widget _firstitemadd() {
     if (products.length != 0) {
       return addListCard(
-          title: products.first.name,
-          barcode: products.first.barcode,
-          imgURL: products.first.imgURL,
-          quantity: products.first.quantity);
+        title: products.first.name,
+        barcode: products.first.barcode,
+        imgURL: products.first.imgURL,
+        quantity: products.first.quantity,
+        id: products.first.id,
+      );
     }
 
     return Text('スキャンを開始してください。');
   }
 
-  List<Barcode> products = [
-    // Barcode(
-    //     name: 'コーラ',
-    //     barcode: '4902102072618',
-    //     imgURL: 'https://sm.r10s.jp/item/31/4902102073431.jpg',
-    //     price: 200,
-    //     quantity: 1,
-    //     category: 'hello'),
-  ];
+  void _deleteitem(id) {
+    print(id);
+    for (int i = 0; i < products.length; i++) {
+      print(products[i].id);
+      if (products[i].id == id) {
+        print('object');
+        products.removeAt(i);
+        setState(() {});
+      }
+    }
+  }
 
+  ///[products]の個数を記録しておくやつ。
+  int productsindex = 0;
+
+  ///qrCode初期値
   String qrCode = '0';
+
+  //imgURL初期値
   String productURL = '';
   @override
   Widget build(BuildContext context) {
@@ -100,7 +95,9 @@ class _MainAddPageState extends State {
                   onPressed: () async {
                     /* ボタンがタップされた時の処理 */
                     products.insert(
-                        0, (await Barcode.addProduct(4549131970258)));
+                        0,
+                        (await Barcode.addProduct(
+                            4549131970258, productsindex)));
                     setState(() {});
                   },
                   child: Text('テスト追加'),
@@ -145,6 +142,7 @@ class _MainAddPageState extends State {
                           barcode: products[i].barcode,
                           quantity: products[i].quantity,
                           imgURL: products[i].imgURL,
+                          id: products[i].id,
                         )
                       }
                     ]),
@@ -197,9 +195,10 @@ class _MainAddPageState extends State {
       this.productURL = qrCode;
     });
 
-    Barcode addProduct = await Barcode.addProduct(qrCode);
+    Barcode addProduct = await Barcode.addProduct(qrCode, productsindex);
+    print(productsindex);
 
-    ///[products]に同じのがあったらreturn
+    /// [products]に同じのがあったらreturn
     for (int i = 0; i < products.length; i++) {
       if (addProduct.barcode == products[i].barcode) {
         showDialog(
@@ -221,6 +220,8 @@ class _MainAddPageState extends State {
         );
         return;
       }
+
+      ///同じ商品だったらreturn
     }
     if (addProduct.price == -400) {
       showDialog(
@@ -249,143 +250,97 @@ class _MainAddPageState extends State {
       );
       return;
     }
+    // ここで追加
     print(addProduct);
+    productsindex++;
     products.add(addProduct);
     setState(() {});
   }
-}
 
-Card getCard({
-  required String title,
-  required String barcode,
-  required IconData icon,
-  required Key key,
-  required Function()? onPressed,
-}) {
-  return Card(
-    key: key,
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 100.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 50.0,
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                  ),
-                  Text(
-                    barcode,
-                    softWrap: true,
-                  ),
-                  const Divider(),
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: OutlinedButton(
-                  //     //参考：https://zenn.dev/enoiu/articles/6b754d37d5a272#elevatedbutton%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
-                  //     style: ElevatedButton.styleFrom(
-                  //       onPrimary: Theme.of(context).colorScheme.onPrimary,
-                  //       primary: Theme.of(context).colorScheme.primary,
-                  //     ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                  //     onPressed: onPressed,
-                  //     child: const Text("開く"),
-                  //   ),
-                  // )
-                ],
+  Card addListCard({
+    required String title,
+    required String barcode,
+    required int quantity,
+
+    //required IconData icon,
+    required String imgURL,
+    required int id,
+    //required Function()? onPressed,
+  }) {
+    return Card(
+      //key: key,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 100.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Icon(
+              //   icon,
+              //   size: 50.0,
+              // ),
+              Container(
+                width: 50,
+                height: 50,
+                child: Image.network(imgURL),
               ),
-            ),
-            Text("個数"),
-            Icon(Icons.cancel)
-          ],
+              const SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      softWrap: true,
+                    ),
+                    Text(
+                      barcode,
+                      softWrap: true,
+                    ),
+                    //const Divider(),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: OutlinedButton(
+                    //     //参考：https://zenn.dev/enoiu/articles/6b754d37d5a272#elevatedbutton%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
+                    //     style: ElevatedButton.styleFrom(
+                    //       onPrimary: Theme.of(context).colorScheme.onPrimary,
+                    //       primary: Theme.of(context).colorScheme.primary,
+                    //     ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
+                    //     onPressed: onPressed,
+                    //     child: const Text("開く"),
+                    //   ),
+                    // )
+                  ],
+                ),
+              ),
+              //Text('${quantity} 個'),
+              SizedBox(
+                height: 50,
+                width: 50,
+                child: TextField(
+                  keyboardType: TextInputType.numberWithOptions(
+                      signed: true, decimal: true),
+                  controller: TextEditingController(text: '2'),
+                ),
+              ),
+              // Icon(Icons.cancel)
+              IconButton(
+                  onPressed: () {
+                    // print(id);
+                    _deleteitem(id);
+                  },
+                  icon: Icon(Icons.cancel)),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
-Card addListCard({
-  required String title,
-  required String barcode,
-  required int quantity,
-  //required IconData icon,
-  required String imgURL,
-  //required Key key,
-  //required Function()? onPressed,
-}) {
-  return Card(
-    //key: key,
-    child: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 100.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Icon(
-            //   icon,
-            //   size: 50.0,
-            // ),
-            Container(
-              width: 50,
-              height: 50,
-              child: Image.network(imgURL),
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    softWrap: true,
-                  ),
-                  Text(
-                    barcode,
-                    softWrap: true,
-                  ),
-                  //const Divider(),
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: OutlinedButton(
-                  //     //参考：https://zenn.dev/enoiu/articles/6b754d37d5a272#elevatedbutton%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
-                  //     style: ElevatedButton.styleFrom(
-                  //       onPrimary: Theme.of(context).colorScheme.onPrimary,
-                  //       primary: Theme.of(context).colorScheme.primary,
-                  //     ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                  //     onPressed: onPressed,
-                  //     child: const Text("開く"),
-                  //   ),
-                  // )
-                ],
-              ),
-            ),
-            Text('${quantity} 個'),
-            Icon(Icons.cancel)
-          ],
-        ),
-      ),
-    ),
-  );
+    );
+  }
 }

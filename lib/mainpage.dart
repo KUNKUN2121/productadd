@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             getCard(
-              title: "ProductAdd",
+              title: "ProductAddTest",
               description: "test",
               icon: Icons.transfer_within_a_station_outlined,
               key: const Key("test-2"),

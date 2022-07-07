@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 import 'dart:convert';
@@ -9,8 +10,7 @@ class Barcode {
   String imgURL;
   int price;
   String category;
-
-  //Key? key;
+  int id;
 
   Barcode({
     required this.name,
@@ -19,9 +19,10 @@ class Barcode {
     required this.imgURL,
     required this.price,
     required this.category,
+    required this.id,
   });
 
-  static Future<Barcode> addProduct(_barcode) async {
+  static Future<Barcode> addProduct(_barcode, int id) async {
     String url =
         'https://store-project.f5.si/database/api/productName.php?barcode=$_barcode';
     try {
@@ -43,9 +44,11 @@ class Barcode {
           imgURL: data['imgURL'],
           category: data['category'],
           price: data['price'],
+          id: id,
         );
         return ThisProduct;
-        // 登録なし
+
+        // 登録なされていない商品
       } else if (result.statusCode == 400) {
         Barcode ThisProduct = Barcode(
           name: 'nullproduct',
@@ -55,9 +58,11 @@ class Barcode {
           category: '-400',
           price: -400,
           quantity: -400,
+          id: id,
         );
         return ThisProduct;
       } else {
+        // その他エラー
         Barcode ThisProduct = Barcode(
           name: '内部エラー',
           barcode: '0',
@@ -66,6 +71,7 @@ class Barcode {
           category: '0',
           price: 0,
           quantity: 0,
+          id: id,
         );
         return ThisProduct;
       }
@@ -80,6 +86,7 @@ class Barcode {
         category: '-1',
         price: -1,
         quantity: -1,
+        id: id,
       );
       //print(ThisProduct);
       return ThisProduct;
