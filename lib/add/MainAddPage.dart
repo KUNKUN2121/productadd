@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:productadd/add/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'Barcode.dart';
 import 'Post.dart';
@@ -28,6 +29,8 @@ class MainAddPage extends StatefulWidget {
 }
 
 class _MainAddPageState extends State {
+  //TextField取得
+  final valueController = TextEditingController();
   List<Barcode> products = [];
 
   Widget _firstitemadd() {
@@ -94,10 +97,8 @@ class _MainAddPageState extends State {
                 ElevatedButton(
                   onPressed: () async {
                     /* ボタンがタップされた時の処理 */
-                    products.insert(
-                        0,
-                        (await Barcode.addProduct(
-                            4549131970258, productsindex)));
+                    products.insert(0,
+                        (await Barcode.addProduct(2424242424, productsindex)));
                     setState(() {});
                   },
                   child: Text('テスト追加'),
@@ -172,8 +173,14 @@ class _MainAddPageState extends State {
           onPressed: () {
             //print('aaa');
             //_request();
-            print(PostRequest.postMethod(products));
-            print('hello');
+            // print(PostRequest.postMethod(products));
+            // print('hello');
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ConfirmPage(
+                          products: products,
+                        )));
           },
           child: Text('続行する'),
         ),
@@ -194,6 +201,9 @@ class _MainAddPageState extends State {
       this.qrCode = qrCode;
       this.productURL = qrCode;
     });
+    if (qrCode == '-1') {
+      return;
+    }
 
     Barcode addProduct = await Barcode.addProduct(qrCode, productsindex);
     print(productsindex);
@@ -234,9 +244,8 @@ class _MainAddPageState extends State {
             actions: <Widget>[
               // ボタン領域
               FlatButton(
-                child: Text("キャンセル"),
-                onPressed: () => Navigator.pop(context),
-              ),
+                  child: Text("キャンセル"),
+                  onPressed: () => Navigator.pop(context)),
               FlatButton(
                   child: Text("登録"),
                   onPressed: () {
@@ -253,7 +262,8 @@ class _MainAddPageState extends State {
     // ここで追加
     print(addProduct);
     productsindex++;
-    products.add(addProduct);
+    //products.add(addProduct);
+    products.insert(0, addProduct);
     setState(() {});
   }
 
@@ -304,19 +314,6 @@ class _MainAddPageState extends State {
                       barcode,
                       softWrap: true,
                     ),
-                    //const Divider(),
-                    // SizedBox(
-                    //   width: double.infinity,
-                    //   child: OutlinedButton(
-                    //     //参考：https://zenn.dev/enoiu/articles/6b754d37d5a272#elevatedbutton%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6
-                    //     style: ElevatedButton.styleFrom(
-                    //       onPrimary: Theme.of(context).colorScheme.onPrimary,
-                    //       primary: Theme.of(context).colorScheme.primary,
-                    //     ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                    //     onPressed: onPressed,
-                    //     child: const Text("開く"),
-                    //   ),
-                    // )
                   ],
                 ),
               ),
@@ -324,16 +321,16 @@ class _MainAddPageState extends State {
               SizedBox(
                 height: 50,
                 width: 50,
-                child: TextField(
-                  keyboardType: TextInputType.numberWithOptions(
-                      signed: true, decimal: true),
-                  controller: TextEditingController(text: '2'),
-                ),
+                child: Text('${quantity}'),
+                // child: TextField(
+                //   keyboardType: TextInputType.numberWithOptions(
+                //       signed: true, decimal: true),
+                //   controller: TextEditingController(text: '${quantity}'),
+                // ),
               ),
               // Icon(Icons.cancel)
               IconButton(
                   onPressed: () {
-                    // print(id);
                     _deleteitem(id);
                   },
                   icon: Icon(Icons.cancel)),

@@ -12,7 +12,7 @@ class PostRequest {
     required this.quantity,
   });
 
-  static Future postMethod(_postBarcode) async {
+  static Future<int> postMethod(_postBarcode) async {
     try {
       String url = "https://store-project.f5.si/database/api/input.php";
 
@@ -36,18 +36,16 @@ class PostRequest {
       http.Response resp =
           await http.post(Uri.parse(url), headers: headers, body: body);
       if (resp.statusCode != 200) {
-        // setState(() {
-        //   int statusCode = resp.statusCode;
-        //   _content = "Failed to post $statusCode";
-        // });
         print(resp.statusCode);
         print(resp.body);
         print('エラー');
       }
       print(resp.body);
       print('レスポンスOK');
+      return 0;
     } catch (e) {
       print(e);
+      return -1;
     }
   }
 }
