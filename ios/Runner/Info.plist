@@ -47,6 +47,8 @@
 	<false/>
 
 	<key>NSCameraUsageDescription</key>
-	<string商品撮影用</string>
+	<string>商品撮影用</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

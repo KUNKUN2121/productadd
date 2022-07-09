@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:productadd/add/add.dart';
-import 'add/addPage.dart';
-import 'mgt/mgt.dart';
-import 'template/header.dart';
+import 'package:productadd/pages/mgtpage.dart';
+import 'test/Camera.dart';
+import 'pages/MainAddPage.dart';
+import 'pages/RegisterPage.dart';
+import 'pages/mainpage.dart';
+import 'package:camera/camera.dart';
 
-void main() {
+Future<void> main() async {
+  // main 関数内で非同期処理を呼び出すための設定
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // デバイスで使用可能なカメラのリストを取得
+  final cameras = await availableCameras();
+
+  // 利用可能なカメラのリストから特定のカメラを取得
+  final firstCamera = cameras.first;
+
+  // 取得できているか確認
+  print(firstCamera);
+
+// void main() {
   runApp(const MyApp());
 }
 
@@ -19,83 +34,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       //ホーム読み込み
-      home: const WidgetsView(),
-    );
-  }
-}
-
-class WidgetsView extends StatelessWidget {
-  const WidgetsView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      //AppBar読み込み
-      appBar: Header(),
-
-      body: Center(
-        child: Column(
-          children: [
-            // Text('Tesst'),
-
-            //在庫追加
-
-            // ElevatedButton(
-            //   onPressed: () {
-            //     Navigator.of(context).push(
-            //       MaterialPageRoute(builder: (context) {
-            //         return const Add();
-            //       }),
-            //     );
-            //   },
-            //   child: const Text('在庫追加'),
-            // ),
-            // ElevatedButton(
-            //   onPressed: () {},
-            //   child: const Text('在庫管理'),
-            // ),
-
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return addPage();
-                  }),
-                );
-              },
-              child: Image.asset('assets/images/add.png'),
-            ),
-
-            //在庫管理
-
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return const Mgt();
-                  }),
-                );
-              },
-              child: Image.asset('assets/images/mgg.png'),
-            ),
-
-            //テスト用
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return const addPop();
-                  }),
-                );
-              },
-              child: Image.asset('assets/images/mgg.png'),
-            ),
-            //以上
-
-            //カメラ
-          ],
-        ),
-      ),
+      home: const MainPage(),
+      routes: {
+        "/MainAddPage": (BuildContext context) => MainAddPage(),
+        "/mgt": (BuildContext context) => Mgt(),
+        "/camera": (BuildContext context) => CemeraPage(),
+        "/ProductAdd": (BuildContext context) => RegisterItemPage(),
+      },
     );
   }
 }
