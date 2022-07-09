@@ -1,8 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:productadd/add/Barcode.dart';
-import 'AlertDialog.dart';
+import 'package:productadd/model/Barcode.dart';
+import '../model/AlertDialog.dart';
 
 class PostRequest {
   final String barcode;

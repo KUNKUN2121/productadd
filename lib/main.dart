@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:productadd/mgt/mgt.dart';
-import 'MainPage.dart';
-import 'add/Register/Camera.dart';
-import 'add/MainAddPage.dart';
-import 'add/Register/RegisterPage.dart';
+import 'package:productadd/pages/mgtpage.dart';
+import 'test/Camera.dart';
+import 'pages/MainAddPage.dart';
+import 'pages/RegisterPage.dart';
+import 'pages/mainpage.dart';
 import 'package:camera/camera.dart';
 
 Future<void> main() async {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'Barcode.dart';
-import 'Post.dart';
+import '../model/Barcode.dart';
+import '../api/Post.dart';
 
 class ConfirmPage extends StatelessWidget {
   final List<Barcode> products;

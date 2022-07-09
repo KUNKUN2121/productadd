@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:productadd/add/ConfirmPage.dart';
+import 'package:productadd/pages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'Barcode.dart';
-import 'Post.dart';
+import '../model/Barcode.dart';
+import '../api/Post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'AlertDialog.dart';
-import 'Register/RegisterPage.dart';
+import '../model/AlertDialog.dart';
+import 'RegisterPage.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 // class OldAdd extends StatelessWidget {
 //   @override

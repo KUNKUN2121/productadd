@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:productadd/add/Barcode.dart';
+import 'package:productadd/model/Barcode.dart';
 
 class Register {
   final int barcode;
