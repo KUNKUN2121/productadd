@@ -267,6 +267,14 @@ class _MainAddPageState extends State {
     setState(() {});
   }
 
+  void _inputchange(String e) {
+    setState(() {
+      // _text = e;
+      print(e);
+      setState(() {});
+    });
+  }
+
   Card addListCard({
     required String title,
     required String barcode,
@@ -319,15 +327,20 @@ class _MainAddPageState extends State {
               ),
               //Text('${quantity} 個'),
               SizedBox(
-                height: 50,
-                width: 50,
-                child: Text('${quantity}'),
-                // child: TextField(
-                //   keyboardType: TextInputType.numberWithOptions(
-                //       signed: true, decimal: true),
-                //   controller: TextEditingController(text: '${quantity}'),
-                // ),
-              ),
+                  height: 50,
+                  width: 50,
+                  // child: Text('${quantity}'),
+                  // child: TextField(
+                  //   keyboardType: TextInputType.numberWithOptions(
+                  //       signed: true, decimal: true),
+                  //   controller: TextEditingController(text: '${quantity}'),
+                  //   onChanged: _inputchange,
+                  // ),
+                  child: TextField(
+                    // controller: TextEditingController(text: '${quantity}'),
+                    controller: TextEditingController(text: "value"),
+                    onChanged: _inputchange,
+                  )),
               // Icon(Icons.cancel)
               IconButton(
                   onPressed: () {
