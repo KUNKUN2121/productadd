@@ -10,18 +10,6 @@ import 'dart:convert';
 import '../model/AlertDialog.dart';
 import 'RegisterPage.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-// class OldAdd extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(),
-//     );
-//   }
-// }
 
 class MainAddPage extends StatefulWidget {
   @override
@@ -71,8 +59,6 @@ class _MainAddPageState extends State {
   String productURL = '';
   @override
   Widget build(BuildContext context) {
-    // final String productURL =
-    //     'https://store-project.f5.si/img/' + qrCode + '.png';
     final String productURL =
         'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01';
     return Scaffold(
@@ -83,9 +69,7 @@ class _MainAddPageState extends State {
         children: [
           Center(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //Image(image: NetworkImage(productURL)),
                 Text(
                   '$qrCode',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -173,10 +157,6 @@ class _MainAddPageState extends State {
       child: Row(children: [
         ElevatedButton(
           onPressed: () {
-            //print('aaa');
-            //_request();
-            // print(PostRequest.postMethod(products));
-            // print('hello');
             Navigator.push(
                 context,
                 MaterialPageRoute(

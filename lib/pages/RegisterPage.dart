@@ -13,38 +13,6 @@ class RegisterItemPage extends StatefulWidget {
 }
 
 class _RegisterItemPageState extends State<RegisterItemPage> {
-  // int _counter = 0;
-
-  // void _incrementCounterplus() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-
-  // void _incrementCounterminus() {
-  //   setState(() {
-  //     _counter--;
-  //   });
-  // }
-
-  // void _incrementCounterplus10() {
-  //   setState(() {
-  //     _counter += 10;
-  //   });
-  // }
-
-  // void _incrementCounterminus10() {
-  //   setState(() {
-  //     _counter -= 10;
-  //   });
-  // }
-
-  // void _incrementCounterreset() {
-  //   setState(() {
-  //     _counter = 0;
-  //   });
-  // }
-
   String? isSelectedItem = '飲み物';
 
   @override
