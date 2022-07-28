@@ -29,6 +29,8 @@ class MainAddPage extends StatefulWidget {
 }
 
 class _MainAddPageState extends State {
+  final FocusNode _textNode1 = FocusNode();
+
   //TextField取得
   final valueController = TextEditingController();
   List<Barcode> products = [];
@@ -338,8 +340,41 @@ class _MainAddPageState extends State {
                   // ),
                   child: TextField(
                     // controller: TextEditingController(text: '${quantity}'),
-                    controller: TextEditingController(text: "value"),
-                    onChanged: _inputchange,
+                    keyboardType: TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    controller: TextEditingController(text: "${quantity}"),
+                    onChanged: (input) {
+                      print('First text field: $input');
+                      var numTry = int.tryParse(input);
+                      if (numTry == null) {
+                        print('すうちいれろ');
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text("数値を入力してください"),
+                              content: Text("数値以外が入力されました。修正してください。"),
+                              actions: <Widget>[
+                                FlatButton(
+                                    child: Text("閉じる"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
+                      for (int i = 0; i < products.length; i++) {
+                        print(products[i].id);
+                        if (products[i].id == id) {
+                          print('これじゃね？${products[i].name}');
+                          products[i].quantity = numTry;
+                          // setState(() {});
+                        }
+                      }
+                    },
                   )),
               // Icon(Icons.cancel)
               IconButton(
