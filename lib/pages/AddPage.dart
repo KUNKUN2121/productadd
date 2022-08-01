@@ -1,15 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:productadd/pages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../model/Barcode.dart';
-import '../api/Post.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../model/AlertDialog.dart';
 import 'RegisterPage.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
 
 class MainAddPage extends StatefulWidget {
   @override
@@ -17,12 +11,6 @@ class MainAddPage extends StatefulWidget {
 }
 
 class _MainAddPageState extends State {
-  final FocusNode _textNode1 = FocusNode();
-
-  //TextField取得
-  final valueController = TextEditingController();
-  List<Barcode> products = [];
-
   Widget _firstitemadd() {
     if (products.length != 0) {
       return addListCard(
@@ -49,18 +37,20 @@ class _MainAddPageState extends State {
     }
   }
 
+  ///[products]初期化
+  List<Barcode> products = [];
+
   ///[products]の個数を記録しておくやつ。
   int productsindex = 0;
 
-  ///qrCode初期値
+  ///qrCode初期化
   String qrCode = '0';
 
-  //imgURL初期値
+  //imgURL初期化
   String productURL = '';
+
   @override
   Widget build(BuildContext context) {
-    final String productURL =
-        'https://network.mobile.rakuten.co.jp/assets/img/product/iphone/iphone-13-pro/pht-device-16.png?220309-01';
     return Scaffold(
       appBar: AppBar(
         title: Text('バーコードスキャン'),
@@ -80,18 +70,16 @@ class _MainAddPageState extends State {
                   onPressed: () => scanQrCode(),
                 ),
                 SizedBox(height: 20),
+                //テスト用 >>>
                 ElevatedButton(
                   onPressed: () async {
-                    /* ボタンがタップされた時の処理 */
-                    products.insert(0,
-                        (await Barcode.addProduct(2424242424, productsindex)));
+                    addProductContents('4902102072618');
                     setState(() {});
                   },
                   child: Text('テスト追加'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    //Navigator.of(context).pushNamed("/MainAddPage");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -178,7 +166,6 @@ class _MainAddPageState extends State {
       ScanMode.BARCODE,
     );
     if (!mounted) return;
-    //products.add(await Barcode.addProduct(this.qrCode));
     setState(() {
       this.qrCode = qrCode;
       this.productURL = qrCode;
@@ -186,8 +173,11 @@ class _MainAddPageState extends State {
     if (qrCode == '-1') {
       return;
     }
+    addProductContents(qrCode);
+  }
 
-    Barcode addProduct = await Barcode.addProduct(qrCode, productsindex);
+  Future addProductContents(String addqrcode) async {
+    Barcode addProduct = await Barcode.addProduct(addqrcode, productsindex);
     print(productsindex);
 
     /// [products]に同じのがあったらreturn
@@ -247,14 +237,6 @@ class _MainAddPageState extends State {
     //products.add(addProduct);
     products.insert(0, addProduct);
     setState(() {});
-  }
-
-  void _inputchange(String e) {
-    setState(() {
-      // _text = e;
-      print(e);
-      setState(() {});
-    });
   }
 
   Card addListCard({

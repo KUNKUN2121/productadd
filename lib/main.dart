@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/pages/mgtpage.dart';
 import 'test/Camera.dart';
-import 'pages/MainAddPage.dart';
+import 'pages/AddPage.dart';
 import 'pages/RegisterPage.dart';
 import 'pages/mainpage.dart';
 import 'package:camera/camera.dart';

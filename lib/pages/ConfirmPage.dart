@@ -17,13 +17,6 @@ class ConfirmPage extends StatelessWidget {
       body: Stack(children: [
         Column(
           children: [
-            // ElevatedButton(
-            //   onPressed: () {
-            //     print('aa');
-            //     print(products.first.barcode);
-            //   },
-            //   child: Text('テスト追加'),
-            // ),
             Container(
               child: Text(
                 '下記を追加します',
@@ -113,11 +106,8 @@ class ConfirmPage extends StatelessWidget {
     required String title,
     required String barcode,
     required int quantity,
-
-    //required IconData icon,
     required String imgURL,
     required int id,
-    //required Function()? onPressed,
   }) {
     return Card(
       //key: key,
@@ -128,10 +118,6 @@ class ConfirmPage extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Icon(
-              //   icon,
-              //   size: 50.0,
-              // ),
               Container(
                 width: 50,
                 height: 50,
@@ -159,18 +145,11 @@ class ConfirmPage extends StatelessWidget {
                   ],
                 ),
               ),
-              //Text('${quantity} 個'),
               SizedBox(
                 height: 50,
                 width: 50,
                 child: Text('${quantity}'),
-                // child: TextField(
-                //   keyboardType: TextInputType.numberWithOptions(
-                //       signed: true, decimal: true),
-                //   controller: TextEditingController(text: '${quantity}'),
-                // ),
               ),
-              // Icon(Icons.cancel)
               IconButton(onPressed: () {}, icon: Icon(Icons.cancel)),
             ],
           ),
