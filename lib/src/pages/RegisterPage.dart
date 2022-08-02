@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:productadd/api/RegisterPost.dart';
+import 'package:productadd/src/api/RegisterPost.dart';
 
 class RegisterItemPage extends StatefulWidget {
   //const registerItemPage({Key? key}) : super(key: key);
