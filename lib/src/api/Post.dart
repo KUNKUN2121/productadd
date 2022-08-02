@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:productadd/model/Barcode.dart';
+import 'package:productadd/src/model/Barcode.dart';
 import '../model/AlertDialog.dart';
 
 class PostRequest {
