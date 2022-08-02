@@ -2,7 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'dart:convert';
+import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
 
 class RegisterItemPage extends StatefulWidget {
@@ -52,9 +53,9 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
               child: Text('続行する'),
               onPressed: () {
                 // 参考 https://minpro.net/future-value
-                Future<int> go = Register.registerPost('test', 2525);
+                Future<int> go = Register.registerPost('test', 2525, _image);
                 go.then((value) {
-                  print("get ${value}");
+                  print("れすぽんすこーど ${value}");
                   int responsecode = value;
                 });
                 //Navigator.of(context).pushNamed("/MainAddPage");
@@ -68,11 +69,21 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
               onPressed: getImage,
             ),
             ElevatedButton(
-              child: Text('続行'),
+              child: Text('decode'),
               onPressed: () {
-                Future<int> go = Register.registerPost('test', 2525);
+                List<int> imageBytes = _image.readAsBytesSync();
+                String baseimage = base64Encode(imageBytes);
+                print("OK");
+                log(baseimage);
+                print("OK");
               },
             ),
+            // ElevatedButton(
+            //   child: Text('続行'),
+            //   onPressed: () {
+            //     Future<int> go = Register.registerPost('test', 2525, _image);
+            //   },
+            // ),
           ],
         )),
       ]),
