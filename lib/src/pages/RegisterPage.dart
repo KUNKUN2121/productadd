@@ -13,6 +13,11 @@ class RegisterItemPage extends StatefulWidget {
 }
 
 class _RegisterItemPageState extends State<RegisterItemPage> {
+  //barnum = 前の画面から
+  //quantity = 0だよね追加だから
+  var _itemname = TextEditingController();
+  var _category = TextEditingController();
+  var _price = TextEditingController();
   File _image = File("");
   final picker = ImagePicker();
   var imgFlg = false;
@@ -46,14 +51,38 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
             child: Column(
           children: [
             Text('商品登録'),
-            Text('名前設定'),
-            Text('写真選択'),
+            Text('商品名'),
+            TextField(
+              // controller: TextEditingController(text: '${quantity}'),
+              controller: _itemname,
+            ),
+            Text('カテゴリー'),
+            TextField(
+              // controller: TextEditingController(text: '${quantity}'),
+              keyboardType:
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
+              controller: _category,
+            ),
+            Text('価格'),
+            TextField(
+              // controller: TextEditingController(text: '${quantity}'),
+              keyboardType:
+                  TextInputType.numberWithOptions(signed: true, decimal: true),
+              controller: _price,
+            ),
+
+            ///https://flutter.keicode.com/basics/textcontroller.php
+
             Text('${barcode}'),
             ElevatedButton(
               child: Text('続行する'),
               onPressed: () {
                 // 参考 https://minpro.net/future-value
-                Future<int> go = Register.registerPost('test', 2525, _image);
+                String item = _itemname.text;
+                String category = _category.text;
+                String price = _price.text;
+                Future<int> go = Register.registerPost(
+                    item, barcode.toString(), category, price, _image);
                 go.then((value) {
                   print("れすぽんすこーど ${value}");
                   int responsecode = value;
