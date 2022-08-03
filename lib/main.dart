@@ -5,8 +5,17 @@ import 'src/pages/AddPage.dart';
 import 'src/pages/RegisterPage.dart';
 import 'src/pages/mainpage.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
+  // Flutter Engineの機能を使うので有効化
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 画面の向きを固定
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   // main 関数内で非同期処理を呼び出すための設定
   WidgetsFlutterBinding.ensureInitialized();
 
