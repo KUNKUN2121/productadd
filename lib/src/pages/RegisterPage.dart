@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:productadd/src/api/RegisterPost.dart';
 
 class RegisterItemPage extends StatefulWidget {
@@ -19,6 +20,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   var _category = TextEditingController();
   var _price = TextEditingController();
   File _image = File("");
+  File croppedFile = File("");
   final picker = ImagePicker();
   var imgFlg = false;
 
@@ -82,7 +84,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 String category = _category.text;
                 String price = _price.text;
                 Future<int> go = Register.registerPost(
-                    item, barcode.toString(), category, price, _image);
+                    item, barcode.toString(), category, price, croppedFile);
                 go.then((value) {
                   print("れすぽんすこーど ${value}");
                   int responsecode = value;
@@ -99,12 +101,21 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
             ),
             ElevatedButton(
               child: Text('decode'),
-              onPressed: () {
-                List<int> imageBytes = _image.readAsBytesSync();
-                String baseimage = base64Encode(imageBytes);
-                print("OK");
-                log(baseimage);
-                print("OK");
+              onPressed: () async {
+                // List<int> imageBytes = _image.readAsBytesSync();
+                // String baseimage = base64Encode(imageBytes);
+
+                ImageProperties properties =
+                    await FlutterNativeImage.getImageProperties(_image.path);
+                print(properties.width);
+                print(properties.height);
+                int _imgx = properties.width!;
+                int _imgy = properties.height!;
+                File croppedFile = await FlutterNativeImage.cropImage(
+                    _image.path, _imgx, _imgy, 50, 50);
+                // print("OK");
+                // log(baseimage);
+                // print("OK");
               },
             ),
             // ElevatedButton(
