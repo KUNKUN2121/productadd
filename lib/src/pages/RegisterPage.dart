@@ -108,7 +108,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 String category = _category.text;
                 String price = _price.text;
                 Future<int> go = Register.registerPost(
-                    item, barcode.toString(), category, price, _image);
+                    item, barcode.toString(), category, price, tempimg);
                 go.then((value) {
                   print("れすぽんすこーど ${value}");
                   int responsecode = value;
