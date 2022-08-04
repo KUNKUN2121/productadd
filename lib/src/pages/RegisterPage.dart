@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
+import 'package:productadd/src/api/RegisterPostImage.dart';
 
 class RegisterItemPage extends StatefulWidget {
   //const registerItemPage({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   File _image = File("");
   final picker = ImagePicker();
   var imgFlg = false;
+  String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -51,6 +53,11 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
             child: Column(
           children: [
             Text('商品登録'),
+            Container(
+              height: 200,
+              child: Image.network(tempimg),
+            ),
+            Text('${barcode}'),
             Text('商品名'),
             TextField(
               // controller: TextEditingController(text: '${quantity}'),
@@ -73,10 +80,29 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
 
             ///https://flutter.keicode.com/basics/textcontroller.php
 
-            Text('${barcode}'),
+            ElevatedButton(
+              child: Text('撮影'),
+              // onPressed: getImage,
+              onPressed: () async {
+                await getImage();
+                Future<String> go = RegisterImage.registerImagePost(_image);
+                go.then((value) {
+                  print("れすぽんすこーど ${value}");
+                  String responsecode = value;
+                  tempimg = value;
+                  setState(() {});
+                });
+                print('LOG:RegisterPage続行');
+              },
+            ),
+
             ElevatedButton(
               child: Text('続行する'),
               onPressed: () {
+                if (imgFlg == false) {
+                  print('imgflg');
+                  return;
+                }
                 // 参考 https://minpro.net/future-value
                 String item = _itemname.text;
                 String category = _category.text;
@@ -91,20 +117,6 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 // Navigator.push(context,
                 //     MaterialPageRoute(builder: (context) => registerItemPage()));
                 print('LOG:RegisterPage続行');
-              },
-            ),
-            ElevatedButton(
-              child: Text('撮影'),
-              onPressed: getImage,
-            ),
-            ElevatedButton(
-              child: Text('decode'),
-              onPressed: () {
-                List<int> imageBytes = _image.readAsBytesSync();
-                String baseimage = base64Encode(imageBytes);
-                print("OK");
-                log(baseimage);
-                print("OK");
               },
             ),
             // ElevatedButton(

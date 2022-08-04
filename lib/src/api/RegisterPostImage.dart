@@ -12,10 +12,9 @@ class RegisterImage {
     required this.barcode,
   });
 
-  static Future<int> registerImagePost(String itemname, String barnum,
-      String category, String price, File uploadimage) async {
+  static Future<String> registerImagePost(File uploadimage) async {
     // 設定
-    String url = "https://store-project.f5.si/database/api/register.php";
+    String url = "https://store-project.f5.si/develop/base.php";
     List regierstItem = [];
 
     try {
@@ -26,24 +25,23 @@ class RegisterImage {
       String baseimage = base64Encode(imageBytes);
 
       var resp = await http.post(Uri.parse(url), body: {
-        'itemname': itemname,
-        'barnum': barnum,
-        'quantity': '0',
-        'category': category,
-        'price': price,
         'image': baseimage,
       });
 
       if (resp.statusCode != 200) {
         print('RegisterPost Error Code : ${resp.statusCode}');
-        return resp.statusCode;
+        return '${resp.statusCode}';
       }
-      print(resp.body);
+
+      // print(resp.body);
       print('レスポンスOK');
-      return 200;
+      Map<String, dynamic> data = jsonDecode(resp.body);
+      String imgurl = data["msg"];
+      print(imgurl);
+      return imgurl;
     } catch (e) {
       print(e);
-      return 500;
+      return '500';
     }
   }
 }
