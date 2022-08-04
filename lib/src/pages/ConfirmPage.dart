@@ -38,63 +38,71 @@ class ConfirmPage extends StatelessWidget {
               ]),
             ),
             Container(
-              child: Row(children: [
-                ElevatedButton(
-                  onPressed: () {
-                    print('戻るボタン');
-                  },
-                  child: Text('戻る'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final go = PostRequest.postMethod(products);
-                    go.then((value) {
-                      if (value == 0) {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text("在庫追加完了"),
-                              content: Text("在庫追加完了しました。\n メインページに戻ります。"),
-                              actions: <Widget>[
-                                FlatButton(
-                                    child: Text("閉じる"),
-                                    onPressed: () {
-                                      Navigator.popUntil(
-                                          context, (route) => route.isFirst);
-                                    }),
-                              ],
+              margin: const EdgeInsets.only(
+                top: 20,
+                left: 10,
+                right: 10.0,
+              ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        print('戻るボタン');
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('戻る'),
+                    ),
+                    ElevatedButton(
+                      child: Text('続行する'),
+                      onPressed: () {
+                        final go = PostRequest.postMethod(products);
+                        go.then((value) {
+                          if (value == 0) {
+                            showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                  title: Text("在庫追加完了"),
+                                  content: Text("在庫追加完了しました。\n メインページに戻ります。"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                        child: Text("閉じる"),
+                                        onPressed: () {
+                                          Navigator.popUntil(context,
+                                              (route) => route.isFirst);
+                                        }),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                        return;
-                      }
-                      if (value != 0) {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text("エラー"),
-                              content: Text(
-                                  "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
-                              actions: <Widget>[
-                                FlatButton(
-                                    child: Text("閉じる"),
-                                    onPressed: () {
-                                      Navigator.popUntil(
-                                          context, (route) => route.isFirst);
-                                    }),
-                              ],
+                            return;
+                          }
+                          if (value != 0) {
+                            showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                  title: Text("エラー"),
+                                  content: Text(
+                                      "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                        child: Text("閉じる"),
+                                        onPressed: () {
+                                          Navigator.popUntil(context,
+                                              (route) => route.isFirst);
+                                        }),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                      print(value);
-                    });
-                  },
-                  child: Text('続行'),
-                ),
-              ]),
+                          }
+                          print(value);
+                        });
+                      },
+                    ),
+                  ]),
             )
           ],
         )

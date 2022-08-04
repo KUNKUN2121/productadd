@@ -123,38 +123,33 @@ class _MainAddPageState extends State {
                     ]),
                   ),
                   //ボタン参照
-                  _bottomButtons(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        top: 20,
+                        left: 10,
+                        right: 10.0,
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ConfirmPage(
+                                        products: products,
+                                      )));
+                        },
+                        child: const Text('続行する'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  //ボタン
-
-  Widget _bottomButtons() {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 20,
-        left: 10,
-        right: 10.0,
-      ),
-      child: Row(children: [
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ConfirmPage(
-                          products: products,
-                        )));
-          },
-          child: Text('続行する'),
-        ),
-      ]),
     );
   }
 
