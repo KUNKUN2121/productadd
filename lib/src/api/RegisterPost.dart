@@ -13,7 +13,7 @@ class Register {
   });
 
   static Future<int> registerPost(String itemname, String barnum,
-      String category, String price, File uploadimage) async {
+      String category, String price, String uploadimage) async {
     // 設定
     String url = "https://store-project.f5.si/database/api/register.php";
     List regierstItem = [];
@@ -22,8 +22,8 @@ class Register {
       ///[registerpost] を Json に変換
 
       //画像変換
-      List<int> imageBytes = uploadimage.readAsBytesSync();
-      String baseimage = base64Encode(imageBytes);
+      // List<int> imageBytes = uploadimage.readAsBytesSync();
+      // String baseimage = base64Encode(imageBytes);
 
       var resp = await http.post(Uri.parse(url), body: {
         'itemname': itemname,
@@ -31,7 +31,7 @@ class Register {
         'quantity': '0',
         'category': category,
         'price': price,
-        'image': baseimage,
+        'image': uploadimage,
       });
 
       if (resp.statusCode != 200) {
