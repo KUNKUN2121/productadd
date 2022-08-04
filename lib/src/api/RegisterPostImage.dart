@@ -14,8 +14,7 @@ class RegisterImage {
 
   static Future<String> registerImagePost(File uploadimage) async {
     // 設定
-    String url = "https://store-project.f5.si/develop/base.php";
-    List regierstItem = [];
+    String url = "https://store-project.f5.si/database/api/square.php";
 
     try {
       ///[registerpost] を Json に変換
