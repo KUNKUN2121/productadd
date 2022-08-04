@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:productadd/src/api/RegisterPost.dart';
-import 'package:productadd/src/api/RegisterPostImage.dart';
 
 class RegisterItemPage extends StatefulWidget {
   //const registerItemPage({Key? key}) : super(key: key);
@@ -21,7 +19,6 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   var _category = TextEditingController();
   var _price = TextEditingController();
   File _image = File("");
-  File croppedFile = File("");
   final picker = ImagePicker();
   var imgFlg = false;
 
@@ -85,7 +82,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 String category = _category.text;
                 String price = _price.text;
                 Future<int> go = Register.registerPost(
-                    item, barcode.toString(), category, price, croppedFile);
+                    item, barcode.toString(), category, price, _image);
                 go.then((value) {
                   print("れすぽんすこーど ${value}");
                   int responsecode = value;
@@ -101,33 +98,13 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
               onPressed: getImage,
             ),
             ElevatedButton(
-              child: Text('base.php'),
-              onPressed: () {
-                // 参考 https://minpro.net/future-value
-                String item = _itemname.text;
-                String category = _category.text;
-                String price = _price.text;
-                Future<int> go = RegisterImage.registerImagePost(
-                    item, barcode.toString(), category, price, croppedFile);
-                go.then((value) {
-                  print("れすぽんすこーど ${value}");
-                  int responsecode = value;
-                });
-                //Navigator.of(context).pushNamed("/MainAddPage");
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => registerItemPage()));
-                print('LOG:RegisterPage続行');
-              },
-            ),
-            ElevatedButton(
               child: Text('decode'),
-              onPressed: () async {
+              onPressed: () {
                 List<int> imageBytes = _image.readAsBytesSync();
                 String baseimage = base64Encode(imageBytes);
-
-                // print("OK");
+                print("OK");
                 log(baseimage);
-                // print("OK");
+                print("OK");
               },
             ),
             // ElevatedButton(
