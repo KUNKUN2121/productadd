@@ -15,10 +15,10 @@ class RegisterItemPage extends StatefulWidget {
 }
 
 class _RegisterItemPageState extends State<RegisterItemPage> {
+  int? isSelectedCategory = 1;
   //barnum = 前の画面から
   //quantity = 0だよね追加だから
   var _itemname = TextEditingController();
-  var _category = TextEditingController();
   var _price = TextEditingController();
   File _image = File("");
   final picker = ImagePicker();
@@ -44,10 +44,9 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   Widget build(BuildContext context) {
     final barcode = ModalRoute.of(context)?.settings.arguments;
     if (barcode == null) {}
-
     registerPost() {
       String item = _itemname.text;
-      String category = _category.text;
+      String category = isSelectedCategory.toString();
       String price = _price.text;
       Future<int> go = Register.registerPost(
           item, barcode.toString(), category, price, tempimg);
@@ -83,11 +82,46 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 controller: _itemname,
               ),
               Text('カテゴリー'),
-              TextField(
-                // controller: TextEditingController(text: '${quantity}'),
-                keyboardType: TextInputType.numberWithOptions(
-                    signed: true, decimal: true),
-                controller: _category,
+              // TextField(
+              //   // controller: TextEditingController(text: '${quantity}'),
+              //   keyboardType: TextInputType.numberWithOptions(
+              //       signed: true, decimal: true),
+              //   controller: _category,
+              // ),
+              DropdownButton(
+                //4
+                items: const [
+                  //5
+                  DropdownMenuItem(
+                    child: Text('ドリンク'),
+                    value: 1,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('おにぎり'),
+                    value: 2,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('パン'),
+                    value: 3,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('筆記用具'),
+                    value: 4,
+                  ),
+                  DropdownMenuItem(
+                    child: Text('その他'),
+                    value: 5,
+                  ),
+                ],
+                //6
+                onChanged: (int? value) {
+                  print(value);
+                  setState(() {
+                    isSelectedCategory = value;
+                  });
+                },
+                //7
+                value: isSelectedCategory,
               ),
               Text('価格'),
               TextField(

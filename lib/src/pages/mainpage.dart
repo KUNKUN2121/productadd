@@ -42,8 +42,8 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             getCard(
-              title: "test",
-              description: "test",
+              title: "在庫追加",
+              description: "画面",
               icon: Icons.transfer_within_a_station_outlined,
               key: const Key("test-1"),
               onPressed: () {
@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             getCard(
-              title: "ProductAddTest",
+              title: "商品追加画面テスト",
               description: "test",
               icon: Icons.transfer_within_a_station_outlined,
               key: const Key("test-2"),
