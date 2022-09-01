@@ -24,12 +24,21 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             getCard(
-              title: "商品追加",
+              title: "在庫追加",
               description: "バーコードをスキャンして在庫追加します。",
               icon: Icons.add_box_sharp,
               key: const Key("add"),
               onPressed: () {
                 Navigator.of(context).pushNamed("/MainAddPage");
+              },
+            ),
+            getCard(
+              title: "新商品追加",
+              description: "新商品の追加を行います",
+              icon: Icons.manage_search,
+              key: const Key("new"),
+              onPressed: () {
+                Navigator.of(context).pushNamed("/NewAddPage");
               },
             ),
             getCard(
@@ -39,15 +48,6 @@ class _MainPageState extends State<MainPage> {
               key: const Key("mgt"),
               onPressed: () {
                 Navigator.of(context).pushNamed("/mgt");
-              },
-            ),
-            getCard(
-              title: "在庫追加",
-              description: "画面",
-              icon: Icons.transfer_within_a_station_outlined,
-              key: const Key("test-1"),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/camera");
               },
             ),
             getCard(

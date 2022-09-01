@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/src/pages/mgtpage.dart';
+
 import 'test/Camera.dart';
 import 'src/pages/AddPage.dart';
 import 'src/pages/RegisterPage.dart';
 import 'src/pages/mainpage.dart';
+import 'src/pages/NewPage.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
       home: const MainPage(),
       routes: {
         "/MainAddPage": (BuildContext context) => MainAddPage(),
+        "/NewAddPage": (BuildContext context) => NewAddPage(),
         "/mgt": (BuildContext context) => Mgt(),
         "/camera": (BuildContext context) => CemeraPage(),
         "/ProductAdd": (BuildContext context) => RegisterItemPage(),
