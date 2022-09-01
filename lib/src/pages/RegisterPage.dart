@@ -169,17 +169,18 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                   child: Text("続行"),
                                   onPressed: () {
                                     imgFlg == true;
+                                    registerPost();
                                   }),
                               FlatButton(
                                   child: Text("キャンセル"),
                                   onPressed: () {
                                     Navigator.pop(context);
+                                    return;
                                   }),
                             ],
                           );
                         },
                       );
-                      registerPost();
                       return;
                     }
                     registerPost();

@@ -22,7 +22,7 @@ class _NewAddPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('バーコードスキャン'),
+        title: Text('新商品の追加'),
       ),
       body: Stack(
         children: [
@@ -59,15 +59,20 @@ class _NewAddPageState extends State {
     }
     final go = boolProduct(qrCode);
     go.then((value) {
-      if (value = true) {
-        print('追加済みの商品');
-        return;
+      print(value);
+      // 既存のものなし
+      if (value == false) {
+        Navigator.of(context).pushNamed("/ProductAdd", arguments: qrCode);
       }
+      // 既存のものあり
+      if (value == true) {
+        print('追加済みの商品');
+      }
+      // エラー
       if (value == null) {
         print('エラー');
-        return;
       }
+      return;
     });
-    Navigator.of(context).pushNamed("/ProductAdd", arguments: qrCode);
   }
 }
