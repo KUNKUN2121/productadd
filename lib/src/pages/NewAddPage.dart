@@ -71,10 +71,43 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
             context: context,
             builder: (context) {
               return SimpleDialog(
-                title: Text("追加しました、"),
+                title: Text("追加しました"),
                 children: [
                   Column(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                // Navigator.of(context).pushNamed("/MainAddPage");
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('閉じる')),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          showDialog(
+            //画面外の部分を押せないようにする。
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return SimpleDialog(
+                title: Text("エラーが発生しました、"),
+                children: [
+                  Column(
+                    children: [
+                      Column(
+                        children: [Text('現在登録することができません。errorcode{$value}')],
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

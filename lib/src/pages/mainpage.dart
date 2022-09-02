@@ -51,9 +51,9 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             getCard(
-              title: "商品追加画面テスト",
+              title: "ヘルプ",
               description: "test",
-              icon: Icons.transfer_within_a_station_outlined,
+              icon: Icons.help,
               key: const Key("test-2"),
               onPressed: () {
                 Navigator.of(context)
