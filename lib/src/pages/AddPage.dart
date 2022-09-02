@@ -186,7 +186,7 @@ class _MainAddPageState extends State {
               content: Text(
                   "この商品はすでに読み込まれています。\n読み込み一覧を確認してください。\n商品名 : ${products[i].name}\nコード ${addProduct.barcode}"),
               actions: <Widget>[
-                FlatButton(
+                ElevatedButton(
                     child: Text("閉じる"),
                     onPressed: () {
                       Navigator.pop(context);
@@ -210,10 +210,10 @@ class _MainAddPageState extends State {
                 Text("この商品は登録されていません。登録処理をしてください\nコード ${addProduct.barcode}"),
             actions: <Widget>[
               // ボタン領域
-              FlatButton(
+              ElevatedButton(
                   child: Text("キャンセル"),
                   onPressed: () => Navigator.pop(context)),
-              FlatButton(
+              ElevatedButton(
                   child: Text("登録"),
                   onPressed: () {
                     Navigator.pop(context);
@@ -312,7 +312,7 @@ class _MainAddPageState extends State {
                               title: Text("数値を入力してください"),
                               content: Text("数値以外が入力されました。修正してください。"),
                               actions: <Widget>[
-                                FlatButton(
+                                ElevatedButton(
                                     child: Text("閉じる"),
                                     onPressed: () {
                                       Navigator.pop(context);

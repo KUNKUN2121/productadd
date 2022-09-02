@@ -66,7 +66,7 @@ class ConfirmPage extends StatelessWidget {
                                   title: Text("在庫追加完了"),
                                   content: Text("在庫追加完了しました。\n メインページに戻ります。"),
                                   actions: <Widget>[
-                                    FlatButton(
+                                    ElevatedButton(
                                         child: Text("閉じる"),
                                         onPressed: () {
                                           Navigator.popUntil(context,
@@ -87,7 +87,7 @@ class ConfirmPage extends StatelessWidget {
                                   content: Text(
                                       "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
                                   actions: <Widget>[
-                                    FlatButton(
+                                    ElevatedButton(
                                         child: Text("閉じる"),
                                         onPressed: () {
                                           Navigator.popUntil(context,

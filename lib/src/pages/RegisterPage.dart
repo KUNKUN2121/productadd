@@ -44,6 +44,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   Widget build(BuildContext context) {
     final barcode = ModalRoute.of(context)?.settings.arguments;
     if (barcode == null) {}
+
     registerPost() {
       String item = _itemname.text;
       String category = isSelectedCategory.toString();
@@ -165,18 +166,30 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                             title: Text("画像が撮影されていません。"),
                             content: Text("NO IMAGEで続行しますか？"),
                             actions: <Widget>[
-                              FlatButton(
+                              // FlatButton(
+                              //     child: Text("続行"),
+                              //     onPressed: () {
+                              //       imgFlg == true;
+                              //       registerPost();
+                              //     }),
+                              ElevatedButton(
                                   child: Text("続行"),
                                   onPressed: () {
                                     imgFlg == true;
                                     registerPost();
                                   }),
-                              FlatButton(
+                              ElevatedButton(
                                   child: Text("キャンセル"),
                                   onPressed: () {
                                     Navigator.pop(context);
                                     return;
                                   }),
+                              // FlatButton(
+                              //     child: Text("キャンセル"),
+                              //     onPressed: () {
+                              //       Navigator.pop(context);
+                              //       return;
+                              //     }),
                             ],
                           );
                         },
