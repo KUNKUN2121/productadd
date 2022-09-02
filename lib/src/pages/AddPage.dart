@@ -3,7 +3,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:productadd/src/pages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../model/Barcode.dart';
-import 'RegisterPage.dart';
+import 'NewAddPage.dart';
 
 class MainAddPage extends StatefulWidget {
   @override

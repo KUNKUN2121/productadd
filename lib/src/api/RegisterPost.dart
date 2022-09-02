@@ -19,12 +19,6 @@ class Register {
     List regierstItem = [];
 
     try {
-      ///[registerpost] を Json に変換
-
-      //画像変換
-      // List<int> imageBytes = uploadimage.readAsBytesSync();
-      // String baseimage = base64Encode(imageBytes);
-
       var resp = await http.post(Uri.parse(url), body: {
         'itemname': itemname,
         'barnum': barnum,
@@ -38,7 +32,7 @@ class Register {
         print('RegisterPost Error Code : ${resp.statusCode}');
         return resp.statusCode;
       }
-      print(resp.body);
+      // print(resp.body);
       print('レスポンスOK');
       return 200;
     } catch (e) {

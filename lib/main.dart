@@ -3,7 +3,7 @@ import 'package:productadd/src/pages/mgtpage.dart';
 
 import 'test/Camera.dart';
 import 'src/pages/AddPage.dart';
-import 'src/pages/RegisterPage.dart';
+import 'src/pages/NewAddPage.dart';
 import 'src/pages/mainpage.dart';
 import 'src/pages/NewPage.dart';
 import 'package:camera/camera.dart';

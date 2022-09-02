@@ -9,14 +9,8 @@ class NewAddPage extends StatefulWidget {
 }
 
 class _NewAddPageState extends State {
-  ///[products]の個数を記録しておくやつ。
-  int productsindex = 0;
-
   ///qrCode初期化
   String qrCode = '0';
-
-  //imgURL初期化
-  String productURL = '';
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +46,6 @@ class _NewAddPageState extends State {
     if (!mounted) return;
     setState(() {
       this.qrCode = qrCode;
-      this.productURL = qrCode;
     });
     if (qrCode == '-1') {
       return;
