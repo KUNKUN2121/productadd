@@ -5,12 +5,23 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../model/Barcode.dart';
 import '../RegisterPages/NewAddPage.dart';
 
+///[products]初期化
+List<Barcode> products = [];
+
+///[products]の個数を記録しておくやつ。
+int productsindex = 0;
+
 class MainAddPage extends StatefulWidget {
   @override
   _MainAddPageState createState() => _MainAddPageState();
 }
 
 class _MainAddPageState extends State {
+  ///qrCode初期化
+  String qrCode = '0';
+
+//imgURL初期化
+  String productURL = '';
   Widget _firstitemadd() {
     if (products.length != 0) {
       return addListCard(
@@ -36,18 +47,6 @@ class _MainAddPageState extends State {
       }
     }
   }
-
-  ///[products]初期化
-  List<Barcode> products = [];
-
-  ///[products]の個数を記録しておくやつ。
-  int productsindex = 0;
-
-  ///qrCode初期化
-  String qrCode = '0';
-
-  //imgURL初期化
-  String productURL = '';
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +151,9 @@ class _MainAddPageState extends State {
     if (qrCode == '-1') {
       return;
     }
-    addProductContents(qrCode);
+    // addProductContents(qrCode);
+    await Navigator.of(context).pushNamed("/AddPage2", arguments: qrCode);
+    setState(() {});
   }
 
   Future addProductContents(String addqrcode) async {

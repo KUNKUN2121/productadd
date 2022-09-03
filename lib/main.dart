@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/src/pages/mgtpage.dart';
 
-import 'test/Camera.dart';
 import 'src/pages/AddPages/AddPage.dart';
 import 'src/pages/RegisterPages/NewAddPage.dart';
+import 'src/pages/AddPages/AddPage2.dart';
 import 'src/pages/mainpage.dart';
 import 'src/pages/RegisterPages/NewPage.dart';
 import 'package:camera/camera.dart';
@@ -47,10 +47,15 @@ class MyApp extends StatelessWidget {
       //ホーム読み込み
       home: const MainPage(),
       routes: {
+        //AddPage1
         "/MainAddPage": (BuildContext context) => MainAddPage(),
-        "/NewAddPage": (BuildContext context) => NewAddPage(),
+        //AddPage2
+        "/AddPage2": (BuildContext context) => AddPage2(),
+        //商品管理
         "/mgt": (BuildContext context) => Mgt(),
-        "/camera": (BuildContext context) => CemeraPage(),
+        //新商品追加
+        "/NewAddPage": (BuildContext context) => NewAddPage(),
+        //新商品追加2
         "/ProductAdd": (BuildContext context) => RegisterItemPage(),
       },
     );
