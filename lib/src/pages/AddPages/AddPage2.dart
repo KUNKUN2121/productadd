@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:productadd/src/api/RegisterPost.dart';
+import 'package:provider/provider.dart';
 
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
 import 'package:productadd/src/model/Barcode.dart';
@@ -13,127 +14,33 @@ class AddPage2 extends StatefulWidget {
   State<AddPage2> createState() => _AddPage2State();
 }
 
+Future<Barcode> productInfoClass(String barcode) async {
+  Barcode Productinfo = await Barcode.addProduct(barcode, -1);
+  // await new Future.delayed(new Duration(seconds: 3));
+  return Productinfo;
+}
+
+///
+
 class _AddPage2State extends State<AddPage2> {
   ///
-  /// カテゴリー変更の際は
-  ///
-
-  ///
-  ///
-
-  int count = 10;
-  int? isSelectedCategory = 1;
-  //barnum = 前の画面から
-  //quantity = 0だよね追加だから
-  var _itemname = TextEditingController();
-  var _price = TextEditingController();
-  File _image = File("");
-  final picker = ImagePicker();
-  var imgFlg = false;
-  String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
-
-  Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        try {
-          _image = File(pickedFile.path);
-          imgFlg = true;
-        } catch (e) {
-          imgFlg = false;
-        }
-      }
-    });
-  }
+  // String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
+  String noimage = 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png';
 
   @override
   Widget build(BuildContext context) {
-    final objbarcode = ModalRoute.of(context)?.settings.arguments;
     final barcode = ModalRoute.of(context)?.settings.arguments.toString();
+    // final go = productInfoClass(barcode!);
+    // go.then((value) {
+    //   productName = value.name;
+    //   productImg = value.imgURL;
+    //   print('hey1');
+    //   setState(() {});
+    // });
+
     if (barcode == null) {}
 
-    registerPost() {
-      String item = _itemname.text;
-      String category = isSelectedCategory.toString();
-      String price = _price.text;
-      Future<int> go = Register.registerPost(
-          item, barcode.toString(), category, price, tempimg);
-      go.then((value) {
-        print("れすぽんすこーど ${value}");
-        int responsecode = value;
-        if (value == 200) {
-          showDialog(
-            //画面外の部分を押せないようにする。
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return SimpleDialog(
-                title: Text("追加しました"),
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // Navigator.of(context).pushNamed("/MainAddPage");
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('閉じる')),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          showDialog(
-            //画面外の部分を押せないようにする。
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return SimpleDialog(
-                title: Text("エラーが発生しました、"),
-                children: [
-                  Column(
-                    children: [
-                      Column(
-                        children: [Text('現在登録することができません。errorcode{$value}')],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // Navigator.of(context).pushNamed("/MainAddPage");
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('閉じる')),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      });
-
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => AddPage2()));
-      print('LOG:RegisterPage続行');
-    }
-
-    print(barcode);
+    print(barcode! + 'a');
     return Scaffold(
       appBar: AppBar(
         title: Text('AddPage2'),
@@ -146,17 +53,65 @@ class _AddPage2State extends State<AddPage2> {
                 SizedBox(
                   height: 15,
                 ),
-                Text(
-                  'ここに商品名',
-                  style: TextStyle(fontSize: 30),
+
+                /// 商品名
+                FutureBuilder(
+                  future: productInfoClass(barcode),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<Barcode> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('エラーが発生しました。' + snapshot.error.toString()),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return Text(
+                        snapshot.data!.name,
+                        style: TextStyle(fontSize: 30),
+                      );
+                    } else {
+                      return Text("エラーが発生しました。",
+                          style: TextStyle(fontSize: 30));
+                    }
+                  },
                 ),
                 Text(
                   '${barcode}',
                   style: TextStyle(fontSize: 20),
                 ),
+
+                /// 画像
                 Container(
                   height: 200,
-                  child: Image.network(tempimg),
+                  child: FutureBuilder(
+                    future: productInfoClass(barcode),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Barcode> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (snapshot.hasError) {
+                        return Center(
+                          child:
+                              Text('エラーが発生しました。' + snapshot.error.toString()),
+                        );
+                      }
+                      if (snapshot.hasData) {
+                        return Image.network(
+                          snapshot.data!.imgURL,
+                        );
+                      } else {
+                        return const Text('エラーが発生しました。');
+                      }
+                    },
+                  ),
                 ),
                 SizedBox(
                   height: 30,
@@ -191,6 +146,7 @@ class _AddPage2State extends State<AddPage2> {
                 SizedBox(
                   height: 30,
                 ),
+////////
 
                 /// 登録画面
 
@@ -200,7 +156,7 @@ class _AddPage2State extends State<AddPage2> {
                     style: TextStyle(fontSize: 25),
                   ),
                   onPressed: () {
-                    addProductContents(barcode!);
+                    addProductContents(barcode);
                   },
                 ),
               ],
