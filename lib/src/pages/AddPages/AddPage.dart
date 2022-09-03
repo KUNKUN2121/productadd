@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:productadd/src/pages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../model/Barcode.dart';
-import 'NewAddPage.dart';
+import '../../model/Barcode.dart';
+import '../RegisterPages/NewAddPage.dart';
 
 class MainAddPage extends StatefulWidget {
   @override
@@ -60,41 +60,25 @@ class _MainAddPageState extends State {
           Center(
             child: Column(
               children: [
-                Text(
-                  '$qrCode',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
                 SizedBox(height: 10),
                 ElevatedButton(
-                  child: Text('スキャン'),
+                  child: Text(
+                    'スキャン',
+                    style: TextStyle(fontSize: 30),
+                  ),
                   onPressed: () => scanQrCode(),
                 ),
                 SizedBox(height: 20),
-                //テスト用 >>>
-                ElevatedButton(
-                  onPressed: () async {
-                    addProductContents('4902102072618');
-                    setState(() {});
-                  },
-                  child: Text('テスト追加'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegisterItemPage()));
-                    print('LOG:画面水ボタン');
-                  },
-                  child: Text('画面推移テスト'),
-                ),
+
+                /// テスト用 >>>
+                // ElevatedButton(
+                //   onPressed: () async {
+                //     addProductContents('4902102072618');
+                //     setState(() {});
+                //   },
+                //   child: Text('テスト追加'),
+                // ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    print(products.length);
-                  },
-                  child: Text('print test'),
-                ),
               ],
             ),
           ),
@@ -334,11 +318,13 @@ class _MainAddPageState extends State {
                     },
                   )),
               // Icon(Icons.cancel)
+              IconButton(onPressed: () {}, icon: Icon(Icons.plus_one)),
               IconButton(
-                  onPressed: () {
-                    _deleteitem(id);
-                  },
-                  icon: Icon(Icons.cancel)),
+                onPressed: () {
+                  _deleteitem(id);
+                },
+                icon: Icon(Icons.cancel),
+              ),
             ],
           ),
         ),

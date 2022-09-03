@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:productadd/src/pages/mgtpage.dart';
 
 import 'test/Camera.dart';
-import 'src/pages/AddPage.dart';
-import 'src/pages/NewAddPage.dart';
+import 'src/pages/AddPages/AddPage.dart';
+import 'src/pages/RegisterPages/NewAddPage.dart';
 import 'src/pages/mainpage.dart';
-import 'src/pages/NewPage.dart';
+import 'src/pages/RegisterPages/NewPage.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 
