@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productadd/src/pages/ConfirmPage.dart';
 import 'package:productadd/src/pages/mgtpage.dart';
 
 import 'src/pages/AddPages/AddPage.dart';
@@ -51,6 +52,8 @@ class MyApp extends StatelessWidget {
         "/MainAddPage": (BuildContext context) => MainAddPage(),
         //AddPage2
         "/AddPage2": (BuildContext context) => AddPage2(),
+        //ConfirmPage
+        "/ConfirmPage": (BuildContext context) => ConfirmPage(),
         //商品管理
         "/mgt": (BuildContext context) => Mgt(),
         //新商品追加

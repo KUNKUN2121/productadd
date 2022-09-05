@@ -3,10 +3,13 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../model/Barcode.dart';
 import '../api/Post.dart';
+import 'package:productadd/src/pages/AddPages/AddPage.dart';
 
 class ConfirmPage extends StatelessWidget {
-  final List<Barcode> products;
-  const ConfirmPage({Key? key, required this.products}) : super(key: key);
+  // final List<Barcode> products;
+  const ConfirmPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +62,7 @@ class ConfirmPage extends StatelessWidget {
                         final go = PostRequest.postMethod(products);
                         go.then((value) {
                           if (value == 0) {
+                            List<Barcode> products = [];
                             showDialog(
                               context: context,
                               builder: (_) {
@@ -137,46 +141,63 @@ class ConfirmPage extends StatelessWidget {
               const SizedBox(
                 width: 10.0,
               ),
+              Container(
+                // color: Colors.green[50],
+                width: 200,
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                      ),
+                      Text(
+                        barcode,
+                        softWrap: true,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      softWrap: true,
-                    ),
-                    Text(
-                      barcode,
-                      softWrap: true,
-                      style: TextStyle(fontSize: 17),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: Container(
+                              color: Colors.green[50],
+                              alignment: Alignment.topRight,
+                              // color: Colors.green[50],
+                              child: Text(
+                                '${quantity}',
+                                style: TextStyle(fontSize: 40),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 20,
+                          child: Container(
+                              // color: Colors.red,
+                              child: Text(
+                            '個',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Container(
-                    alignment: Alignment.center,
-                    color: Colors.green[50],
-                    child: Text(
-                      '${quantity}',
-                      style: TextStyle(fontSize: 40),
-                    )),
-              ),
-              SizedBox(
-                height: 30,
-                width: 20,
-                child: Container(
-                    // color: Colors.red,
-                    child: Text(
-                  '個',
-                  style: TextStyle(fontSize: 20),
-                )),
               ),
             ],
           ),

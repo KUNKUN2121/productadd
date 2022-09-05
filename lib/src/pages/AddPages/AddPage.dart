@@ -95,12 +95,10 @@ class _MainAddPageState extends State {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ConfirmPage(
-                                    products: products,
-                                  )));
+                      if (products.length == 0) {
+                        return;
+                      }
+                      Navigator.of(context).pushNamed("/ConfirmPage");
                     },
                     child: const Text('続行する'),
                   ),
@@ -163,68 +161,84 @@ class _MainAddPageState extends State {
               const SizedBox(
                 width: 10.0,
               ),
+              Container(
+                // color: Colors.green[50],
+                width: 200,
+                child: Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        softWrap: true,
+                      ),
+                      Text(
+                        barcode,
+                        softWrap: true,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: Container(
+                              alignment: Alignment.center,
+                              // color: Colors.green[50],
+                              child: Text(
+                                '${quantity}',
+                                style: TextStyle(fontSize: 40),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: 20,
+                          child: Container(
+                              // color: Colors.red,
+                              child: Text(
+                            '個',
+                            style: TextStyle(fontSize: 20),
+                          )),
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue,
+                        onPrimary: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      softWrap: true,
-                    ),
-                    Text(
-                      barcode,
-                      softWrap: true,
-                      style: TextStyle(fontSize: 17),
-                    ),
+                      onPressed: () async {
+                        print(id);
+                        print(products[id].name);
+                        await Navigator.of(context).pushNamed(
+                          "/AddPage2",
+                          arguments: QrCodeQuantity(
+                              qrcode: products[id].barcode,
+                              quantity: products[id].quantity),
+                        );
+                        setState(() {});
+                      },
+                      child: Text('変更'),
+                    )
                   ],
                 ),
               ),
-              SizedBox(
-                height: 50,
-                width: 50,
-                child: Container(
-                    alignment: Alignment.center,
-                    // color: Colors.green[50],
-                    child: Text(
-                      '${quantity}',
-                      style: TextStyle(fontSize: 40),
-                    )),
-              ),
-              SizedBox(
-                height: 30,
-                width: 20,
-                child: Container(
-                    // color: Colors.red,
-                    child: Text(
-                  '個',
-                  style: TextStyle(fontSize: 20),
-                )),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
-                  onPrimary: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () async {
-                  print(id);
-                  print(products[id].name);
-                  await Navigator.of(context).pushNamed(
-                    "/AddPage2",
-                    arguments: QrCodeQuantity(
-                        qrcode: products[id].barcode,
-                        quantity: products[id].quantity),
-                  );
-                  setState(() {});
-                },
-                child: Text('変更'),
-              )
             ],
           ),
         ),
