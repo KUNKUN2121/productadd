@@ -114,21 +114,24 @@ class ConfirmPage extends StatelessWidget {
     required String title,
     required String barcode,
     required int quantity,
+
+    //required IconData icon,
     required String imgURL,
     required int id,
+    //required Function()? onPressed,
   }) {
     return Card(
       //key: key,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 100.0),
+          constraints: const BoxConstraints(minHeight: 120.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 50,
-                height: 50,
+                width: 55,
+                height: 55,
                 child: Image.network(imgURL),
               ),
               const SizedBox(
@@ -141,7 +144,7 @@ class ConfirmPage extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 17.0,
+                        fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
                       softWrap: true,
@@ -149,6 +152,7 @@ class ConfirmPage extends StatelessWidget {
                     Text(
                       barcode,
                       softWrap: true,
+                      style: TextStyle(fontSize: 17),
                     ),
                   ],
                 ),
@@ -156,9 +160,24 @@ class ConfirmPage extends StatelessWidget {
               SizedBox(
                 height: 50,
                 width: 50,
-                child: Text('${quantity}'),
+                child: Container(
+                    alignment: Alignment.center,
+                    color: Colors.green[50],
+                    child: Text(
+                      '${quantity}',
+                      style: TextStyle(fontSize: 40),
+                    )),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.cancel)),
+              SizedBox(
+                height: 30,
+                width: 20,
+                child: Container(
+                    // color: Colors.red,
+                    child: Text(
+                  '個',
+                  style: TextStyle(fontSize: 20),
+                )),
+              ),
             ],
           ),
         ),
