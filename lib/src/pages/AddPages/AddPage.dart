@@ -4,6 +4,7 @@ import 'package:productadd/src/pages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../model/Barcode.dart';
 import '../RegisterPages/NewAddPage.dart';
+import '../../api/boolProduct.dart';
 
 ///[products]初期化
 List<Barcode> products = [];
@@ -60,24 +61,57 @@ class _MainAddPageState extends State {
                 ]),
               ),
               //ボタン参照
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    top: 20,
-                    left: 10,
-                    right: 10.0,
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (products.length == 0) {
-                        return;
-                      }
-                      Navigator.of(context).pushNamed("/ConfirmPage");
-                    },
-                    child: const Text('続行する'),
-                  ),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Container(
+              //     margin: const EdgeInsets.only(
+              //       top: 20,
+              //       left: 10,
+              //       right: 10.0,
+              //     ),
+              //     child: ElevatedButton(
+              //       onPressed: () {
+              //         if (products.length == 0) {
+              //           return;
+              //         }
+              //         Navigator.of(context).pushNamed("/ConfirmPage");
+              //       },
+              //       child: const Text('続行する'),
+              //     ),
+              //   ),
+              // ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  left: 10,
+                  right: 10.0,
                 ),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          products = [];
+                          setState(() {});
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                        ),
+                        child: const Text(
+                          'クリア',
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (products.length == 0) {
+                            return;
+                          }
+                          Navigator.of(context).pushNamed("/ConfirmPage");
+                        },
+                        child: const Text('続行する'),
+                      ),
+                    ]),
               ),
             ],
           ),
@@ -100,12 +134,71 @@ class _MainAddPageState extends State {
     if (qrCode == '-1') {
       return;
     }
-    // addProductContents(qrCode);
-    await Navigator.of(context).pushNamed(
-      "/AddPage2",
-      arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0),
-    );
-    setState(() {});
+
+    /// [products]に同じのがあったらreturn
+    for (int i = 0; i < products.length; i++) {
+      if (qrCode == products[i].barcode) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("同じ商品が読み込まれています。"),
+              content: Text(
+                  "この商品はすでに読み込まれています。\n読み込み一覧を確認してください。\n商品名 : ${products[i].name}\nコード ${qrCode}"),
+              actions: <Widget>[
+                ElevatedButton(
+                    child: Text("閉じる"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              ],
+            );
+          },
+        );
+        return;
+      }
+    }
+    final go = boolProduct(qrCode);
+    go.then((value) async {
+      print(value);
+      // データベースあり
+      if (value == true) {
+        await Navigator.of(context).pushNamed("/AddPage2",
+            arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0));
+      }
+      // エラー
+      if (value == null) {
+        print('エラー');
+      }
+      // データベースに存在しない
+      if (value == false) {
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("この商品は登録されていません。"),
+              content: Text("この商品は登録されていません。登録処理をしてください\nコード ${qrCode}"),
+              actions: <Widget>[
+                // ボタン領域
+                ElevatedButton(
+                    child: Text("キャンセル"),
+                    onPressed: () => Navigator.pop(context)),
+                ElevatedButton(
+                    child: Text("登録"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context)
+                          .pushNamed("/ProductAdd", arguments: qrCode);
+                    }),
+              ],
+            );
+          },
+        );
+
+        return;
+      }
+      setState(() {});
+    });
   }
 
   Card addListCard({

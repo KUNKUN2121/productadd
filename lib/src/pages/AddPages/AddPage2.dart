@@ -49,6 +49,10 @@ class _AddPage2State extends State<AddPage2> {
           quantity = 0;
           return;
         }
+        if (quantity! > 199) {
+          quantity = 199;
+          return;
+        }
       });
     }
 

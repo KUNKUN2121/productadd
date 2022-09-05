@@ -169,7 +169,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                       tempimg = value;
                       setState(() {});
                     });
-                    print('LOG:RegisterPage続行');
+                    print('LOG:カメラ撮影');
                   },
                 ),
                 Text(

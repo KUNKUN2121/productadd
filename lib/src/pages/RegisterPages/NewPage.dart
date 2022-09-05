@@ -23,9 +23,17 @@ class _NewAddPageState extends State {
           Center(
             child: Column(
               children: [
-                ElevatedButton(
-                  child: Text('スキャン'),
-                  onPressed: () => scanQrCode(),
+                SizedBox(
+                  height: 100.0,
+                  child: Center(
+                    child: ElevatedButton(
+                      child: Text(
+                        'スキャン',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      onPressed: () => scanQrCode(),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20),
               ],
@@ -60,6 +68,22 @@ class _NewAddPageState extends State {
       // 既存のものあり
       if (value == true) {
         print('追加済みの商品');
+        showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("この商品は登録されています。"),
+              content: Text("この商品はすでにデータベースに登録されています\n"),
+              actions: <Widget>[
+                ElevatedButton(
+                    child: Text("閉じる"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              ],
+            );
+          },
+        );
       }
       // エラー
       if (value == null) {
