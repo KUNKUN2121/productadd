@@ -84,7 +84,6 @@ class _AddPage2State extends State<AddPage2> {
             Center(
               child: Column(
                 children: [
-                  _widgetCache,
                   SizedBox(
                     height: 15,
                   ),
