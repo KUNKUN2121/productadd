@@ -148,7 +148,6 @@ class ConfirmPage extends StatelessWidget {
               ),
               Container(
                 // color: Colors.green[50],
-                width: 200,
                 child: Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

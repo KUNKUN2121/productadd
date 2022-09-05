@@ -48,17 +48,20 @@ class _MainAddPageState extends State {
                 ),
               ),
               Expanded(
-                child: ListView(children: [
-                  for (int i = 0; i < products.length; i++) ...{
-                    addListCard(
-                      title: products[i].name,
-                      barcode: products[i].barcode,
-                      quantity: products[i].quantity,
-                      imgURL: products[i].imgURL,
-                      id: products[i].id,
-                    )
-                  }
-                ]),
+                child: ListView(
+                  children: [
+                    for (int i = 0; i < products.length; i++) ...{
+                      addListCard(
+                        title: products[i].name,
+                        barcode: products[i].barcode,
+                        quantity: products[i].quantity,
+                        imgURL: products[i].imgURL,
+                        id: products[i].id,
+                      )
+                    },
+                    // Text('hello'),
+                  ],
+                ),
               ),
               //ボタン参照
               // Align(
@@ -217,6 +220,7 @@ class _MainAddPageState extends State {
         padding: const EdgeInsets.all(10.0),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 120.0),
+          ///////
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -228,9 +232,9 @@ class _MainAddPageState extends State {
               const SizedBox(
                 width: 10.0,
               ),
+              /////エラー>>>>
               Container(
                 // color: Colors.green[50],
-                width: 200,
                 child: Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,6 +256,7 @@ class _MainAddPageState extends State {
                   ),
                 ),
               ),
+              /////////<<<<end
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
