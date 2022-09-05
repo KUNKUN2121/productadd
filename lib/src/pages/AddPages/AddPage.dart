@@ -22,31 +22,6 @@ class _MainAddPageState extends State {
 
 //imgURL初期化
   String productURL = '';
-  Widget _firstitemadd() {
-    if (products.length != 0) {
-      return addListCard(
-        title: products.first.name,
-        barcode: products.first.barcode,
-        imgURL: products.first.imgURL,
-        quantity: products.first.quantity,
-        id: products.first.id,
-      );
-    }
-
-    return Text('スキャンを開始してください。');
-  }
-
-  void _deleteitem(id) {
-    print(id);
-    for (int i = 0; i < products.length; i++) {
-      print(products[i].id);
-      if (products[i].id == id) {
-        print('object');
-        products.removeAt(i);
-        setState(() {});
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +96,6 @@ class _MainAddPageState extends State {
     if (!mounted) return;
     setState(() {
       this.qrCode = qrCode;
-      this.productURL = qrCode;
     });
     if (qrCode == '-1') {
       return;
@@ -194,8 +168,9 @@ class _MainAddPageState extends State {
                       children: [
                         SizedBox(
                           height: 50,
-                          width: 50,
+                          width: 70,
                           child: Container(
+                              // color: Colors.green[50],
                               alignment: Alignment.center,
                               // color: Colors.green[50],
                               child: Text(
@@ -224,15 +199,23 @@ class _MainAddPageState extends State {
                         ),
                       ),
                       onPressed: () async {
-                        print(id);
-                        print(products[id].name);
-                        await Navigator.of(context).pushNamed(
-                          "/AddPage2",
-                          arguments: QrCodeQuantity(
-                              qrcode: products[id].barcode,
-                              quantity: products[id].quantity),
-                        );
-                        setState(() {});
+                        // print(id);
+                        // print('すべて');
+                        // print(products);
+                        // print(products[id].name);
+                        for (int i = 0; i < products.length; i++) {
+                          if (products[i].barcode == barcode) {
+                            await Navigator.of(context).pushNamed(
+                              "/AddPage2",
+                              arguments: QrCodeQuantity(
+                                  qrcode: products[i].barcode,
+                                  quantity: products[i].quantity),
+                            );
+                            setState(() {});
+                          } else {
+                            print('error');
+                          }
+                        }
                       },
                       child: Text('変更'),
                     )

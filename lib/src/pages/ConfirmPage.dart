@@ -61,9 +61,11 @@ class ConfirmPage extends StatelessWidget {
                       onPressed: () {
                         final go = PostRequest.postMethod(products);
                         go.then((value) {
+                          products = [];
                           if (value == 0) {
-                            List<Barcode> products = [];
                             showDialog(
+                              //画面外の部分を押せないようにする。
+                              barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return AlertDialog(
@@ -73,6 +75,7 @@ class ConfirmPage extends StatelessWidget {
                                     ElevatedButton(
                                         child: Text("閉じる"),
                                         onPressed: () {
+                                          products = [];
                                           Navigator.popUntil(context,
                                               (route) => route.isFirst);
                                         }),
@@ -84,6 +87,8 @@ class ConfirmPage extends StatelessWidget {
                           }
                           if (value != 0) {
                             showDialog(
+                              //画面外の部分を押せないようにする。
+                              barrierDismissible: false,
                               context: context,
                               builder: (_) {
                                 return AlertDialog(
@@ -174,10 +179,10 @@ class ConfirmPage extends StatelessWidget {
                       children: [
                         SizedBox(
                           height: 50,
-                          width: 50,
+                          width: 70,
                           child: Container(
                               color: Colors.green[50],
-                              alignment: Alignment.topRight,
+                              alignment: Alignment.center,
                               // color: Colors.green[50],
                               child: Text(
                                 '${quantity}',

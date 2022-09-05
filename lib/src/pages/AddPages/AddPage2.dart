@@ -177,20 +177,6 @@ class _AddPage2State extends State<AddPage2> {
                           '${quantity}',
                           style: TextStyle(fontSize: 50),
                         ),
-                        // child: TextField(
-                        //   // controller: TextEditingController(text: '${quantity}'),
-                        //   textAlign: TextAlign.center,
-                        //   keyboardType: TextInputType.numberWithOptions(
-                        //       signed: true, decimal: true),
-                        //   controller: TextEditingController(text: "45"),
-
-                        //   /// デコレーション
-                        //   decoration: InputDecoration(
-                        //     contentPadding: EdgeInsets.all(10),
-                        //     border: OutlineInputBorder(),
-                        //   ),
-                        //   style: TextStyle(fontSize: 40),
-                        // ),
                       ),
                       ElevatedButton(
                           onPressed: () {
@@ -247,14 +233,35 @@ class _AddPage2State extends State<AddPage2> {
   }
 
   removeProductContents(String barcode) {
-    for (int i = 0; i < products.length; i++) {
-      if (products[i].barcode == barcode) {
-        products.removeAt(i);
-        setState(() {});
-      }
-    }
-    flg = false;
-    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("本当に削除しますか？"),
+          content: Text("この商品を削除します。"),
+          actions: <Widget>[
+            // ボタン領域
+            ElevatedButton(
+                child: Text("キャンセル"), onPressed: () => Navigator.pop(context)),
+            ElevatedButton(
+                child: Text("削除する"),
+                onPressed: () {
+                  flg = false;
+                  for (int i = 0; i < products.length; i++) {
+                    if (products[i].barcode == barcode) {
+                      products.removeAt(i);
+                      flg = false;
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  }
+
+                  return;
+                }),
+          ],
+        );
+      },
+    );
   }
 
   Future addProductContents(String addqrcode) async {
