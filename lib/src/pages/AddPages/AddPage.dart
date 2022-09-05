@@ -152,72 +152,75 @@ class _MainAddPageState extends State {
       return;
     }
     // addProductContents(qrCode);
-    await Navigator.of(context).pushNamed("/AddPage2", arguments: qrCode);
+    await Navigator.of(context).pushNamed(
+      "/AddPage2",
+      arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0),
+    );
     setState(() {});
   }
 
-  Future addProductContents(String addqrcode) async {
-    Barcode addProduct = await Barcode.addProduct(addqrcode, productsindex);
-    print(productsindex);
+  // Future addProductContents(String addqrcode) async {
+  //   Barcode addProduct = await Barcode.addProduct(addqrcode, productsindex);
+  //   print(productsindex);
 
-    /// [products]に同じのがあったらreturn
-    for (int i = 0; i < products.length; i++) {
-      if (addProduct.barcode == products[i].barcode) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text("同じ商品が読み込まれています。"),
-              content: Text(
-                  "この商品はすでに読み込まれています。\n読み込み一覧を確認してください。\n商品名 : ${products[i].name}\nコード ${addProduct.barcode}"),
-              actions: <Widget>[
-                ElevatedButton(
-                    child: Text("閉じる"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-              ],
-            );
-          },
-        );
-        return;
-      }
+  //   /// [products]に同じのがあったらreturn
+  //   for (int i = 0; i < products.length; i++) {
+  //     if (addProduct.barcode == products[i].barcode) {
+  //       showDialog(
+  //         context: context,
+  //         builder: (_) {
+  //           return AlertDialog(
+  //             title: Text("同じ商品が読み込まれています。"),
+  //             content: Text(
+  //                 "この商品はすでに読み込まれています。\n読み込み一覧を確認してください。\n商品名 : ${products[i].name}\nコード ${addProduct.barcode}"),
+  //             actions: <Widget>[
+  //               ElevatedButton(
+  //                   child: Text("閉じる"),
+  //                   onPressed: () {
+  //                     Navigator.pop(context);
+  //                   }),
+  //             ],
+  //           );
+  //         },
+  //       );
+  //       return;
+  //     }
 
-      ///同じ商品だったらreturn
-    }
-    if (addProduct.price == -400) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: Text("この商品は登録されていません。"),
-            content:
-                Text("この商品は登録されていません。登録処理をしてください\nコード ${addProduct.barcode}"),
-            actions: <Widget>[
-              // ボタン領域
-              ElevatedButton(
-                  child: Text("キャンセル"),
-                  onPressed: () => Navigator.pop(context)),
-              ElevatedButton(
-                  child: Text("登録"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.of(context).pushNamed("/ProductAdd",
-                        arguments: addProduct.barcode);
-                  }),
-            ],
-          );
-        },
-      );
-      return;
-    }
-    // ここで追加
-    print(addProduct);
-    productsindex++;
-    //products.add(addProduct);
-    products.insert(0, addProduct);
-    setState(() {});
-  }
+  //     ///同じ商品だったらreturn
+  //   }
+  //   if (addProduct.price == -400) {
+  //     showDialog(
+  //       context: context,
+  //       builder: (_) {
+  //         return AlertDialog(
+  //           title: Text("この商品は登録されていません。"),
+  //           content:
+  //               Text("この商品は登録されていません。登録処理をしてください\nコード ${addProduct.barcode}"),
+  //           actions: <Widget>[
+  //             // ボタン領域
+  //             ElevatedButton(
+  //                 child: Text("キャンセル"),
+  //                 onPressed: () => Navigator.pop(context)),
+  //             ElevatedButton(
+  //                 child: Text("登録"),
+  //                 onPressed: () {
+  //                   Navigator.pop(context);
+  //                   Navigator.of(context).pushNamed("/ProductAdd",
+  //                       arguments: addProduct.barcode);
+  //                 }),
+  //           ],
+  //         );
+  //       },
+  //     );
+  //     return;
+  //   }
+  //   // ここで追加
+  //   print(addProduct);
+  //   productsindex++;
+  //   //products.add(addProduct);
+  //   products.insert(0, addProduct);
+  //   setState(() {});
+  // }
 
   Card addListCard({
     required String title,
@@ -319,13 +322,26 @@ class _MainAddPageState extends State {
                     },
                   )),
               // Icon(Icons.cancel)
-              IconButton(onPressed: () {}, icon: Icon(Icons.plus_one)),
-              IconButton(
-                onPressed: () {
-                  _deleteitem(id);
-                },
-                icon: Icon(Icons.cancel),
-              ),
+              // IconButton(onPressed: () {}, icon: Icon(Icons.plus_one)),
+              // IconButton(
+              //   onPressed: () {
+              //     _deleteitem(id);
+              //   },
+              //   icon: Icon(Icons.cancel),
+              // ),
+              ElevatedButton(
+                  onPressed: () async {
+                    print(id);
+                    print(products[id].name);
+                    await Navigator.of(context).pushNamed(
+                      "/AddPage2",
+                      arguments: QrCodeQuantity(
+                          qrcode: products[id].barcode,
+                          quantity: products[id].quantity),
+                    );
+                    setState(() {});
+                  },
+                  child: Text('変更'))
             ],
           ),
         ),
