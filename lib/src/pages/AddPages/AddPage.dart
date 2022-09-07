@@ -232,9 +232,10 @@ class _MainAddPageState extends State {
               const SizedBox(
                 width: 10.0,
               ),
-              /////エラー>>>>
+
+              /// 商品名とバーコード
               Container(
-                // color: Colors.green[50],
+                color: Colors.white,
                 child: Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +257,6 @@ class _MainAddPageState extends State {
                   ),
                 ),
               ),
-              /////////<<<<end
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

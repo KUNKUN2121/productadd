@@ -261,64 +261,67 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                           return SimpleDialog(
                             title: Text("以下の商品を登録します。"),
                             children: [
-                              Column(
-                                children: [
-                                  Text(
-                                    _itemname.text,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Image.network(tempimg),
-                                  Row(
-                                    children: [
-                                      Text('商品名：',
-                                          style: TextStyle(fontSize: 20)),
-                                      Text(_itemname.text,
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text('バーコード：',
-                                          style: TextStyle(fontSize: 20)),
-                                      Text(barcode.toString(),
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text('カテゴリー：',
-                                          style: TextStyle(fontSize: 20)),
-                                      Text(
-                                          isSelectedCategoryName[
-                                              isSelectedCategory! - 1],
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text('価格設定：',
-                                          style: TextStyle(fontSize: 20)),
-                                      Text("¥" + _price.text,
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('閉じる')),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            registerPost();
-                                          },
-                                          child: Text('続行する')),
-                                    ],
-                                  )
-                                ],
+                              Padding(
+                                padding: EdgeInsets.all(12),
+                                child: Column(
+                                  children: [
+                                    Image.network(tempimg),
+                                    Row(
+                                      children: [
+                                        Text('商品名：',
+                                            style: TextStyle(fontSize: 17)),
+                                        Flexible(
+                                          child: Text(
+                                            _itemname.text,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('バーコード：',
+                                            style: TextStyle(fontSize: 17)),
+                                        Text(barcode.toString(),
+                                            style: TextStyle(fontSize: 20)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('カテゴリー：',
+                                            style: TextStyle(fontSize: 17)),
+                                        Text(
+                                            isSelectedCategoryName[
+                                                isSelectedCategory! - 1],
+                                            style: TextStyle(fontSize: 20)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('価格設定：',
+                                            style: TextStyle(fontSize: 17)),
+                                        Text("¥" + _price.text,
+                                            style: TextStyle(fontSize: 20)),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('閉じる')),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              registerPost();
+                                            },
+                                            child: Text('続行する')),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           );
