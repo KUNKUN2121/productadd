@@ -13,7 +13,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("MainPage"),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green[300],
       ),
       //右のバー
       drawer: Drawer(child: Center(child: Text("ドロワーダヨーン"))),
