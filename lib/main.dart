@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:productadd/src/pages/ConfirmPage.dart';
+import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 import 'package:productadd/src/pages/mgtpage.dart';
 
 import 'src/pages/AddPages/AddPage.dart';

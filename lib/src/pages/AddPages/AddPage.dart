@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:productadd/src/pages/ConfirmPage.dart';
+import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../model/Barcode.dart';
 import '../RegisterPages/NewAddPage.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import '../model/Barcode.dart';
-import '../api/Post.dart';
+import '../../model/Barcode.dart';
+import '../../api/Post.dart';
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
 
 class ConfirmPage extends StatelessWidget {
@@ -148,6 +148,7 @@ class ConfirmPage extends StatelessWidget {
               ),
               Container(
                 // color: Colors.green[50],
+                color: Colors.white,
                 child: Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
