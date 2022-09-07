@@ -240,15 +240,13 @@ class _MainAddPageState extends State {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          title,
-                          style: const TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          // softWrap: true,
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                        softWrap: true,
                       ),
                       Text(
                         barcode,
