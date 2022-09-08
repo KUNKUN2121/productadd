@@ -17,8 +17,15 @@ class _MgtState extends State<Mgt> {
       appBar: AppBar(
         title: Text('商品管理'),
       ),
-      body: Container(
-        color: Colors.blue,
+      backgroundColor: Colors.blueGrey[300],
+      body: Column(
+        children: [
+          Container(
+            color: Colors.red,
+            width: 100,
+          ),
+          Text('作成中...'),
+        ],
       ),
     );
   }
