@@ -28,7 +28,11 @@ class _MainAddPageState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('入荷処理'),
+        title: const Text(
+          '入荷処理',
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.red,
       ),
       body: Stack(
         children: [
@@ -208,14 +212,10 @@ class _MainAddPageState extends State {
     required String title,
     required String barcode,
     required int quantity,
-
-    //required IconData icon,
     required String imgURL,
     required int id,
-    //required Function()? onPressed,
   }) {
     return Card(
-      //key: key,
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ConstrainedBox(
@@ -223,101 +223,109 @@ class _MainAddPageState extends State {
           ///////
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisAlignment: MainAxisAlignment.end,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 55,
-                height: 55,
-                child: Image.network(imgURL),
-              ),
-              const SizedBox(
-                width: 10.0,
-              ),
-
-              /// 商品名とバーコード
-              Container(
-                color: Colors.white,
-                child: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              Flexible(
+                child: Container(
+                  child: Row(
                     children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        softWrap: true,
+                      // 商品画像画像
+                      Container(
+                        width: 55,
+                        height: 55,
+                        child: Image.network(imgURL),
                       ),
-                      Text(
-                        barcode,
-                        softWrap: true,
-                        style: TextStyle(fontSize: 18),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      // 商品名バーコード
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title,
+                                style: const TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                // softWrap: false,
+                              ),
+                              Text(
+                                barcode,
+                                softWrap: true,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: 70,
-                          child: Container(
-                              // color: Colors.green[50],
+
+              // 個数 変更ボタン
+              Align(
+                alignment: Alignment.bottomCenter, //右寄せの指定
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  // color: Colors.green,
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
                               alignment: Alignment.center,
-                              // color: Colors.green[50],
                               child: Text(
                                 '${quantity}',
                                 style: TextStyle(fontSize: 40),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          width: 20,
-                          child: Container(
-                              // color: Colors.red,
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.bottomCenter,
+                              // color: Colors.blue,
                               child: Text(
-                            '個',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                        ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        onPrimary: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                                '個',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      onPressed: () async {
-                        // print(id);
-                        // print('すべて');
-                        // print(products);
-                        // print(products[id].name);
-                        for (int i = 0; i < products.length; i++) {
-                          if (products[i].barcode == barcode) {
-                            await Navigator.of(context).pushNamed(
-                              "/AddPage2",
-                              arguments: QrCodeQuantity(
-                                  qrcode: products[i].barcode,
-                                  quantity: products[i].quantity),
-                            );
-                            setState(() {});
-                          } else {
-                            print('error');
+                      ElevatedButton(
+                        child: Text('変更'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          onPrimary: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () async {
+                          for (int i = 0; i < products.length; i++) {
+                            if (products[i].barcode == barcode) {
+                              await Navigator.of(context).pushNamed(
+                                "/AddPage2",
+                                arguments: QrCodeQuantity(
+                                    qrcode: products[i].barcode,
+                                    quantity: products[i].quantity),
+                              );
+                              setState(() {});
+                            } else {
+                              print('error');
+                            }
                           }
-                        }
-                      },
-                      child: Text('変更'),
-                    )
-                  ],
+                        },
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],

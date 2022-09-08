@@ -269,7 +269,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     Row(
                                       children: [
                                         Text('商品名：',
-                                            style: TextStyle(fontSize: 17)),
+                                            style: TextStyle(fontSize: 14)),
                                         Flexible(
                                           child: Text(
                                             _itemname.text,
@@ -281,7 +281,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     Row(
                                       children: [
                                         Text('バーコード：',
-                                            style: TextStyle(fontSize: 17)),
+                                            style: TextStyle(fontSize: 14)),
                                         Text(barcode.toString(),
                                             style: TextStyle(fontSize: 20)),
                                       ],
@@ -289,7 +289,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     Row(
                                       children: [
                                         Text('カテゴリー：',
-                                            style: TextStyle(fontSize: 17)),
+                                            style: TextStyle(fontSize: 14)),
                                         Text(
                                             isSelectedCategoryName[
                                                 isSelectedCategory! - 1],
@@ -299,7 +299,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     Row(
                                       children: [
                                         Text('価格設定：',
-                                            style: TextStyle(fontSize: 17)),
+                                            style: TextStyle(fontSize: 14)),
                                         Text("¥" + _price.text,
                                             style: TextStyle(fontSize: 20)),
                                       ],
@@ -317,7 +317,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                             onPressed: () {
                                               registerPost();
                                             },
-                                            child: Text('続行する')),
+                                            child: Text('登録')),
                                       ],
                                     )
                                   ],
