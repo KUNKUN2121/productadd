@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
-import 'package:productadd/src/pages/mgtpage.dart';
-
-import 'src/pages/AddPages/AddPage.dart';
-import 'src/pages/RegisterPages/NewAddPage.dart';
-import 'src/pages/AddPages/AddPage2.dart';
-import 'src/pages/mainpage.dart';
-import 'src/pages/RegisterPages/NewPage.dart';
-import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:camera/camera.dart';
+
+///最初の画面
+import 'package:productadd/src/pages/mainpage.dart';
+//在庫追加
+import 'package:productadd/src/pages/AddPages/AddPage.dart';
+import 'package:productadd/src/pages/AddPages/AddPage2.dart';
+import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
+//在庫管理
+import 'package:productadd/src/pages/mgtpage.dart';
+//新規商品追加
+import 'package:productadd/src/pages/RegisterPages/NewAddPage.dart';
+import 'package:productadd/src/pages/RegisterPages/NewPage.dart';
 
 Future<void> main() async {
   // Flutter Engineの機能を使うので有効化
