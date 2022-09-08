@@ -56,8 +56,9 @@ class _MainPageState extends State<MainPage> {
               icon: Icons.help,
               key: const Key("test-2"),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed("/ProductAdd", arguments: 4903333187560);
+                // Navigator.of(context)
+                //     .pushNamed("/ProductAdd", arguments: 4903333187560);
+                Navigator.of(context).pushNamed("/HelpMainPage");
               },
             ),
           ],

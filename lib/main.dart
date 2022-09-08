@@ -13,6 +13,8 @@ import 'package:productadd/src/pages/mgtpage.dart';
 //新規商品追加
 import 'package:productadd/src/pages/RegisterPages/NewAddPage.dart';
 import 'package:productadd/src/pages/RegisterPages/NewPage.dart';
+//ヘルプ
+import 'package:productadd/src/pages/HelpPages/HelpMainPage.dart';
 
 Future<void> main() async {
   // Flutter Engineの機能を使うので有効化
@@ -64,6 +66,8 @@ class MyApp extends StatelessWidget {
         "/NewAddPage": (BuildContext context) => NewAddPage(),
         //新商品追加2
         "/ProductAdd": (BuildContext context) => RegisterItemPage(),
+        //HelpPage
+        "/HelpMainPage": (BuildContext context) => HelpMainPage(),
       },
     );
   }
