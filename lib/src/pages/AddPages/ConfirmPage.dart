@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:productadd/src/pages/AddPages/Complete.dart';
 import '../../model/Barcode.dart';
 import '../../api/Post.dart';
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
+import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 
 class ConfirmPage extends StatelessWidget {
   // final List<Barcode> products;
@@ -97,30 +99,12 @@ class ConfirmPage extends StatelessWidget {
                                             PostRequest.postMethod(products);
                                         go.then(
                                           (value) {
-                                            products = [];
                                             if (value == 0) {
-                                              showDialog(
-                                                //画面外の部分を押せないようにする。
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (_) {
-                                                  return AlertDialog(
-                                                    title: Text("在庫追加完了"),
-                                                    content: Text(
-                                                        "在庫追加完了しました。\n メインページに戻ります。"),
-                                                    actions: <Widget>[
-                                                      ElevatedButton(
-                                                          child: Text("閉じる"),
-                                                          onPressed: () {
-                                                            products = [];
-                                                            Navigator.popUntil(
-                                                                context,
-                                                                (route) => route
-                                                                    .isFirst);
-                                                          }),
-                                                    ],
-                                                  );
-                                                },
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        CompletePage()),
                                               );
                                               return;
                                             }

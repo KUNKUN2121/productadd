@@ -206,7 +206,7 @@ class _AddPage2State extends State<AddPage2> {
                     ],
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 50,
                   ),
 ////////
 
