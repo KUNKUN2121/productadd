@@ -5,6 +5,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import '../../model/Barcode.dart';
 import '../RegisterPages/NewAddPage.dart';
 import '../../api/boolProduct.dart';
+import 'package:productadd/main.dart';
 
 ///[products]初期化
 List<Barcode> products = [];
@@ -30,9 +31,9 @@ class _MainAddPageState extends State {
       appBar: AppBar(
         title: const Text(
           '入荷処理',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: HexColor('ea2f46'),
       ),
       body: Stack(
         children: [
@@ -94,31 +95,38 @@ class _MainAddPageState extends State {
                   right: 10.0,
                 ),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          products = [];
-                          setState(() {});
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red),
-                        ),
-                        child: const Text(
-                          'クリア',
-                        ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        products = [];
+                        setState(() {});
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(HexColor('ea2f46')),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (products.length == 0) {
-                            return;
-                          }
-                          Navigator.of(context).pushNamed("/ConfirmPage");
-                        },
-                        child: const Text('続行する'),
+                      child: const Text(
+                        'クリア',
+                        style: TextStyle(
+                            // color: Color.fromARGB(255, 128, 3, 3),
+                            fontSize: 25),
                       ),
-                    ]),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          // primary: HexColor('ea2f46'), //背景色
+                          ),
+                      onPressed: () {
+                        if (products.length == 0) {
+                          return;
+                        }
+                        Navigator.of(context).pushNamed("/ConfirmPage");
+                      },
+                      child: const Text('続行', style: TextStyle(fontSize: 25)),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

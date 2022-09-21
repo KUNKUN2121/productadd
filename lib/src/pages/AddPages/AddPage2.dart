@@ -81,7 +81,7 @@ class _AddPage2State extends State<AddPage2> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('AddPage2'),
+          title: Text('個数設定'),
         ),
         body: SingleChildScrollView(
           child: Stack(children: [
@@ -164,12 +164,18 @@ class _AddPage2State extends State<AddPage2> {
                           onPressed: () {
                             _incrementquantity(-10);
                           },
-                          child: Text('-10')),
+                          child: Text(
+                            '-10',
+                            style: TextStyle(fontSize: 20),
+                          )),
                       ElevatedButton(
                           onPressed: () {
                             _incrementquantity(-1);
                           },
-                          child: Text('-1')),
+                          child: Text(
+                            '-1',
+                            style: TextStyle(fontSize: 20),
+                          )),
                       Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -185,16 +191,22 @@ class _AddPage2State extends State<AddPage2> {
                           onPressed: () {
                             _incrementquantity(1);
                           },
-                          child: Text('+1')),
+                          child: Text(
+                            '+1',
+                            style: TextStyle(fontSize: 20),
+                          )),
                       ElevatedButton(
                           onPressed: () {
                             _incrementquantity(10);
                           },
-                          child: Text('+10')),
+                          child: Text(
+                            '+10',
+                            style: TextStyle(fontSize: 20),
+                          )),
                     ],
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 100,
                   ),
 ////////
 
@@ -202,8 +214,8 @@ class _AddPage2State extends State<AddPage2> {
 
                   ElevatedButton(
                     child: Text(
-                      "完了",
-                      style: TextStyle(fontSize: 25),
+                      "確定",
+                      style: TextStyle(fontSize: 45),
                     ),
                     onPressed: () {
                       addProductContents(barcode!);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productadd/main.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -12,8 +13,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MainPage"),
-        backgroundColor: Colors.blue,
+        title: Text("メインページ"),
+        backgroundColor: HexColor('ea2f46'),
       ),
       //右のバー
       drawer: Drawer(child: Center(child: Text("ドロワーダヨーン"))),
@@ -115,6 +116,7 @@ class _MainPageState extends State<MainPage> {
                         style: ElevatedButton.styleFrom(
                           onPrimary: Theme.of(context).colorScheme.onPrimary,
                           primary: Theme.of(context).colorScheme.primary,
+                          backgroundColor: HexColor('ea2f46'),
                         ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
                         onPressed: onPressed,
                         child: const Text("開く"),

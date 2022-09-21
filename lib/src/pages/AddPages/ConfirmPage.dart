@@ -16,11 +16,14 @@ class ConfirmPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('確認画面', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.yellow,
+        backgroundColor: Color.fromARGB(255, 255, 238, 87),
       ),
       body: Stack(children: [
         Column(
           children: [
+            SizedBox(
+              height: 30,
+            ),
             Container(
               child: Text(
                 '下記を追加します',
@@ -55,61 +58,107 @@ class ConfirmPage extends StatelessWidget {
                         print('戻るボタン');
                         Navigator.of(context).pop();
                       },
-                      child: Text('戻る'),
+                      child: Text('戻る', style: TextStyle(fontSize: 25)),
                     ),
                     ElevatedButton(
-                      child: Text('続行する'),
+                      child: Text(
+                        '追加',
+                        style: TextStyle(fontSize: 25),
+                      ),
                       onPressed: () {
-                        final go = PostRequest.postMethod(products);
-                        go.then((value) {
-                          products = [];
-                          if (value == 0) {
-                            showDialog(
-                              //画面外の部分を押せないようにする。
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (_) {
-                                return AlertDialog(
-                                  title: Text("在庫追加完了"),
-                                  content: Text("在庫追加完了しました。\n メインページに戻ります。"),
-                                  actions: <Widget>[
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text("本当に追加しますか？"),
+                              content: Text(
+                                "追加をタップすると在庫追加します。",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              actions: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    // ボタン領域
                                     ElevatedButton(
-                                        child: Text("閉じる"),
-                                        onPressed: () {
-                                          products = [];
-                                          Navigator.popUntil(context,
-                                              (route) => route.isFirst);
-                                        }),
-                                  ],
-                                );
-                              },
-                            );
-                            return;
-                          }
-                          if (value != 0) {
-                            showDialog(
-                              //画面外の部分を押せないようにする。
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (_) {
-                                return AlertDialog(
-                                  title: Text("エラー"),
-                                  content: Text(
-                                      "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
-                                  actions: <Widget>[
+                                        child: Text("キャンセル"),
+                                        onPressed: () =>
+                                            Navigator.pop(context)),
                                     ElevatedButton(
-                                        child: Text("閉じる"),
-                                        onPressed: () {
-                                          Navigator.popUntil(context,
-                                              (route) => route.isFirst);
-                                        }),
+                                      child: Text(
+                                        "追加する",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        final go =
+                                            PostRequest.postMethod(products);
+                                        go.then(
+                                          (value) {
+                                            products = [];
+                                            if (value == 0) {
+                                              showDialog(
+                                                //画面外の部分を押せないようにする。
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (_) {
+                                                  return AlertDialog(
+                                                    title: Text("在庫追加完了"),
+                                                    content: Text(
+                                                        "在庫追加完了しました。\n メインページに戻ります。"),
+                                                    actions: <Widget>[
+                                                      ElevatedButton(
+                                                          child: Text("閉じる"),
+                                                          onPressed: () {
+                                                            products = [];
+                                                            Navigator.popUntil(
+                                                                context,
+                                                                (route) => route
+                                                                    .isFirst);
+                                                          }),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              return;
+                                            }
+                                            if (value != 0) {
+                                              showDialog(
+                                                //画面外の部分を押せないようにする。
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (_) {
+                                                  return AlertDialog(
+                                                    title: Text("エラー"),
+                                                    content: Text(
+                                                        "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
+                                                    actions: <Widget>[
+                                                      ElevatedButton(
+                                                          child: Text("閉じる"),
+                                                          onPressed: () {
+                                                            Navigator.popUntil(
+                                                                context,
+                                                                (route) => route
+                                                                    .isFirst);
+                                                          }),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }
+                                            print(value);
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ],
-                                );
-                              },
+                                ),
+                              ],
                             );
-                          }
-                          print(value);
-                        });
+                          },
+                        );
                       },
                     ),
                   ]),
