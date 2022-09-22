@@ -1,5 +1,5 @@
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // import 'package:productadd/src/model/Barcode.dart';
 // import '../model/AlertDialog.dart';
@@ -12,8 +12,7 @@
 //     required this.quantity,
 //   });
 
-//   static Future<List> allProduct(_postBarcode) async {
-//     List data = ;
+//   static List<dynamic> allProduct() async {
 //     try {
 //       String url = "https://store-project.f5.si/database/api/all.php";
 
@@ -22,11 +21,10 @@
 //       if (resp.statusCode != 200) {
 //         print(resp.statusCode);
 //         print(resp.body);
-//         print('エラー');
-//         return;
+//         // return;
 //       }
-//       List data = json.decode(resp.body);
-//       return data;
+//       dynamic jsonObjects = jsonDecode(resp.body);
+//       return jsonObjects;
 //     } catch (e) {
 //       print(e);
 //       return -1;
