@@ -6,6 +6,7 @@ import '../../model/Barcode.dart';
 import '../../api/Post.dart';
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
 import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class ConfirmPage extends StatelessWidget {
   // final List<Barcode> products;
@@ -15,6 +16,45 @@ class ConfirmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RoundedLoadingButtonController _btnController =
+        RoundedLoadingButtonController();
+    Future addRequest() async {
+      final go = PostRequest.postMethod(products);
+      go.then(
+        (value) {
+          if (value == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CompletePage()),
+            );
+          }
+          if (value != 0) {
+            showDialog(
+              //画面外の部分を押せないようにする。
+              barrierDismissible: false,
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                  title: Text("エラー"),
+                  content:
+                      Text("エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
+                  actions: <Widget>[
+                    ElevatedButton(
+                        child: Text("閉じる"),
+                        onPressed: () {
+                          Navigator.popUntil(context, (route) => route.isFirst);
+                        }),
+                  ],
+                );
+              },
+            );
+          }
+          _btnController.success();
+          print(value);
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('確認画面', style: TextStyle(color: Colors.black)),
@@ -46,107 +86,50 @@ class ConfirmPage extends StatelessWidget {
                 }
               ]),
             ),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 20,
-                left: 10,
-                right: 10.0,
-              ),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        print('戻るボタン');
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('戻る', style: TextStyle(fontSize: 25)),
-                    ),
-                    ElevatedButton(
-                      child: Text(
-                        '追加',
-                        style: TextStyle(fontSize: 25),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text("本当に追加しますか？"),
-                              content: Text(
-                                "追加をタップすると在庫追加します。",
-                                style: TextStyle(fontSize: 15),
-                              ),
-                              actions: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    // ボタン領域
-                                    ElevatedButton(
-                                        child: Text("キャンセル"),
-                                        onPressed: () =>
-                                            Navigator.pop(context)),
-                                    ElevatedButton(
-                                      child: Text(
-                                        "追加する",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        final go =
-                                            PostRequest.postMethod(products);
-                                        go.then(
-                                          (value) {
-                                            if (value == 0) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        CompletePage()),
-                                              );
-                                              return;
-                                            }
-                                            if (value != 0) {
-                                              showDialog(
-                                                //画面外の部分を押せないようにする。
-                                                barrierDismissible: false,
-                                                context: context,
-                                                builder: (_) {
-                                                  return AlertDialog(
-                                                    title: Text("エラー"),
-                                                    content: Text(
-                                                        "エラーが発生しました。最初からやり直してください。\n ErrorCode: ${value}"),
-                                                    actions: <Widget>[
-                                                      ElevatedButton(
-                                                          child: Text("閉じる"),
-                                                          onPressed: () {
-                                                            Navigator.popUntil(
-                                                                context,
-                                                                (route) => route
-                                                                    .isFirst);
-                                                          }),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            }
-                                            print(value);
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ]),
-            )
+            SizedBox(
+              height: 30,
+            ),
+            RoundedLoadingButton(
+                child: Text('追加',
+                    style: TextStyle(fontSize: 30, color: Colors.white)),
+                controller: _btnController,
+                width: 200,
+                onPressed: () {
+                  addRequest();
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            RoundedLoadingButton(
+                child: Text('戻る',
+                    style: TextStyle(fontSize: 30, color: Colors.white)),
+                controller: _btnController,
+                color: Colors.green,
+                width: 200,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            // Container(
+            //   margin: const EdgeInsets.only(
+            //     top: 20,
+            //     left: 10,
+            //     right: 10.0,
+            //   ),
+            //   child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         ElevatedButton(
+            //           onPressed: () {
+            //             print('戻るボタン');
+            //             Navigator.of(context).pop();
+            //           },
+            //           child: Text('戻る', style: TextStyle(fontSize: 25)),
+            //         ),
+            //       ]),
+            // )
           ],
         )
       ]),
