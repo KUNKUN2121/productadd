@@ -160,11 +160,18 @@ class _MainAddPageState extends State {
       false,
       ScanMode.BARCODE,
     );
-    if (!mounted) return;
-    setState(() {
-      this.qrCode = qrCode;
-    });
+    if (!mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      return;
+    }
+    this.qrCode = qrCode;
     if (qrCode == '-1') {
+      setState(() {
+        _isLoading = false;
+      });
       return;
     }
 
