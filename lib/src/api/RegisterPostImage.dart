@@ -13,6 +13,7 @@ class RegisterImage {
   });
 
   static Future<String> registerImagePost(File uploadimage) async {
+    print('写真アップロード');
     // 設定
     String url = "https://store-project.f5.si/database/api/square.php";
 

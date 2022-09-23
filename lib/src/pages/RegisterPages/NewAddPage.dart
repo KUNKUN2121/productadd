@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
 import 'package:productadd/src/api/RegisterPostImage.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class RegisterItemPage extends StatefulWidget {
   //const registerItemPage({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
 
   ///
   ///
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   int count = 10;
   int? isSelectedCategory = 1;
@@ -34,6 +37,24 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   final picker = ImagePicker();
   var imgFlg = false;
   String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
+  Future pictureChange() async {
+    await getImage();
+    // カメラキャンセルしたさいにreturn
+    if (imgFlg == false) {
+      return;
+    }
+    Future<String> go = RegisterImage.registerImagePost(_image);
+    go.then((value) {
+      print("れすぽんすこーど ${value}");
+      String responsecode = value;
+      tempimg = value;
+      setState(() {
+        // _btnController.success();
+        _btnController.reset();
+      });
+    });
+    print('LOG:カメラ撮影');
+  }
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
@@ -138,40 +159,27 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
     print(barcode);
     return Scaffold(
       appBar: AppBar(
-        title: Text('商品登録'),
+        title: const Text('商品登録'),
       ),
       body: SingleChildScrollView(
         child: Stack(children: [
           Center(
             child: Column(
               children: [
-                Text('商品登録'),
                 Container(
                   height: 200,
                   child: Image.network(tempimg),
                 ),
-                ElevatedButton(
-                  child: Text(
-                    '商品写真を撮影',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  // onPressed: getImage,
-                  onPressed: () async {
-                    await getImage();
-                    // カメラキャンセルしたさいにreturn
-                    if (imgFlg == false) {
-                      return;
-                    }
-                    Future<String> go = RegisterImage.registerImagePost(_image);
-                    go.then((value) {
-                      print("れすぽんすこーど ${value}");
-                      String responsecode = value;
-                      tempimg = value;
-                      setState(() {});
-                    });
-                    print('LOG:カメラ撮影');
-                  },
-                ),
+                Text('画像の読み込みには時間がかかります。'),
+                RoundedLoadingButton(
+                    child: Text('商品写真を撮影',
+                        style: TextStyle(fontSize: 23, color: Colors.white)),
+                    controller: _btnController,
+                    color: Colors.green,
+                    width: 200,
+                    onPressed: () {
+                      pictureChange();
+                    }),
                 Text(
                   'コード : ${barcode}',
                   style: TextStyle(fontSize: 20),
