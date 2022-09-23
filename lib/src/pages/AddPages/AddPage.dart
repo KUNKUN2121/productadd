@@ -19,6 +19,8 @@ class MainAddPage extends StatefulWidget {
 }
 
 class _MainAddPageState extends State {
+  bool _isLoading = false;
+
   ///qrCode初期化
   String qrCode = '0';
 
@@ -48,10 +50,14 @@ class _MainAddPageState extends State {
                       'スキャン',
                       style: TextStyle(fontSize: 30),
                     ),
-                    onPressed: () => scanQrCode(),
+                    onPressed: () async {
+                      await scanQrCode();
+                      print('OK??2');
+                    },
                   ),
                 ),
               ),
+
               Expanded(
                 child: ListView(
                   children: [
@@ -130,12 +136,24 @@ class _MainAddPageState extends State {
               ),
             ],
           ),
+          if (_isLoading)
+            const Opacity(
+              opacity: 0.7,
+              child: ModalBarrier(
+                dismissible: false,
+                color: Colors.black,
+              ),
+            ),
+          if (_isLoading) const Center(child: CircularProgressIndicator())
         ],
       ),
     );
   }
 
   Future scanQrCode() async {
+    setState(() {
+      _isLoading = true;
+    });
     final qrCode = await FlutterBarcodeScanner.scanBarcode(
       '#EB394B',
       'キャンセル',
@@ -170,6 +188,9 @@ class _MainAddPageState extends State {
             );
           },
         );
+        setState(() {
+          _isLoading = false;
+        });
         return;
       }
     }
@@ -180,6 +201,7 @@ class _MainAddPageState extends State {
       if (value == true) {
         await Navigator.of(context).pushNamed("/AddPage2",
             arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0));
+        print('OK1??');
       }
       // エラー
       if (value == null) {
@@ -209,10 +231,11 @@ class _MainAddPageState extends State {
             );
           },
         );
-
-        return;
       }
-      setState(() {});
+
+      setState(() {
+        _isLoading = false;
+      });
     });
   }
 
