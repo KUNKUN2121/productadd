@@ -29,7 +29,7 @@ class _AddPage2State extends State<AddPage2> {
   ///
   // String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
   String noimage = 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png';
-
+  String productname = '';
   @override
   Widget build(BuildContext context) {
     if (flg == false) {
@@ -109,6 +109,7 @@ class _AddPage2State extends State<AddPage2> {
                         );
                       }
                       if (snapshot.hasData) {
+                        productname = snapshot.data!.name;
                         return Text(
                           snapshot.data!.name,
                           style: TextStyle(fontSize: 30),
@@ -282,6 +283,7 @@ class _AddPage2State extends State<AddPage2> {
   Future addProductContents(String addqrcode) async {
     Barcode addProduct =
         await Barcode.addProduct(addqrcode, quantity!, productsindex);
+    // Barcode addProduc22 = Barcode(name: productname,barcode: barcode.toString(),imgURL:,quantity: quantity!,id:productsindex);
     // print(productsindex);
 
     /// [products]に同じのがあったらreturn

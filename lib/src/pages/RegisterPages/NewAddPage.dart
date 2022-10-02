@@ -45,7 +45,47 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
     }
     Future<String> go = RegisterImage.registerImagePost(_image);
     go.then((value) {
-      print("れすぽんすこーど ${value}");
+      if (value.contains("error")) {
+        _btnController.error();
+        showDialog(
+          //画面外の部分を押せないようにする。
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return SimpleDialog(
+              title: Text("エラーが発生しました、"),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Text('写真処理中にエラーが発生しました。もう一度最初から行ってください。 $value')
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                // Navigator.of(context).pushNamed("/MainAddPage");
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('閉じる')),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+      // print("れすぽんすこーど ${value}");
       String responsecode = value;
       tempimg = value;
       setState(() {

@@ -30,7 +30,7 @@ class RegisterImage {
 
       if (resp.statusCode != 200) {
         print('RegisterPost Error Code : ${resp.statusCode}');
-        return '${resp.statusCode}';
+        return 'error_${resp.statusCode}';
       }
 
       // print(resp.body);
@@ -41,7 +41,7 @@ class RegisterImage {
       return imgurl;
     } catch (e) {
       print(e);
-      return '500';
+      return 'error_500';
     }
   }
 }
