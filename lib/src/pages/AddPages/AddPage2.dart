@@ -269,8 +269,12 @@ class _AddPage2State extends State<AddPage2> {
                       flg = false;
                       Navigator.pop(context);
                       Navigator.pop(context);
+                      return;
                     }
                   }
+                  flg = false;
+                  Navigator.pop(context);
+                  Navigator.pop(context);
 
                   return;
                 }),

@@ -104,19 +104,55 @@ class _MainAddPageState extends State {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        products = [];
-                        setState(() {});
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(HexColor('ea2f46')),
-                      ),
                       child: const Text(
                         'クリア',
                         style: TextStyle(
                             // color: Color.fromARGB(255, 128, 3, 3),
                             fontSize: 25),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          //画面外の部分を押せないようにする。
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text("本当にクリアしますか？"),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                return;
+                                              },
+                                              child: Text('キャンセル')),
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                products = [];
+                                                Navigator.of(context).pop();
+                                                setState(() {});
+                                              },
+                                              child: Text('クリアする')),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(HexColor('ea2f46')),
                       ),
                     ),
                     ElevatedButton(
