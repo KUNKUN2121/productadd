@@ -8,6 +8,7 @@ import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
 import 'package:productadd/src/api/RegisterPostImage.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:flutter/services.dart';
 
 class RegisterItemPage extends StatefulWidget {
   //const registerItemPage({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
     await getImage();
     // カメラキャンセルしたさいにreturn
     if (imgFlg == false) {
+      _btnController.reset();
       return;
     }
     Future<String> go = RegisterImage.registerImagePost(_image);
@@ -239,6 +241,8 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                 TextField(
                     keyboardType: TextInputType.numberWithOptions(
                         signed: true, decimal: true),
+                    // keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: _price,
                     decoration: const InputDecoration(
                       icon: Icon(Icons.currency_yen),
@@ -301,6 +305,40 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                       style: TextStyle(fontSize: 25),
                     ),
                     onPressed: () {
+                      if (_itemname.text == '' || _price.text == '') {
+                        print('null');
+                        showDialog(
+                          //画面外の部分を押せないようにする。
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text("商品名または価格が入力されていません。"),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('閉じる')),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
                       showDialog(
                         //画面外の部分を押せないようにする。
                         barrierDismissible: false,
@@ -316,7 +354,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     Image.network(tempimg),
                                     Row(
                                       children: [
-                                        Text('商品名：',
+                                        const Text('商品名：',
                                             style: TextStyle(fontSize: 14)),
                                         Flexible(
                                           child: Text(
@@ -328,7 +366,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                     ),
                                     Row(
                                       children: [
-                                        Text('バーコード：',
+                                        const Text('バーコード：',
                                             style: TextStyle(fontSize: 14)),
                                         Text(barcode.toString(),
                                             style: TextStyle(fontSize: 20)),
