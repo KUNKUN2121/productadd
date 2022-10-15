@@ -9,7 +9,8 @@ import 'package:productadd/src/pages/AddPages/AddPage.dart';
 import 'package:productadd/src/pages/AddPages/AddPage2.dart';
 import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 //在庫管理
-import 'package:productadd/src/pages/mgtpage.dart';
+import 'package:productadd/src/pages/mgt/mgtpage.dart';
+import 'package:productadd/src/pages/mgt/ItemSetting.dart';
 //新規商品追加
 import 'package:productadd/src/pages/RegisterPages/NewAddPage.dart';
 import 'package:productadd/src/pages/RegisterPages/NewPage.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         "/ConfirmPage": (BuildContext context) => ConfirmPage(),
         //商品管理
         "/mgt": (BuildContext context) => Mgt(),
+        "/mgtItemSetting": (BuildContext context) => ItemSetting(),
         //新商品追加
         "/NewAddPage": (BuildContext context) => NewAddPage(),
         //新商品追加2

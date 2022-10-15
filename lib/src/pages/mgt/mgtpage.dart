@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:productadd/src/api/AllProduct.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:productadd/src/pages/mgt/ItemSetting.dart';
+import 'package:productadd/src/model/Barcode.dart';
 
 class Mgt extends StatefulWidget {
   const Mgt({Key? key}) : super(key: key);
@@ -41,41 +43,67 @@ class _MgtState extends State<Mgt> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('商品管理'),
-      ),
-      backgroundColor: Colors.blueGrey[300],
-      body: Center(
-        child: FutureBuilder(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.hasData) {
-              // return Text(snapshot[1]['itemname']);
-              print(snapshot.data![1]['itemname']);
-              // return Text(snapshot.data![1]['itemname']);
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return addListCard(
-                      title: snapshot.data![index]['itemname'],
-                      barcode: snapshot.data![index]['barnum'].toString(),
-                      quantity: snapshot.data![index]['quantity'],
-                      imgURL: snapshot.data![index]['imgURL'],
-                      id: 1);
-                },
-              );
-            } else {
-              return Text("エラーが発生しました。", style: TextStyle(fontSize: 30));
-            }
-          },
+        appBar: AppBar(
+          title: Text('商品管理'),
         ),
-      ),
-    );
+        backgroundColor: Colors.blueGrey[300],
+        body: SafeArea(
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                '商品管理',
+                style: TextStyle(fontSize: 30),
+              ),
+              Container(
+                //カテゴリ選択
+                child: Row(children: [
+                  Text('aaa'),
+                  Text('aaa'),
+                  Text('aaa'),
+                  Text('aaa'),
+                ]),
+              ),
+              FutureBuilder(
+                future: getData(),
+                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    // return Text(snapshot[1]['itemname']);
+                    print(snapshot.data![1]['itemname']);
+                    // return Text(snapshot.data![1]['itemname']);
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return addListCard(
+                              title: snapshot.data![index]['itemname'],
+                              barcode:
+                                  snapshot.data![index]['barnum'].toString(),
+                              quantity: snapshot.data![index]['quantity'],
+                              imgURL: snapshot.data![index]['imgURL'],
+                              id: 1);
+                        },
+                      ),
+                    );
+                  } else {
+                    return Text("エラーが発生しました。", style: TextStyle(fontSize: 30));
+                  }
+                },
+              ),
+            ],
+          )),
+        )
+
+        // Center(
+        //   child:
+        // ),
+        );
   }
 
   Card addListCard({
@@ -178,7 +206,13 @@ class _MgtState extends State<Mgt> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              onPressed: () async {},
+                              onPressed: () async {
+                                await Navigator.of(context).pushNamed(
+                                  "/mgtItemSetting",
+                                  arguments: QrCodeQuantity(
+                                      qrcode: barcode, quantity: quantity),
+                                );
+                              },
                             )
                           ],
                         ),
