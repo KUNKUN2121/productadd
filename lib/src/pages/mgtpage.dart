@@ -143,29 +143,43 @@ class _MgtState extends State<Mgt> {
                 alignment: Alignment.bottomCenter, //右寄せの指定
                 child: Container(
                   alignment: Alignment.centerRight,
-                  color: Colors.green[50],
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        child: Row(
+                        child: Column(
                           // mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '${quantity}',
-                                style: TextStyle(fontSize: 40),
-                              ),
+                              child: Row(children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '${quantity}',
+                                    style: TextStyle(fontSize: 40),
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.bottomCenter,
+                                  // color: Colors.blue,
+                                  child: Text(
+                                    '個',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                              ]),
                             ),
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              // color: Colors.blue,
-                              child: Text(
-                                '個',
-                                style: TextStyle(fontSize: 15),
+                            ElevatedButton(
+                              child: Text('変更'),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.blue,
+                                onPrimary: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
-                            ),
+                              onPressed: () async {},
+                            )
                           ],
                         ),
                       ),
