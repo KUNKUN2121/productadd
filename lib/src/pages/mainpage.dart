@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:productadd/main.dart';
+import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -12,8 +14,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MainPage"),
-        backgroundColor: Colors.blue,
+        title: Text("メインページ"),
+        backgroundColor: HexColor('ea2f46'),
       ),
       //右のバー
       drawer: Drawer(child: Center(child: Text("ドロワーダヨーン"))),
@@ -24,12 +26,21 @@ class _MainPageState extends State<MainPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             getCard(
-              title: "商品追加",
+              title: "在庫追加",
               description: "バーコードをスキャンして在庫追加します。",
               icon: Icons.add_box_sharp,
               key: const Key("add"),
               onPressed: () {
                 Navigator.of(context).pushNamed("/MainAddPage");
+              },
+            ),
+            getCard(
+              title: "新商品追加",
+              description: "新商品の追加を行います",
+              icon: Icons.manage_search,
+              key: const Key("new"),
+              onPressed: () {
+                Navigator.of(context).pushNamed("/NewAddPage");
               },
             ),
             getCard(
@@ -41,25 +52,21 @@ class _MainPageState extends State<MainPage> {
                 Navigator.of(context).pushNamed("/mgt");
               },
             ),
-            getCard(
-              title: "test",
-              description: "test",
-              icon: Icons.transfer_within_a_station_outlined,
-              key: const Key("test-1"),
-              onPressed: () {
-                Navigator.of(context).pushNamed("/camera");
-              },
-            ),
-            getCard(
-              title: "ProductAddTest",
-              description: "test",
-              icon: Icons.transfer_within_a_station_outlined,
-              key: const Key("test-2"),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed("/ProductAdd", arguments: 4903333187560);
-              },
-            ),
+            // getCard(
+            //   title: "ヘルプ",
+            //   description: "test",
+            //   icon: Icons.help,
+            //   key: const Key("test-2"),
+            //   onPressed: () {
+            //     // Navigator.of(context)
+            //     //     .pushNamed("/ProductAdd", arguments: 4903333187560);
+            //     // Navigator.of(context).pushNamed("/HelpMainPage");
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => MobilerScaner()),
+            //     );
+            //   },
+            // ),
           ],
         ),
         //ここまで
@@ -114,6 +121,7 @@ class _MainPageState extends State<MainPage> {
                         style: ElevatedButton.styleFrom(
                           onPrimary: Theme.of(context).colorScheme.onPrimary,
                           primary: Theme.of(context).colorScheme.primary,
+                          backgroundColor: HexColor('ea2f46'),
                         ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
                         onPressed: onPressed,
                         child: const Text("開く"),
