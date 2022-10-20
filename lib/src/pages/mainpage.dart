@@ -52,21 +52,21 @@ class _MainPageState extends State<MainPage> {
                 Navigator.of(context).pushNamed("/mgt");
               },
             ),
-            getCard(
-              title: "ヘルプ",
-              description: "test",
-              icon: Icons.help,
-              key: const Key("test-2"),
-              onPressed: () {
-                // Navigator.of(context)
-                //     .pushNamed("/ProductAdd", arguments: 4903333187560);
-                // Navigator.of(context).pushNamed("/HelpMainPage");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MobilerScaner()),
-                );
-              },
-            ),
+            // getCard(
+            //   title: "ヘルプ",
+            //   description: "test",
+            //   icon: Icons.help,
+            //   key: const Key("test-2"),
+            //   onPressed: () {
+            //     // Navigator.of(context)
+            //     //     .pushNamed("/ProductAdd", arguments: 4903333187560);
+            //     // Navigator.of(context).pushNamed("/HelpMainPage");
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => MobilerScaner()),
+            //     );
+            //   },
+            // ),
           ],
         ),
         //ここまで

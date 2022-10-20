@@ -57,19 +57,19 @@ class _MainAddPageState extends State {
                   ),
                 ),
               ),
-              ElevatedButton(
-                child: Text(
-                  'スキャン2',
-                  style: TextStyle(fontSize: 30),
-                ),
-                onPressed: () async {
-                  // Navigator.of(context).pushNamed("/QRScanner");
-                  var result =
-                      await Navigator.of(context).pushNamed('/QRScanner');
-                  print('戻ってきたよ${result}');
-                  goAddProduct(result.toString());
-                },
-              ),
+              // ElevatedButton(
+              //   child: Text(
+              //     'スキャン2',
+              //     style: TextStyle(fontSize: 30),
+              //   ),
+              //   onPressed: () async {
+              //     // Navigator.of(context).pushNamed("/QRScanner");
+              //     var result =
+              //         await Navigator.of(context).pushNamed('/QRScanner');
+              //     print('戻ってきたよ${result}');
+              //     goAddProduct(result.toString());
+              //   },
+              // ),
 
               Expanded(
                 child: ListView(

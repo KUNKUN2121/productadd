@@ -35,6 +35,7 @@ class Register {
       }
       // print(resp.body);
       print('レスポンスOK');
+      print(uploadimage);
       return 200;
     } catch (e) {
       print(e);
