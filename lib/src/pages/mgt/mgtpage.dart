@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productadd/main.dart';
 import 'package:productadd/src/api/AllProduct.dart';
 import 'dart:convert';
 import 'package:http/http.dart';
@@ -15,7 +16,8 @@ class Mgt extends StatefulWidget {
 class _MgtState extends State<Mgt> {
   var data;
   Future<List> getData() async {
-    String url = 'https://store-project.f5.si/database/api/all.php';
+    String url = apiURL + 'all.php';
+    // String url = 'https://store-project.f5.si/database/api/all.php';
     try {
       var result = await get(Uri.parse(url));
       if (result.statusCode == 200) {
@@ -28,6 +30,7 @@ class _MgtState extends State<Mgt> {
       return data;
     } catch (e) {
       print('error');
+      print(e);
       List aa = [];
       return aa;
     }
@@ -53,16 +56,21 @@ class _MgtState extends State<Mgt> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '商品管理',
+                '作成中',
                 style: TextStyle(fontSize: 30),
               ),
               Container(
                 //カテゴリ選択
                 child: Row(children: [
-                  Text('aaa'),
-                  Text('aaa'),
-                  Text('aaa'),
-                  Text('aaa'),
+                  Column(
+                    children: [
+                      Text(
+                        '現在 変更 ボタンは使用できません。',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text('個数確認のみ使用できます。', style: TextStyle(fontSize: 20)),
+                    ],
+                  )
                 ]),
               ),
               FutureBuilder(
@@ -75,7 +83,7 @@ class _MgtState extends State<Mgt> {
                   }
                   if (snapshot.hasData) {
                     // return Text(snapshot[1]['itemname']);
-                    print(snapshot.data![1]['itemname']);
+                    // print(snapshot.data![1]['itemname']);
                     // return Text(snapshot.data![1]['itemname']);
                     return Expanded(
                       child: ListView.builder(
@@ -85,7 +93,8 @@ class _MgtState extends State<Mgt> {
                               title: snapshot.data![index]['itemname'],
                               barcode:
                                   snapshot.data![index]['barnum'].toString(),
-                              quantity: snapshot.data![index]['quantity'],
+                              quantity:
+                                  int.parse(snapshot.data![index]['quantity']),
                               imgURL: snapshot.data![index]['imgURL'],
                               id: 1);
                         },

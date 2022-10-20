@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/main.dart';
+import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -59,7 +60,11 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {
                 // Navigator.of(context)
                 //     .pushNamed("/ProductAdd", arguments: 4903333187560);
-                Navigator.of(context).pushNamed("/HelpMainPage");
+                // Navigator.of(context).pushNamed("/HelpMainPage");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MobilerScaner()),
+                );
               },
             ),
           ],

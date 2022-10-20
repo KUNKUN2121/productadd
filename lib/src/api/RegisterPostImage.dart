@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:productadd/main.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,6 +16,7 @@ class RegisterImage {
   static Future<String> registerImagePost(File uploadimage) async {
     print('写真アップロード');
     // 設定
+    // String url = apiURL + "square.php";
     String url = "https://store-project.f5.si/database/api/square.php";
 
     try {

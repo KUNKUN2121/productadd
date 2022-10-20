@@ -1,8 +1,8 @@
 import 'package:http/http.dart';
+import 'package:productadd/main.dart';
 
 Future<bool?> boolProduct(_barcode) async {
-  String url =
-      'https://store-project.f5.si/database/api/productName.php?barcode=$_barcode';
+  String url = apiURL + 'productName.php?barcode=$_barcode';
   try {
     var result = await get(Uri.parse(url));
     if (result.statusCode == 200) {

@@ -3,6 +3,8 @@ import 'package:http/http.dart';
 
 import 'dart:convert';
 
+import 'package:productadd/main.dart';
+
 class QrCodeQuantity {
   String qrcode;
   int quantity;
@@ -32,8 +34,7 @@ class Barcode {
   });
 
   static Future<Barcode> addProduct(_barcode, int quantity, int id) async {
-    String url =
-        'https://store-project.f5.si/database/api/productName.php?barcode=$_barcode';
+    String url = apiURL + 'productName.php?barcode=$_barcode';
     try {
       var result = await get(Uri.parse(url));
       //print('Response status: ${result.statusCode}');

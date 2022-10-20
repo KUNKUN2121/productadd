@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:productadd/main.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,7 +16,7 @@ class Register {
   static Future<int> registerPost(String itemname, String barnum,
       String category, String price, String uploadimage) async {
     // 設定
-    String url = "https://store-project.f5.si/database/api/register.php";
+    String url = apiURL + "register.php";
     List regierstItem = [];
 
     try {

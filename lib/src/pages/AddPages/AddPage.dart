@@ -57,6 +57,19 @@ class _MainAddPageState extends State {
                   ),
                 ),
               ),
+              ElevatedButton(
+                child: Text(
+                  'スキャン2',
+                  style: TextStyle(fontSize: 30),
+                ),
+                onPressed: () async {
+                  // Navigator.of(context).pushNamed("/QRScanner");
+                  var result =
+                      await Navigator.of(context).pushNamed('/QRScanner');
+                  print('戻ってきたよ${result}');
+                  goAddProduct(result.toString());
+                },
+              ),
 
               Expanded(
                 child: ListView(
@@ -210,7 +223,11 @@ class _MainAddPageState extends State {
       });
       return;
     }
+    goAddProduct(qrCode);
+    // start
+  }
 
+  void goAddProduct(String qrCode) async {
     /// [products]に同じのがあったらreturn
     for (int i = 0; i < products.length; i++) {
       if (qrCode == products[i].barcode) {
@@ -238,48 +255,49 @@ class _MainAddPageState extends State {
       }
     }
     final go = boolProduct(qrCode);
-    go.then((value) async {
-      print(value);
-      // データベースあり
-      if (value == true) {
-        await Navigator.of(context).pushNamed("/AddPage2",
-            arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0));
-        print('OK1??');
-      }
-      // エラー
-      if (value == null) {
-        print('エラー');
-      }
-      // データベースに存在しない
-      if (value == false) {
-        showDialog(
-          context: context,
-          builder: (_) {
-            return AlertDialog(
-              title: Text("この商品は登録されていません。"),
-              content: Text("この商品は登録されていません。登録処理をしてください\nコード ${qrCode}"),
-              actions: <Widget>[
-                // ボタン領域
-                ElevatedButton(
-                    child: Text("キャンセル"),
-                    onPressed: () => Navigator.pop(context)),
-                ElevatedButton(
-                    child: Text("登録"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.of(context)
-                          .pushNamed("/ProductAdd", arguments: qrCode);
-                    }),
-              ],
-            );
-          },
-        );
-      }
+    go.then(
+      (value) async {
+        print(value);
+        // データベースあり
+        if (value == true) {
+          await Navigator.of(context).pushNamed("/AddPage2",
+              arguments: QrCodeQuantity(qrcode: qrCode, quantity: 0));
+        }
+        // エラー
+        if (value == null) {
+          print('エラー');
+        }
+        // データベースに存在しない
+        if (value == false) {
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text("この商品は登録されていません。"),
+                content: Text("この商品は登録されていません。登録処理をしてください\nコード ${qrCode}"),
+                actions: <Widget>[
+                  // ボタン領域
+                  ElevatedButton(
+                      child: Text("キャンセル"),
+                      onPressed: () => Navigator.pop(context)),
+                  ElevatedButton(
+                      child: Text("登録"),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.of(context)
+                            .pushNamed("/ProductAdd", arguments: qrCode);
+                      }),
+                ],
+              );
+            },
+          );
+        }
 
-      setState(() {
-        _isLoading = false;
-      });
-    });
+        setState(() {
+          _isLoading = false;
+        });
+      },
+    );
   }
 
   Card addListCard({

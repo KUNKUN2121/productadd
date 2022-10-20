@@ -16,7 +16,10 @@ import 'package:productadd/src/pages/RegisterPages/NewAddPage.dart';
 import 'package:productadd/src/pages/RegisterPages/NewPage.dart';
 //ヘルプ
 import 'package:productadd/src/pages/HelpPages/HelpMainPage.dart';
+//QRCODE
+import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
+String apiURL = 'https://api-stoful.meiden-travel.jp/api/';
 Future<void> main() async {
   // Flutter Engineの機能を使うので有効化
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,15 +33,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // デバイスで使用可能なカメラのリストを取得
-  final cameras = await availableCameras();
+  // final cameras = await availableCameras();
 
   // 利用可能なカメラのリストから特定のカメラを取得
-  final firstCamera = cameras.first;
+  // final firstCamera = cameras.first;
 
   // 取得できているか確認
-  print(firstCamera);
+  // print(firstCamera);
 
 // void main() {
+
   runApp(const MyApp());
 }
 
@@ -57,6 +61,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //AddPage1
         "/MainAddPage": (BuildContext context) => MainAddPage(),
+        "/QRScanner": (BuildContext context) => MobilerScaner(),
         //AddPage2
         "/AddPage2": (BuildContext context) => AddPage2(),
         //ConfirmPage

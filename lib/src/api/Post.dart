@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:productadd/main.dart';
 import 'dart:convert';
 
 import 'package:productadd/src/model/Barcode.dart';
@@ -14,7 +15,7 @@ class PostRequest {
 
   static Future<int> postMethod(_postBarcode) async {
     try {
-      String url = "https://store-project.f5.si/database/api/input.php";
+      String url = apiURL + "input.php";
 
       // Post用List
       List postBarcode = [];
