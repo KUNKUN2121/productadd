@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
 import 'package:productadd/src/model/Barcode.dart';
+import 'package:productadd/src/api/ChangePost.dart';
 
 class ItemSetting extends StatefulWidget {
   //const ItemSetting({Key? key}) : super(key: key);
@@ -166,7 +167,7 @@ class _ItemSettingState extends State<ItemSetting> {
                         width: 100,
                         child: Text(
                           '${quantity}',
-                          style: TextStyle(fontSize: 50),
+                          style: TextStyle(fontSize: 44),
                         ),
                       ),
                       ElevatedButton(
@@ -199,7 +200,9 @@ class _ItemSettingState extends State<ItemSetting> {
                       "確定",
                       style: TextStyle(fontSize: 45),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Change.changePostQuantity(int.parse(barcode!), quantity!);
+                    },
                   ),
                   SizedBox(
                     height: 50,
@@ -214,6 +217,16 @@ class _ItemSettingState extends State<ItemSetting> {
                     onPressed: () {
                       removeProductContents(barcode!);
                     },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red),
+                    ),
+                  ),
+                  ElevatedButton(
+                    child: Text(
+                      "詳細設定",
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    onPressed: () {},
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                     ),
