@@ -25,6 +25,7 @@ Future<Barcode> productInfoClass(String barcode) async {
 String? barcode;
 int? quantity;
 bool flg = false;
+bool _isLoading = false;
 
 class _ItemSettingState extends State<ItemSetting> {
   ///
@@ -59,191 +60,211 @@ class _ItemSettingState extends State<ItemSetting> {
       onWillPop: () async {
         // ここで任意の処理
         flg = false;
+        bool _isLoading = false;
         return true; // trueを返すと前の画面へ遷移
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('個数設定'),
-        ),
-        body: SingleChildScrollView(
-          child: Stack(children: [
-            Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 15,
-                  ),
-
-                  /// 商品名
-                  FutureBuilder(
-                    future: productInfoClass(barcode!),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Barcode> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Center(
-                          child:
-                              Text('エラーが発生しました。' + snapshot.error.toString()),
-                        );
-                      }
-                      if (snapshot.hasData) {
-                        productname = snapshot.data!.name;
-                        return Text(
-                          snapshot.data!.name,
-                          style: TextStyle(fontSize: 30),
-                        );
-                      } else {
-                        return Text("エラーが発生しました。",
-                            style: TextStyle(fontSize: 30));
-                      }
-                    },
-                  ),
-                  Text(
-                    '${barcode}',
-                    style: TextStyle(fontSize: 20),
-                  ),
-
-                  /// 画像
-                  Container(
-                    height: 200,
-                    child: FutureBuilder(
-                      future: productInfoClass(barcode!),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Barcode> snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                            child:
-                                Text('エラーが発生しました。' + snapshot.error.toString()),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          return Image.network(
-                            snapshot.data!.imgURL,
-                          );
-                        } else {
-                          return const Text('エラーが発生しました。');
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+      child: Stack(children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text('個数設定'),
+          ),
+          body: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
                     children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            _incrementquantity(-10);
-                          },
-                          child: Text(
-                            '-10',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                      ElevatedButton(
-                          onPressed: () {
-                            _incrementquantity(-1);
-                          },
-                          child: Text(
-                            '-1',
-                            style: TextStyle(fontSize: 20),
-                          )),
+                      SizedBox(
+                        height: 15,
+                      ),
+
+                      /// 商品名
+                      FutureBuilder(
+                        future: productInfoClass(barcode!),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Barcode> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: Text(
+                                  'エラーが発生しました。' + snapshot.error.toString()),
+                            );
+                          }
+                          if (snapshot.hasData) {
+                            productname = snapshot.data!.name;
+                            return Text(
+                              snapshot.data!.name,
+                              style: TextStyle(fontSize: 30),
+                            );
+                          } else {
+                            return Text("エラーが発生しました。",
+                                style: TextStyle(fontSize: 30));
+                          }
+                        },
+                      ),
+                      Text(
+                        '${barcode}',
+                        style: TextStyle(fontSize: 20),
+                      ),
+
+                      /// 画像
                       Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue),
+                        height: 200,
+                        child: FutureBuilder(
+                          future: productInfoClass(barcode!),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<Barcode> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.hasError) {
+                              return Center(
+                                child: Text(
+                                    'エラーが発生しました。' + snapshot.error.toString()),
+                              );
+                            }
+                            if (snapshot.hasData) {
+                              return Image.network(
+                                snapshot.data!.imgURL,
+                              );
+                            } else {
+                              return const Text('エラーが発生しました。');
+                            }
+                          },
                         ),
-                        width: 100,
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                _incrementquantity(-10);
+                              },
+                              child: Text(
+                                '-10',
+                                style: TextStyle(fontSize: 20),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                _incrementquantity(-1);
+                              },
+                              child: Text(
+                                '-1',
+                                style: TextStyle(fontSize: 20),
+                              )),
+                          Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.blue),
+                            ),
+                            width: 100,
+                            child: Text(
+                              '${quantity}',
+                              style: TextStyle(fontSize: 44),
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                _incrementquantity(1);
+                              },
+                              child: Text(
+                                '+1',
+                                style: TextStyle(fontSize: 20),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                _incrementquantity(10);
+                              },
+                              child: Text(
+                                '+10',
+                                style: TextStyle(fontSize: 20),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      ////////
+
+                      /// 登録画面
+
+                      ElevatedButton(
                         child: Text(
-                          '${quantity}',
-                          style: TextStyle(fontSize: 44),
+                          "確定",
+                          style: TextStyle(fontSize: 45),
+                        ),
+                        onPressed: () {
+                          _isLoading = true;
+                          setState(() {});
+                          Future<int> go = Change.changePostQuantity(
+                              barcode!, quantity!.toString());
+                          go.then((value) {
+                            if (value == 200) {
+                              print('changePostQuantity_OK');
+                              _isLoading = false;
+                              Navigator.pop(context);
+                            }
+                          });
+                        },
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+
+                      ///削除
+                      ElevatedButton(
+                        child: Text(
+                          "削除",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        onPressed: () {
+                          removeProductContents(barcode!);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
                         ),
                       ),
                       ElevatedButton(
-                          onPressed: () {
-                            _incrementquantity(1);
-                          },
-                          child: Text(
-                            '+1',
-                            style: TextStyle(fontSize: 20),
-                          )),
-                      ElevatedButton(
-                          onPressed: () {
-                            _incrementquantity(10);
-                          },
-                          child: Text(
-                            '+10',
-                            style: TextStyle(fontSize: 20),
-                          )),
+                        child: Text(
+                          "詳細設定",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
-////////
-
-                  /// 登録画面
-
-                  ElevatedButton(
-                    child: Text(
-                      "確定",
-                      style: TextStyle(fontSize: 45),
-                    ),
-                    onPressed: () {
-                      Future<int> go = Change.changePostQuantity(
-                          barcode!, quantity!.toString());
-                      go.then((value) {
-                        if (value == 200) {
-                          print('changePostQuantity_OK');
-                          Navigator.pop(context);
-                        }
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-
-                  ///削除
-                  ElevatedButton(
-                    child: Text(
-                      "削除",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    onPressed: () {
-                      removeProductContents(barcode!);
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red),
-                    ),
-                  ),
-                  ElevatedButton(
-                    child: Text(
-                      "詳細設定",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    onPressed: () {},
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.red),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ]),
+          ),
         ),
-      ),
+        if (_isLoading)
+          const Opacity(
+            opacity: 0.7,
+            child: ModalBarrier(
+              dismissible: false,
+              color: Colors.black,
+            ),
+          ),
+        if (_isLoading) const Center(child: CircularProgressIndicator()),
+      ]),
     );
   }
 
