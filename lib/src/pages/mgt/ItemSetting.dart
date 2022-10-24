@@ -251,6 +251,7 @@ class _ItemSettingState extends State<ItemSetting> {
                                 imgURL: imgURL),
                           )
                               .then((value) {
+                            flg = false;
                             // 再描画
                             setState(() {});
                           });

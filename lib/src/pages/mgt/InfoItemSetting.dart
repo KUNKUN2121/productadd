@@ -431,8 +431,10 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
                                               if (value == 200) {
                                                 print('changePostQuantity_OK');
                                                 // _isLoading = false;
+                                                flg = false;
                                                 Navigator.pop(context);
                                                 Navigator.pop(context);
+                                                // Navigator.pop(context);
                                               }
                                             });
                                           },
