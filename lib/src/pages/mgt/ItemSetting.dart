@@ -201,7 +201,14 @@ class _ItemSettingState extends State<ItemSetting> {
                       style: TextStyle(fontSize: 45),
                     ),
                     onPressed: () {
-                      Change.changePostQuantity(int.parse(barcode!), quantity!);
+                      Future<int> go = Change.changePostQuantity(
+                          barcode!, quantity!.toString());
+                      go.then((value) {
+                        if (value == 200) {
+                          print('changePostQuantity_OK');
+                          Navigator.pop(context);
+                        }
+                      });
                     },
                   ),
                   SizedBox(

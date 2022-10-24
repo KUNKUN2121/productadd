@@ -216,11 +216,17 @@ class _MgtState extends State<Mgt> {
                                 ),
                               ),
                               onPressed: () async {
-                                await Navigator.of(context).pushNamed(
+                                await Navigator.of(context)
+                                    .pushNamed(
                                   "/mgtItemSetting",
                                   arguments: QrCodeQuantity(
                                       qrcode: barcode, quantity: quantity),
-                                );
+                                )
+                                    .then((value) {
+                                  // 再描画
+                                  setState(() {});
+                                });
+                                ;
                               },
                             )
                           ],
