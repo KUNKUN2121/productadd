@@ -8,9 +8,17 @@ import 'package:productadd/main.dart';
 class QrCodeQuantity {
   String qrcode;
   int quantity;
+  String? name;
+  int? price;
+  String? imgURL;
+  String? category;
   QrCodeQuantity({
     required this.qrcode,
     required this.quantity,
+    this.name,
+    this.price,
+    this.imgURL,
+    this.category,
   });
 }
 

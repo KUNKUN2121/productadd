@@ -24,21 +24,28 @@ Future<Barcode> productInfoClass(String barcode) async {
 ///
 String? barcode;
 int? quantity;
+int? price;
 bool flg = false;
 bool _isLoading = false;
+String? imgURL;
+String? category;
+String productname = '';
 
 class _ItemSettingState extends State<ItemSetting> {
   ///
   // String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
   String noimage = 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png';
-  String productname = '';
+
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     if (flg == false) {
-      QrCodeQuantity qrCodeQuantity =
+      final QrCodeQuantity qrCodeQuantity =
           ModalRoute.of(context)!.settings.arguments as QrCodeQuantity;
       barcode = qrCodeQuantity.qrcode;
       quantity = qrCodeQuantity.quantity;
+      price = qrCodeQuantity.price;
+      category = qrCodeQuantity.category;
       flg = true;
     }
 
@@ -132,6 +139,7 @@ class _ItemSettingState extends State<ItemSetting> {
                               );
                             }
                             if (snapshot.hasData) {
+                              imgURL = snapshot.data!.imgURL;
                               return Image.network(
                                 snapshot.data!.imgURL,
                               );
@@ -206,6 +214,9 @@ class _ItemSettingState extends State<ItemSetting> {
                           style: TextStyle(fontSize: 45),
                         ),
                         onPressed: () {
+                          print(imgURL);
+                          flg = false;
+                          // bool _isLoading = false;
                           _isLoading = true;
                           setState(() {});
                           Future<int> go = Change.changePostQuantity(
@@ -214,6 +225,7 @@ class _ItemSettingState extends State<ItemSetting> {
                             if (value == 200) {
                               print('changePostQuantity_OK');
                               _isLoading = false;
+                              flg = false;
                               Navigator.pop(context);
                             }
                           });
@@ -223,26 +235,26 @@ class _ItemSettingState extends State<ItemSetting> {
                         height: 50,
                       ),
 
-                      ///削除
-                      ElevatedButton(
-                        child: Text(
-                          "削除",
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        onPressed: () {
-                          removeProductContents(barcode!);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red),
-                        ),
-                      ),
                       ElevatedButton(
                         child: Text(
                           "詳細設定",
                           style: TextStyle(fontSize: 25),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await Navigator.of(context)
+                              .pushNamed(
+                            "/mgtInfoItemSetting",
+                            arguments: QrCodeQuantity(
+                                name: productname,
+                                qrcode: barcode.toString(),
+                                quantity: quantity!,
+                                imgURL: imgURL),
+                          )
+                              .then((value) {
+                            // 再描画
+                            setState(() {});
+                          });
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red),

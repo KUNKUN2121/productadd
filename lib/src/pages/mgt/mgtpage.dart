@@ -56,22 +56,25 @@ class _MgtState extends State<Mgt> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '作成中',
+                '商品管理ページ',
                 style: TextStyle(fontSize: 30),
               ),
               Container(
                 //カテゴリ選択
                 child: Row(children: [
                   Column(
-                    children: [
-                      Text(
-                        '現在 変更 ボタンは使用できません。',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      Text('個数確認のみ使用できます。', style: TextStyle(fontSize: 20)),
-                    ],
+                    children: [],
                   )
                 ]),
+              ),
+              ElevatedButton(
+                child: Text(
+                  "更新",
+                  style: TextStyle(fontSize: 45),
+                ),
+                onPressed: () {
+                  setState(() {});
+                },
               ),
               FutureBuilder(
                 future: getData(),
@@ -95,7 +98,10 @@ class _MgtState extends State<Mgt> {
                                   snapshot.data![index]['barnum'].toString(),
                               quantity:
                                   int.parse(snapshot.data![index]['quantity']),
+                              // imgURL: snapshot.data![index]['imgURL'],
                               imgURL: snapshot.data![index]['imgURL'],
+                              price: snapshot.data![index]['price'],
+                              category: snapshot.data![index]['category'],
                               id: 1);
                         },
                       ),
@@ -118,8 +124,10 @@ class _MgtState extends State<Mgt> {
   Card addListCard({
     required String title,
     required String barcode,
+    required String price,
     required int quantity,
     required String imgURL,
+    required String category,
     required int id,
   }) {
     return Card(
@@ -163,6 +171,11 @@ class _MgtState extends State<Mgt> {
                               ),
                               Text(
                                 barcode,
+                                softWrap: true,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                '${price}円',
                                 softWrap: true,
                                 style: TextStyle(fontSize: 18),
                               ),
@@ -216,17 +229,20 @@ class _MgtState extends State<Mgt> {
                                 ),
                               ),
                               onPressed: () async {
+                                print(imgURL);
                                 await Navigator.of(context)
                                     .pushNamed(
                                   "/mgtItemSetting",
                                   arguments: QrCodeQuantity(
-                                      qrcode: barcode, quantity: quantity),
+                                      qrcode: barcode,
+                                      quantity: quantity,
+                                      price: int.parse(price),
+                                      category: category),
                                 )
                                     .then((value) {
                                   // 再描画
                                   setState(() {});
                                 });
-                                ;
                               },
                             )
                           ],
