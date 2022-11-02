@@ -68,7 +68,7 @@ class _MainAddPageState extends State {
                   // Navigator.of(context).pushNamed("/QRScanner");
                   var result =
                       await Navigator.of(context).pushNamed('/QRScanner');
-                  print('戻ってきたよ${result}');
+                  // print('戻ってきたよ${result}');
                   goAddProduct(result.toString());
                 },
               ),
