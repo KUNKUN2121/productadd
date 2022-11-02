@@ -18,7 +18,7 @@ class RegisterImage {
     // 設定
     // String url = apiURL + "square.php";
     // String url = "https://store-project.f5.si/database/api/square.php";
-    String url = "https://api-stoful.meiden-travel.jp/api/square.php";
+    String url = apiURL + "square.php";
     // String url = "http://192.168.0.203:9000/api/square.php";
 
     try {
@@ -41,6 +41,7 @@ class RegisterImage {
       print('レスポンスOK');
       Map<String, dynamic> data = jsonDecode(resp.body);
       String imgurl = data["msg"];
+      print(imgurl);
       print(imgurl);
       return imgurl;
     } catch (e) {
