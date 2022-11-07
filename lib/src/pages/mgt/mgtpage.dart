@@ -64,7 +64,7 @@ class _MgtState extends State<Mgt> {
         appBar: AppBar(
           title: Text('商品管理'),
         ),
-        backgroundColor: Colors.blueGrey[300],
+        // backgroundColor: Color.fromARGB(255, 158, 174, 255),
         body: SafeArea(
           child: Center(
               child: Column(
