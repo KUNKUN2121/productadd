@@ -456,7 +456,7 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "削除",
+                    "商品削除",
                     style: TextStyle(fontSize: 25),
                   ),
                   onPressed: () {
