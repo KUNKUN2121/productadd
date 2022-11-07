@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:productadd/main.dart';
 import 'package:productadd/src/api/AllProduct.dart';
@@ -15,11 +17,14 @@ class Mgt extends StatefulWidget {
 
 class _MgtState extends State<Mgt> {
   var data;
-  Future<List> getData() async {
+
+  Future<List> getData(String order) async {
     String url = apiURL + 'all.php';
-    // String url = 'https://store-project.f5.si/database/api/all.php';
+    // カテゴリー
+    String goURL = apiURL + 'all.php' + '?order=${order}&category=${category}';
+    print(goURL);
     try {
-      var result = await get(Uri.parse(url));
+      var result = await get(Uri.parse(goURL));
       if (result.statusCode == 200) {
         data = json.decode(result.body);
         int length = data.length - 1;
@@ -40,10 +45,20 @@ class _MgtState extends State<Mgt> {
   void initState() {
     super.initState();
 
-    getData();
+    // getData();
   }
 
+  List CategoryName = [
+    ["すべて"],
+    ["ドリンク"],
+    ["おにぎり"],
+    ["パン"],
+    ["筆記用具"],
+    ["その他"],
+  ];
   @override
+  String? order = 'itemname';
+  String? category = '0';
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -53,31 +68,114 @@ class _MgtState extends State<Mgt> {
         body: SafeArea(
           child: Center(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
                 '商品管理ページ',
                 style: TextStyle(fontSize: 30),
               ),
+
+              // 並び替え
+
               Container(
-                //カテゴリ選択
-                child: Row(children: [
-                  Column(
-                    children: [],
-                  )
-                ]),
-              ),
-              ElevatedButton(
-                child: Text(
-                  "更新",
-                  style: TextStyle(fontSize: 45),
+                child: Row(
+                  children: [
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              DropdownButton(
+                                items: const [
+                                  DropdownMenuItem(
+                                    child: Text('名前順'),
+                                    value: 'itemname',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('在庫 多い順'),
+                                    value: '-quantity',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('在庫 少ない順'),
+                                    value: 'quantity',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('変更順'),
+                                    value: '-updated_at',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('作成 新しい順'),
+                                    value: '-created_at',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('作成 古い順'),
+                                    value: 'created_at',
+                                  ),
+                                ],
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    print('isSelected ${order} value ${value}');
+                                    order = value;
+                                  });
+                                },
+                                value: order,
+                              ),
+                            ]),
+
+                        //カテゴリ
+
+                        DropdownButton(
+                          items: const [
+                            DropdownMenuItem(
+                              child: Text('すべて'),
+                              value: '0',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('ドリンク'),
+                              value: '1',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('おにぎり'),
+                              value: '2',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('パン'),
+                              value: '3',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('筆記用具'),
+                              value: '4',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('その他'),
+                              value: '5',
+                            ),
+                          ],
+                          onChanged: (String? value) {
+                            setState(() {
+                              print('isSelected ${category} value ${value}');
+                              category = value;
+                            });
+                          },
+                          value: category,
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                      child: Text(
+                        "更新",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                  ],
                 ),
-                onPressed: () {
-                  setState(() {});
-                },
               ),
+
               FutureBuilder(
-                future: getData(),
+                future: getData(order!),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -176,6 +274,11 @@ class _MgtState extends State<Mgt> {
                               ),
                               Text(
                                 '${price}円',
+                                softWrap: true,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                CategoryName[int.parse(category)].toString(),
                                 softWrap: true,
                                 style: TextStyle(fontSize: 18),
                               ),
