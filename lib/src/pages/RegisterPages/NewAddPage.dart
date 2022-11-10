@@ -17,6 +17,8 @@ class RegisterItemPage extends StatefulWidget {
 }
 
 class _RegisterItemPageState extends State<RegisterItemPage> {
+  bool _isLoading = false;
+
   ///
   /// カテゴリー変更の際は
   ///[isSelectedCategoryName]と[DropdownButton]を変更してください
@@ -26,6 +28,8 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   ///
   ///
   final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnControllerAdd =
       RoundedLoadingButtonController();
 
   int count = 10;
@@ -128,6 +132,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
         print("れすぽんすこーど ${value}");
         int responsecode = value;
         if (value == 200) {
+          _btnControllerAdd.stop();
           showDialog(
             //画面外の部分を押せないようにする。
             barrierDismissible: false,
@@ -158,6 +163,7 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
             },
           );
         } else {
+          _btnControllerAdd.error();
           showDialog(
             //画面外の部分を押せないようにする。
             barrierDismissible: false,
@@ -204,121 +210,193 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
         title: const Text('商品登録'),
       ),
       body: SingleChildScrollView(
-        child: Stack(children: [
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  height: 200,
-                  child: Image.network(tempimg),
-                ),
-                Text('画像の読み込みには時間がかかります。'),
-                RoundedLoadingButton(
-                    child: Text('商品写真を撮影',
-                        style: TextStyle(fontSize: 23, color: Colors.white)),
-                    controller: _btnController,
-                    color: Colors.green,
-                    width: 200,
-                    onPressed: () {
-                      pictureChange();
-                    }),
-                Text(
-                  'コード : ${barcode}',
-                  style: TextStyle(fontSize: 20),
-                ),
-
-                /// 商品名
-
-                TextField(
-                    controller: _itemname,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.edit),
-                      labelText: '商品名',
-                    )),
-
-                /// 価格
-
-                TextField(
-                    keyboardType: TextInputType.numberWithOptions(
-                        signed: true, decimal: true),
-                    // keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _price,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.currency_yen),
-                      labelText: '販売価格',
-                    )),
-
-                /// カテゴリー
-
-                Text('カテゴリー'),
-                // TextField(
-                //   // controller: TextEditingController(text: '${quantity}'),
-                //   keyboardType: TextInputType.numberWithOptions(
-                //       signed: true, decimal: true),
-                //   controller: _category,
-                // ),
-                DropdownButton(
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black,
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Container(
+                    height: 200,
+                    child: Image.network(tempimg),
                   ),
-                  items: const [
-                    DropdownMenuItem(
-                      child: Text('ドリンク'),
-                      value: 1,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('おにぎり'),
-                      value: 2,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('パン'),
-                      value: 3,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('筆記用具'),
-                      value: 4,
-                    ),
-                    DropdownMenuItem(
-                      child: Text('その他'),
-                      value: 5,
-                    ),
-                  ],
-                  //6
-                  onChanged: (int? value) {
-                    print(value);
-                    setState(() {
-                      isSelectedCategory = value;
-                    });
-                  },
-                  //7
-                  value: isSelectedCategory,
-                ),
+                  Text('画像の読み込みには時間がかかります。'),
+                  RoundedLoadingButton(
+                      child: Text('商品写真を撮影',
+                          style: TextStyle(fontSize: 23, color: Colors.white)),
+                      controller: _btnController,
+                      color: Colors.green,
+                      width: 200,
+                      onPressed: () {
+                        pictureChange();
+                      }),
+                  Text(
+                    'コード : ${barcode}',
+                    style: TextStyle(fontSize: 20),
+                  ),
 
-                ///https://flutter.keicode.com/basics/textcontroller.php
-                ///
+                  /// 商品名
 
-                ElevatedButton(
-                    child: Text(
-                      "登録確認",
-                      style: TextStyle(fontSize: 25),
+                  TextField(
+                      controller: _itemname,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.edit),
+                        labelText: '商品名',
+                      )),
+
+                  /// 価格
+
+                  TextField(
+                      keyboardType: TextInputType.numberWithOptions(
+                          signed: true, decimal: true),
+                      // keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      controller: _price,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.currency_yen),
+                        labelText: '販売価格',
+                      )),
+
+                  /// カテゴリー
+
+                  Text('カテゴリー'),
+                  // TextField(
+                  //   // controller: TextEditingController(text: '${quantity}'),
+                  //   keyboardType: TextInputType.numberWithOptions(
+                  //       signed: true, decimal: true),
+                  //   controller: _category,
+                  // ),
+                  DropdownButton(
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
                     ),
-                    onPressed: () {
-                      if (_itemname.text == '' || _price.text == '') {
-                        print('null');
+                    items: const [
+                      DropdownMenuItem(
+                        child: Text('ドリンク'),
+                        value: 1,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('おにぎり'),
+                        value: 2,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('パン'),
+                        value: 3,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('筆記用具'),
+                        value: 4,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('その他'),
+                        value: 5,
+                      ),
+                    ],
+                    //6
+                    onChanged: (int? value) {
+                      print(value);
+                      setState(() {
+                        isSelectedCategory = value;
+                      });
+                    },
+                    //7
+                    value: isSelectedCategory,
+                  ),
+
+                  ///https://flutter.keicode.com/basics/textcontroller.php
+                  ///
+
+                  ElevatedButton(
+                      child: Text(
+                        "登録確認",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      onPressed: () {
+                        if (_itemname.text == '' || _price.text == '') {
+                          print('null');
+                          showDialog(
+                            //画面外の部分を押せないようにする。
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                title: Text("商品名または価格が入力されていません。"),
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(12),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text('閉じる')),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                          return;
+                        }
                         showDialog(
                           //画面外の部分を押せないようにする。
                           barrierDismissible: false,
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                              title: Text("商品名または価格が入力されていません。"),
+                              title: Text("以下の商品を登録します。"),
                               children: [
                                 Padding(
                                   padding: EdgeInsets.all(12),
                                   child: Column(
                                     children: [
+                                      Image.network(tempimg),
+                                      Row(
+                                        children: [
+                                          const Text('商品名：',
+                                              style: TextStyle(fontSize: 14)),
+                                          Flexible(
+                                            child: Text(
+                                              _itemname.text,
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('コード:',
+                                              style: TextStyle(fontSize: 14)),
+                                          Text(barcode.toString(),
+                                              style: TextStyle(fontSize: 20)),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('カテゴリー：',
+                                              style: TextStyle(fontSize: 14)),
+                                          Text(
+                                              isSelectedCategoryName[
+                                                  isSelectedCategory! - 1],
+                                              style: TextStyle(fontSize: 20)),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text('価格設定：',
+                                              style: TextStyle(fontSize: 14)),
+                                          Text("¥" + _price.text,
+                                              style: TextStyle(fontSize: 20)),
+                                        ],
+                                      ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -328,6 +406,23 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                                                 Navigator.of(context).pop();
                                               },
                                               child: Text('閉じる')),
+                                          // ElevatedButton(
+                                          //     onPressed: () {
+                                          //       registerPost();
+                                          //     },
+                                          //     child: Text('登録')),
+                                          RoundedLoadingButton(
+                                              child: Text('登録',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white)),
+                                              controller: _btnControllerAdd,
+                                              color: Colors.green,
+                                              width: 100,
+                                              onPressed: () {
+                                                _isLoading = true;
+                                                registerPost();
+                                              }),
                                         ],
                                       )
                                     ],
@@ -337,87 +432,21 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
                             );
                           },
                         );
-                        return;
-                      }
-                      showDialog(
-                        //画面外の部分を押せないようにする。
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) {
-                          return SimpleDialog(
-                            title: Text("以下の商品を登録します。"),
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(12),
-                                child: Column(
-                                  children: [
-                                    Image.network(tempimg),
-                                    Row(
-                                      children: [
-                                        const Text('商品名：',
-                                            style: TextStyle(fontSize: 14)),
-                                        Flexible(
-                                          child: Text(
-                                            _itemname.text,
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('バーコード：',
-                                            style: TextStyle(fontSize: 14)),
-                                        Text(barcode.toString(),
-                                            style: TextStyle(fontSize: 20)),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('カテゴリー：',
-                                            style: TextStyle(fontSize: 14)),
-                                        Text(
-                                            isSelectedCategoryName[
-                                                isSelectedCategory! - 1],
-                                            style: TextStyle(fontSize: 20)),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text('価格設定：',
-                                            style: TextStyle(fontSize: 14)),
-                                        Text("¥" + _price.text,
-                                            style: TextStyle(fontSize: 20)),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('閉じる')),
-                                        ElevatedButton(
-                                            onPressed: () {
-                                              registerPost();
-                                            },
-                                            child: Text('登録')),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }),
-              ],
+                      }),
+                ],
+              ),
             ),
-          ),
-        ]),
+            if (_isLoading)
+              const Opacity(
+                opacity: 0.7,
+                child: ModalBarrier(
+                  dismissible: false,
+                  color: Colors.black,
+                ),
+              ),
+            if (_isLoading) const Center(child: CircularProgressIndicator())
+          ],
+        ),
       ),
     );
   }
