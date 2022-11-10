@@ -11,6 +11,7 @@ import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 //在庫管理
 import 'package:productadd/src/pages/mgt/mgtpage.dart';
 import 'package:productadd/src/pages/mgt/ItemSetting.dart';
+import 'package:productadd/src/pages/mgt/InfoItemSetting.dart';
 //新規商品追加
 import 'package:productadd/src/pages/RegisterPages/NewAddPage.dart';
 import 'package:productadd/src/pages/RegisterPages/NewPage.dart';
@@ -20,6 +21,7 @@ import 'package:productadd/src/pages/HelpPages/HelpMainPage.dart';
 import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
 String apiURL = 'https://api-stoful.meiden-travel.jp/api/';
+String testURL = 'http://localhost:9000/api/';
 Future<void> main() async {
   // Flutter Engineの機能を使うので有効化
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
         //商品管理
         "/mgt": (BuildContext context) => Mgt(),
         "/mgtItemSetting": (BuildContext context) => ItemSetting(),
+        "/mgtInfoItemSetting": (BuildContext context) => InfoItemSetting(),
         //新商品追加
         "/NewAddPage": (BuildContext context) => NewAddPage(),
         //新商品追加2

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:productadd/main.dart';
 import 'package:productadd/src/api/AllProduct.dart';
@@ -15,11 +17,14 @@ class Mgt extends StatefulWidget {
 
 class _MgtState extends State<Mgt> {
   var data;
-  Future<List> getData() async {
+
+  Future<List> getData(String order) async {
     String url = apiURL + 'all.php';
-    // String url = 'https://store-project.f5.si/database/api/all.php';
+    // カテゴリー
+    String goURL = apiURL + 'all.php' + '?order=${order}&category=${category}';
+    print(goURL);
     try {
-      var result = await get(Uri.parse(url));
+      var result = await get(Uri.parse(goURL));
       if (result.statusCode == 200) {
         data = json.decode(result.body);
         int length = data.length - 1;
@@ -40,10 +45,20 @@ class _MgtState extends State<Mgt> {
   void initState() {
     super.initState();
 
-    getData();
+    // getData();
   }
 
+  List CategoryName = [
+    ["すべて"],
+    ["ドリンク"],
+    ["おにぎり"],
+    ["パン"],
+    ["筆記用具"],
+    ["その他"],
+  ];
   @override
+  String? order = 'itemname';
+  String? category = '0';
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -53,28 +68,114 @@ class _MgtState extends State<Mgt> {
         body: SafeArea(
           child: Center(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '作成中',
+                '商品管理ページ',
                 style: TextStyle(fontSize: 30),
               ),
+
+              // 並び替え
+
               Container(
-                //カテゴリ選択
-                child: Row(children: [
-                  Column(
-                    children: [
-                      Text(
-                        '現在 変更 ボタンは使用できません。',
-                        style: TextStyle(fontSize: 20),
+                child: Row(
+                  children: [
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              DropdownButton(
+                                items: const [
+                                  DropdownMenuItem(
+                                    child: Text('名前順'),
+                                    value: 'itemname',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('在庫 多い順'),
+                                    value: '-quantity',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('在庫 少ない順'),
+                                    value: 'quantity',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('変更順'),
+                                    value: '-updated_at',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('作成 新しい順'),
+                                    value: '-created_at',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('作成 古い順'),
+                                    value: 'created_at',
+                                  ),
+                                ],
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    print('isSelected ${order} value ${value}');
+                                    order = value;
+                                  });
+                                },
+                                value: order,
+                              ),
+                            ]),
+
+                        //カテゴリ
+
+                        DropdownButton(
+                          items: const [
+                            DropdownMenuItem(
+                              child: Text('すべて'),
+                              value: '0',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('ドリンク'),
+                              value: '1',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('おにぎり'),
+                              value: '2',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('パン'),
+                              value: '3',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('筆記用具'),
+                              value: '4',
+                            ),
+                            DropdownMenuItem(
+                              child: Text('その他'),
+                              value: '5',
+                            ),
+                          ],
+                          onChanged: (String? value) {
+                            setState(() {
+                              print('isSelected ${category} value ${value}');
+                              category = value;
+                            });
+                          },
+                          value: category,
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                      child: Text(
+                        "更新",
+                        style: TextStyle(fontSize: 17),
                       ),
-                      Text('個数確認のみ使用できます。', style: TextStyle(fontSize: 20)),
-                    ],
-                  )
-                ]),
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
               ),
+
               FutureBuilder(
-                future: getData(),
+                future: getData(order!),
                 builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -95,7 +196,10 @@ class _MgtState extends State<Mgt> {
                                   snapshot.data![index]['barnum'].toString(),
                               quantity:
                                   int.parse(snapshot.data![index]['quantity']),
+                              // imgURL: snapshot.data![index]['imgURL'],
                               imgURL: snapshot.data![index]['imgURL'],
+                              price: snapshot.data![index]['price'],
+                              category: snapshot.data![index]['category'],
                               id: 1);
                         },
                       ),
@@ -118,8 +222,10 @@ class _MgtState extends State<Mgt> {
   Card addListCard({
     required String title,
     required String barcode,
+    required String price,
     required int quantity,
     required String imgURL,
+    required String category,
     required int id,
   }) {
     return Card(
@@ -163,6 +269,16 @@ class _MgtState extends State<Mgt> {
                               ),
                               Text(
                                 barcode,
+                                softWrap: true,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                '${price}円',
+                                softWrap: true,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              Text(
+                                CategoryName[int.parse(category)].toString(),
                                 softWrap: true,
                                 style: TextStyle(fontSize: 18),
                               ),
@@ -216,11 +332,20 @@ class _MgtState extends State<Mgt> {
                                 ),
                               ),
                               onPressed: () async {
-                                await Navigator.of(context).pushNamed(
+                                print(imgURL);
+                                await Navigator.of(context)
+                                    .pushNamed(
                                   "/mgtItemSetting",
                                   arguments: QrCodeQuantity(
-                                      qrcode: barcode, quantity: quantity),
-                                );
+                                      qrcode: barcode,
+                                      quantity: quantity,
+                                      price: int.parse(price),
+                                      category: category),
+                                )
+                                    .then((value) {
+                                  // 再描画
+                                  setState(() {});
+                                });
                               },
                             )
                           ],
