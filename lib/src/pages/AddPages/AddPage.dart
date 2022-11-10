@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import '../../model/Barcode.dart';
 import '../RegisterPages/NewAddPage.dart';
 import '../../api/boolProduct.dart';
@@ -29,6 +30,7 @@ class _MainAddPageState extends State {
 
   @override
   Widget build(BuildContext context) {
+    String result = '';
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -57,19 +59,35 @@ class _MainAddPageState extends State {
                   ),
                 ),
               ),
-              // ElevatedButton(
-              //   child: Text(
-              //     'スキャン2',
-              //     style: TextStyle(fontSize: 30),
-              //   ),
-              //   onPressed: () async {
-              //     // Navigator.of(context).pushNamed("/QRScanner");
-              //     var result =
-              //         await Navigator.of(context).pushNamed('/QRScanner');
-              //     print('戻ってきたよ${result}');
-              //     goAddProduct(result.toString());
-              //   },
-              // ),
+              ElevatedButton(
+                child: Text(
+                  'スキャン2',
+                  style: TextStyle(fontSize: 30),
+                ),
+                onPressed: () async {
+                  // Navigator.of(context).pushNamed("/QRScanner");
+                  var result =
+                      await Navigator.of(context).pushNamed('/QRScanner');
+                  // print('戻ってきたよ${result}');
+                  goAddProduct(result.toString());
+                },
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  var res = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SimpleBarcodeScannerPage(),
+                      ));
+                  setState(() {
+                    if (res is String) {
+                      result = res;
+                    }
+                  });
+                },
+                child: const Text('Open Scanner'),
+              ),
+              Text('Barcode Result: $result'),
 
               Expanded(
                 child: ListView(

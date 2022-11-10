@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:productadd/src/model/QRScan/QRScannerOverlay.dart';
+import 'dart:io';
 
 class MobilerScaner extends StatefulWidget {
   const MobilerScaner({Key? key}) : super(key: key);
@@ -59,10 +60,18 @@ class _MobilerScanerState extends State<MobilerScaner> {
               allowDuplicates: false,
               controller: cameraController,
               onDetect: (barcode, args) {
+                cameraController.stop();
                 final String? code = barcode.rawValue;
-                debugPrint('Barcode found! $code');
-                Navigator.pop(context, code);
-                return;
+                print(code);
+                try {
+                  cameraController.stop();
+                  int barnum = int.parse(code!);
+                  Navigator.pop(context, barnum);
+                } catch (e) {
+                  sleep(Duration(seconds: 1));
+                  cameraController.start();
+                  debugPrint('URL???NotINT! $code');
+                }
               },
             ),
             QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.5)),

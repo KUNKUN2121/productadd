@@ -28,7 +28,9 @@ bool flg = false;
 class _AddPage2State extends State<AddPage2> {
   ///
   // String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
-  String noimage = 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png';
+  // String noimage = 'https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png';
+  String noimage =
+      'https://api-stoful.meiden-travel.jp/api/uploads/noimage.jpg';
   String productname = '';
   @override
   Widget build(BuildContext context) {
