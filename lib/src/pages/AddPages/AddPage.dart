@@ -284,6 +284,22 @@ class _MainAddPageState extends State {
         // エラー
         if (value == null) {
           print('エラー');
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text("ネットワークエラー"),
+                content: Text(
+                    "ネットワークに接続できません。Wi-Fi設定などを確認してください。治らない場合は端末を再起動してください"),
+                actions: <Widget>[
+                  // ボタン領域
+                  ElevatedButton(
+                      child: Text("完了"),
+                      onPressed: () => Navigator.pop(context)),
+                ],
+              );
+            },
+          );
         }
         // データベースに存在しない
         if (value == false) {
