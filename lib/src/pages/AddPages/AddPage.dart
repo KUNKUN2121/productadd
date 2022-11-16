@@ -69,25 +69,28 @@ class _MainAddPageState extends State {
                   var result =
                       await Navigator.of(context).pushNamed('/QRScanner');
                   // print('戻ってきたよ${result}');
+                  if (result == null) {
+                    return;
+                  }
                   goAddProduct(result.toString());
                 },
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  var res = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SimpleBarcodeScannerPage(),
-                      ));
-                  setState(() {
-                    if (res is String) {
-                      result = res;
-                    }
-                  });
-                },
-                child: const Text('Open Scanner'),
-              ),
-              Text('Barcode Result: $result'),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     var res = await Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const SimpleBarcodeScannerPage(),
+              //         ));
+              //     setState(() {
+              //       if (res is String) {
+              //         result = res;
+              //       }
+              //     });
+              //   },
+              //   child: const Text('Open Scanner'),
+              // ),
+              // Text('Barcode Result: $result'),
 
               Expanded(
                 child: ListView(
