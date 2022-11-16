@@ -288,7 +288,7 @@ class _AddPage2State extends State<AddPage2> {
 
   Future addProductContents(String addqrcode) async {
     Barcode addProduct =
-        await Barcode.addProduct(addqrcode, quantity!, productsindex);
+        await Barcode.addProductinput(addqrcode, quantity!, productsindex);
     // Barcode addProduc22 = Barcode(name: productname,barcode: barcode.toString(),imgURL:,quantity: quantity!,id:productsindex);
     // print(productsindex);
 
@@ -355,6 +355,8 @@ class _AddPage2State extends State<AddPage2> {
     flg = false;
     // products.insert(0, addProduct);
     products.add(addProduct);
+    print(quantity);
+    print(addProduct.quantity);
     Navigator.of(context).pop();
   }
 }
