@@ -19,9 +19,10 @@ class _MgtState extends State<Mgt> {
   var data;
 
   Future<List> getData(String order) async {
-    String url = apiURL + 'all.php';
     // カテゴリー
-    String goURL = apiURL + 'all.php' + '?order=${order}&category=${category}';
+    String goURL = apiURL +
+        'all.php' +
+        '?order=${order}&category=${category}&search=${search}';
     print(goURL);
     try {
       var result = await get(Uri.parse(goURL));
@@ -59,6 +60,9 @@ class _MgtState extends State<Mgt> {
   @override
   String? order = 'itemname';
   String? category = '0';
+  String? search = '';
+  final TextEditingController _seachController = TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -69,11 +73,9 @@ class _MgtState extends State<Mgt> {
           child: Center(
               child: Column(
             children: [
-              const Text(
-                '商品管理ページ',
-                style: TextStyle(fontSize: 30),
+              SizedBox(
+                height: 15,
               ),
-
               // 並び替え
 
               Container(
@@ -169,6 +171,52 @@ class _MgtState extends State<Mgt> {
                       onPressed: () {
                         setState(() {});
                       },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue, //色
+                    width: 3.0, //太さ
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                        child: (Icon(Icons.qr_code_scanner)),
+                        onPressed: () async {
+                          var result = await Navigator.of(context)
+                              .pushNamed('/QRScanner');
+                          print(result);
+                          if (result == null) {
+                            return;
+                          }
+                          search = '';
+                          search = result.toString();
+                          _seachController.text = result.toString();
+                          setState(() {});
+                        }),
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: TextFormField(
+                          // バーコード読み取りの値入力
+                          // initialValue: search,
+                          controller: _seachController,
+                          decoration: const InputDecoration(
+                            labelText: 'クリックで検索します',
+                            // icon: Icon(Icons.search),
+                          ),
+                          onChanged: (value) {
+                            // serach に 変更した内容代入
+                            search = value;
+                            setState(() {});
+                          }),
                     ),
                   ],
                 ),
@@ -332,7 +380,7 @@ class _MgtState extends State<Mgt> {
                                 ),
                               ),
                               onPressed: () async {
-                                print(imgURL);
+                                // print(imgURL);
                                 await Navigator.of(context)
                                     .pushNamed(
                                   "/mgtItemSetting",

@@ -44,21 +44,22 @@ class _MainAddPageState extends State {
           //スライドウィンド
           Column(
             children: <Widget>[
-              SizedBox(
-                height: 100.0,
-                child: Center(
-                  child: ElevatedButton(
-                    child: Text(
-                      'スキャン',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    onPressed: () async {
-                      await scanQrCode();
-                      print('OK??2');
-                    },
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 100.0,
+              // child: Center(
+              //   child: ElevatedButton(
+              //     child: Text(
+              //       'スキャン',
+              //       style: TextStyle(fontSize: 30),
+              //     ),
+              //     onPressed: () async {
+              //       await scanQrCode();
+              //       print('OK??2');
+              //     },
+              //   ),
+              // ),
+              // ),
+              SizedBox(height: 10),
               ElevatedButton(
                 child: Text(
                   'スキャン2',
