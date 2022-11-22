@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import '../model/Barcode.dart';
 import '../../api/boolProduct.dart';
 
@@ -26,16 +25,32 @@ class _NewAddPageState extends State {
                 SizedBox(
                   height: 100.0,
                   child: Center(
-                    child: ElevatedButton(
-                      child: Text(
-                        'スキャン',
-                        style: TextStyle(fontSize: 30),
+                      // child: ElevatedButton(
+                      //   child: Text(
+                      //     'スキャン',
+                      //     style: TextStyle(fontSize: 30),
+                      //   ),
+                      //   onPressed: () => scanQrCode(),
+                      // ),
                       ),
-                      onPressed: () => scanQrCode(),
-                    ),
-                  ),
                 ),
                 SizedBox(height: 20),
+                ElevatedButton(
+                  child: Text(
+                    'スキャン2',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  onPressed: () async {
+                    // Navigator.of(context).pushNamed("/QRScanner");
+                    var result =
+                        await Navigator.of(context).pushNamed('/QRScanner');
+                    // print('戻ってきたよ${result}');
+                    if (result == null) {
+                      return;
+                    }
+                    scanQrCode(result.toString());
+                  },
+                ),
               ],
             ),
           ),
@@ -44,20 +59,20 @@ class _NewAddPageState extends State {
     );
   }
 
-  Future scanQrCode() async {
-    final qrCode = await FlutterBarcodeScanner.scanBarcode(
-      '#EB394B',
-      'キャンセル',
-      false,
-      ScanMode.BARCODE,
-    );
-    if (!mounted) return;
-    setState(() {
-      this.qrCode = qrCode;
-    });
-    if (qrCode == '-1') {
-      return;
-    }
+  Future scanQrCode(String qrCode) async {
+    // final qrCode = await FlutterBarcodeScanner.scanBarcode(
+    //   '#EB394B',
+    //   'キャンセル',
+    //   false,
+    //   ScanMode.BARCODE,
+    // );
+    // if (!mounted) return;
+    // setState(() {
+    //   this.qrCode = qrCode;
+    // });
+    // if (qrCode == '-1') {
+    //   return;
+    // }
     final go = boolProduct(qrCode);
     go.then((value) {
       print(value);

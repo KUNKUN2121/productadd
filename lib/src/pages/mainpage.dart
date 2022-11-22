@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/main.dart';
-import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

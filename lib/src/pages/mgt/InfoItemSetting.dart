@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
-import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
 import 'package:productadd/src/api/RegisterPostImage.dart';
 import 'package:productadd/src/pages/mgt/ItemSetting.dart';

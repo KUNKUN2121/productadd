@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import '../../model/Barcode.dart';
-import '../../api/Post.dart';
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
-import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
 
 class CompletePage extends StatelessWidget {
   // final List<Barcode> products;
