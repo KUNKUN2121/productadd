@@ -44,6 +44,9 @@ class _MgtState extends State<Mgt> {
 
   @override
   void initState() {
+    _scrollController.addListener(() {
+      _scrollPosition = _scrollController.position.pixels;
+    });
     super.initState();
 
     // getData();
@@ -61,12 +64,23 @@ class _MgtState extends State<Mgt> {
   String? order = 'itemname';
   String? category = '0';
   String? search = '';
+  double _scrollPosition = 0;
+
+  /// コントローラ
   final TextEditingController _seachController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
 
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('商品管理'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/MainPage", (r) => false);
+            },
+            icon: Icon(Icons.arrow_back_ios),
+          ),
         ),
         // backgroundColor: Color.fromARGB(255, 158, 174, 255),
         body: SafeArea(
@@ -115,6 +129,7 @@ class _MgtState extends State<Mgt> {
                                   ),
                                 ],
                                 onChanged: (String? value) {
+                                  _scrollPosition = 0;
                                   setState(() {
                                     print('isSelected ${order} value ${value}');
                                     order = value;
@@ -169,7 +184,9 @@ class _MgtState extends State<Mgt> {
                         style: TextStyle(fontSize: 17),
                       ),
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          print(_scrollPosition);
+                        });
                       },
                     ),
                   ],
@@ -215,7 +232,9 @@ class _MgtState extends State<Mgt> {
                           onChanged: (value) {
                             // serach に 変更した内容代入
                             search = value;
-                            setState(() {});
+                            setState(() {
+                              _scrollPosition = 0;
+                            });
                           }),
                     ),
                   ],
@@ -231,11 +250,18 @@ class _MgtState extends State<Mgt> {
                     );
                   }
                   if (snapshot.hasData) {
-                    // return Text(snapshot[1]['itemname']);
-                    // print(snapshot.data![1]['itemname']);
-                    // return Text(snapshot.data![1]['itemname']);
+                    /// スクロール移動
+                    Future.delayed(Duration(microseconds: 500), () {
+                      _scrollController.animateTo(
+                        _scrollPosition,
+                        duration: Duration(milliseconds: 1),
+                        curve: Curves.linear,
+                      );
+                    });
+
                     return Expanded(
                       child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return addListCard(
