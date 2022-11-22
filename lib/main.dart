@@ -21,7 +21,7 @@ import 'package:productadd/src/pages/HelpPages/HelpMainPage.dart';
 import 'package:productadd/src/model/QRScan/QRScanner.dart';
 
 String apiURL = 'https://api-stoful.meiden-travel.jp/api/';
-String testURL = 'http://192.168.0.214:9000/api/';
+String testURL = 'http://192.168.0.50:9000/api/';
 Future<void> main() async {
   // Flutter Engineの機能を使うので有効化
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
       //ホーム読み込み
       home: const MainPage(),
       routes: {
+        "/MainPage": (BuildContext context) => MainPage(),
         //AddPage1
         "/MainAddPage": (BuildContext context) => MainAddPage(),
         "/QRScanner": (BuildContext context) => MobilerScaner(),
