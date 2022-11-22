@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:productadd/src/model/Barcode.dart';
+import 'package:productadd/src/pages/AddPages/AddPage2.dart';
 import 'package:productadd/src/pages/mgt/ItemSetting.dart';
 
 class Change {
@@ -41,12 +42,19 @@ class Change {
     }
   }
 
-  static Future<int> changePostInfo(String barnum, String cngIemname,
-      String cngPrice, String cngCategory, String cngImgUrl) async {
+  static Future<int> changePostInfo(
+    String barnum,
+    String cngIemname,
+    String cngPrice,
+    String cngCategory,
+    String cngImgUrl,
+  ) async {
     // 設定
     String url = apiURL + "changePostQuantity.php";
     // String url = testURL + "changePostQuantity.php";
     print(url);
+
+    ///　変更処理
     print(
         'barnum ${barnum} , cngIemname ${cngIemname} , cngPrice ${cngPrice} , cngCategory ${cngCategory} cngImgUrl ${cngImgUrl}');
     try {
@@ -65,6 +73,31 @@ class Change {
       }
       print(resp.body);
       print('レスポンスOK');
+      return 200;
+    } catch (e) {
+      print(e);
+      return 500;
+    }
+  }
+
+  /// 削除アイテム
+  static Future<int> deleteitem(
+    String barnum,
+  ) async {
+    // 設定
+    String url = apiURL + "changePostQuantity.php";
+
+    ///　変更処理
+    try {
+      var resp = await http.post(Uri.parse(url), body: {
+        'barnum': barnum,
+        'delete': 'true',
+      });
+      print('godelte');
+      if (resp.statusCode != 200) {
+        print('RegisterPost Error Code : ${resp.statusCode}');
+        return resp.statusCode;
+      }
       return 200;
     } catch (e) {
       print(e);

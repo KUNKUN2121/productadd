@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:productadd/src/pages/AddPages/ConfirmPage.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 import '../../model/Barcode.dart';
-import '../RegisterPages/NewAddPage.dart';
 import '../../api/boolProduct.dart';
 import 'package:productadd/main.dart';
 
@@ -44,21 +40,22 @@ class _MainAddPageState extends State {
           //スライドウィンド
           Column(
             children: <Widget>[
-              SizedBox(
-                height: 100.0,
-                child: Center(
-                  child: ElevatedButton(
-                    child: Text(
-                      'スキャン',
-                      style: TextStyle(fontSize: 30),
-                    ),
-                    onPressed: () async {
-                      await scanQrCode();
-                      print('OK??2');
-                    },
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: 100.0,
+              // child: Center(
+              //   child: ElevatedButton(
+              //     child: Text(
+              //       'スキャン',
+              //       style: TextStyle(fontSize: 30),
+              //     ),
+              //     onPressed: () async {
+              //       await scanQrCode();
+              //       print('OK??2');
+              //     },
+              //   ),
+              // ),
+              // ),
+              SizedBox(height: 10),
               ElevatedButton(
                 child: Text(
                   'スキャン2',
@@ -69,25 +66,28 @@ class _MainAddPageState extends State {
                   var result =
                       await Navigator.of(context).pushNamed('/QRScanner');
                   // print('戻ってきたよ${result}');
+                  if (result == null) {
+                    return;
+                  }
                   goAddProduct(result.toString());
                 },
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  var res = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SimpleBarcodeScannerPage(),
-                      ));
-                  setState(() {
-                    if (res is String) {
-                      result = res;
-                    }
-                  });
-                },
-                child: const Text('Open Scanner'),
-              ),
-              Text('Barcode Result: $result'),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     var res = await Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => const SimpleBarcodeScannerPage(),
+              //         ));
+              //     setState(() {
+              //       if (res is String) {
+              //         result = res;
+              //       }
+              //     });
+              //   },
+              //   child: const Text('Open Scanner'),
+              // ),
+              // Text('Barcode Result: $result'),
 
               Expanded(
                 child: ListView(
@@ -284,6 +284,22 @@ class _MainAddPageState extends State {
         // エラー
         if (value == null) {
           print('エラー');
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text("ネットワークエラー"),
+                content: Text(
+                    "ネットワークに接続できません。Wi-Fi設定などを確認してください。治らない場合は端末を再起動してください"),
+                actions: <Widget>[
+                  // ボタン領域
+                  ElevatedButton(
+                      child: Text("完了"),
+                      onPressed: () => Navigator.pop(context)),
+                ],
+              );
+            },
+          );
         }
         // データベースに存在しない
         if (value == false) {

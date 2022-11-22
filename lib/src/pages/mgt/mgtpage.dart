@@ -19,9 +19,10 @@ class _MgtState extends State<Mgt> {
   var data;
 
   Future<List> getData(String order) async {
-    String url = apiURL + 'all.php';
     // カテゴリー
-    String goURL = apiURL + 'all.php' + '?order=${order}&category=${category}';
+    String goURL = apiURL +
+        'all.php' +
+        '?order=${order}&category=${category}&search=${search}';
     print(goURL);
     try {
       var result = await get(Uri.parse(goURL));
@@ -43,6 +44,9 @@ class _MgtState extends State<Mgt> {
 
   @override
   void initState() {
+    _scrollController.addListener(() {
+      _scrollPosition = _scrollController.position.pixels;
+    });
     super.initState();
 
     // getData();
@@ -59,21 +63,33 @@ class _MgtState extends State<Mgt> {
   @override
   String? order = 'itemname';
   String? category = '0';
+  String? search = '';
+  double _scrollPosition = 0;
+
+  /// コントローラ
+  final TextEditingController _seachController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('商品管理'),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/MainPage", (r) => false);
+            },
+            icon: Icon(Icons.arrow_back_ios),
+          ),
         ),
-        backgroundColor: Colors.blueGrey[300],
+        // backgroundColor: Color.fromARGB(255, 158, 174, 255),
         body: SafeArea(
           child: Center(
               child: Column(
             children: [
-              const Text(
-                '商品管理ページ',
-                style: TextStyle(fontSize: 30),
+              SizedBox(
+                height: 15,
               ),
-
               // 並び替え
 
               Container(
@@ -113,6 +129,7 @@ class _MgtState extends State<Mgt> {
                                   ),
                                 ],
                                 onChanged: (String? value) {
+                                  _scrollPosition = 0;
                                   setState(() {
                                     print('isSelected ${order} value ${value}');
                                     order = value;
@@ -167,8 +184,58 @@ class _MgtState extends State<Mgt> {
                         style: TextStyle(fontSize: 17),
                       ),
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          print(_scrollPosition);
+                        });
                       },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 80,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue, //色
+                    width: 3.0, //太さ
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                        child: (Icon(Icons.qr_code_scanner)),
+                        onPressed: () async {
+                          var result = await Navigator.of(context)
+                              .pushNamed('/QRScanner');
+                          print(result);
+                          if (result == null) {
+                            return;
+                          }
+                          search = '';
+                          search = result.toString();
+                          _seachController.text = result.toString();
+                          setState(() {});
+                        }),
+                    SizedBox(width: 10),
+                    Flexible(
+                      child: TextFormField(
+                          // バーコード読み取りの値入力
+                          // initialValue: search,
+                          controller: _seachController,
+                          decoration: const InputDecoration(
+                            labelText: 'クリックで検索します',
+                            // icon: Icon(Icons.search),
+                          ),
+                          onChanged: (value) {
+                            // serach に 変更した内容代入
+                            search = value;
+                            setState(() {
+                              _scrollPosition = 0;
+                            });
+                          }),
                     ),
                   ],
                 ),
@@ -183,11 +250,18 @@ class _MgtState extends State<Mgt> {
                     );
                   }
                   if (snapshot.hasData) {
-                    // return Text(snapshot[1]['itemname']);
-                    // print(snapshot.data![1]['itemname']);
-                    // return Text(snapshot.data![1]['itemname']);
+                    /// スクロール移動
+                    Future.delayed(Duration(microseconds: 500), () {
+                      _scrollController.animateTo(
+                        _scrollPosition,
+                        duration: Duration(milliseconds: 1),
+                        curve: Curves.linear,
+                      );
+                    });
+
                     return Expanded(
                       child: ListView.builder(
+                        controller: _scrollController,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return addListCard(
@@ -332,7 +406,7 @@ class _MgtState extends State<Mgt> {
                                 ),
                               ),
                               onPressed: () async {
-                                print(imgURL);
+                                // print(imgURL);
                                 await Navigator.of(context)
                                     .pushNamed(
                                   "/mgtItemSetting",

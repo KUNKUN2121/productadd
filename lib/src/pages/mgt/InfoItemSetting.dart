@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
-import 'dart:developer';
 import 'package:productadd/src/api/RegisterPost.dart';
 import 'package:productadd/src/api/RegisterPostImage.dart';
 import 'package:productadd/src/pages/mgt/ItemSetting.dart';
@@ -456,11 +453,59 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
                 ),
                 ElevatedButton(
                   child: Text(
-                    "削除",
+                    "商品削除",
                     style: TextStyle(fontSize: 25),
                   ),
                   onPressed: () {
-                    // removeProductContents(barcode!);
+                    showDialog(
+                      //画面外の部分を押せないようにする。
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (context) {
+                        return SimpleDialog(
+                          title: Text("本当に削除しますか？"),
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(12),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            return;
+                                          },
+                                          child: Text('キャンセル')),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Future<int> go = Change.deleteitem(
+                                              barcode.toString(),
+                                            );
+                                            go.then((value) {
+                                              if (value == 200) {
+                                                print('DELETEOK');
+                                                flg = false;
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                        context,
+                                                        '/mgt',
+                                                        (r) => false);
+                                              }
+                                            });
+                                          },
+                                          child: Text('削除する')),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),

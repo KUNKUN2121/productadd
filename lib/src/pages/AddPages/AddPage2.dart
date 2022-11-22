@@ -1,9 +1,5 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:productadd/src/api/RegisterPost.dart';
-import 'package:provider/provider.dart';
 
 import 'package:productadd/src/pages/AddPages/AddPage.dart';
 import 'package:productadd/src/model/Barcode.dart';
@@ -288,7 +284,7 @@ class _AddPage2State extends State<AddPage2> {
 
   Future addProductContents(String addqrcode) async {
     Barcode addProduct =
-        await Barcode.addProduct(addqrcode, quantity!, productsindex);
+        await Barcode.addProductinput(addqrcode, quantity!, productsindex);
     // Barcode addProduc22 = Barcode(name: productname,barcode: barcode.toString(),imgURL:,quantity: quantity!,id:productsindex);
     // print(productsindex);
 
@@ -355,6 +351,8 @@ class _AddPage2State extends State<AddPage2> {
     flg = false;
     // products.insert(0, addProduct);
     products.add(addProduct);
+    print(quantity);
+    print(addProduct.quantity);
     Navigator.of(context).pop();
   }
 }

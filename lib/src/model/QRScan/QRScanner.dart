@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:productadd/src/model/QRScan/QRScannerOverlay.dart';
@@ -11,6 +13,7 @@ class MobilerScaner extends StatefulWidget {
 }
 
 class _MobilerScanerState extends State<MobilerScaner> {
+  int count = 0;
   MobileScannerController cameraController = MobileScannerController();
   @override
   Widget build(BuildContext context) {
@@ -60,17 +63,21 @@ class _MobilerScanerState extends State<MobilerScaner> {
               allowDuplicates: false,
               controller: cameraController,
               onDetect: (barcode, args) {
-                cameraController.stop();
-                final String? code = barcode.rawValue;
-                print(code);
-                try {
-                  cameraController.stop();
-                  int barnum = int.parse(code!);
-                  Navigator.pop(context, barnum);
-                } catch (e) {
-                  sleep(Duration(seconds: 1));
-                  cameraController.start();
-                  debugPrint('URL???NotINT! $code');
+                //複数スキャンするのでカウントする。
+                count++;
+                if (count == 1) {
+                  final String? code = barcode.rawValue;
+                  try {
+                    int barnum = int.parse(code!);
+                    Navigator.pop(context, barnum);
+                  } catch (e) {
+                    cameraController.stop();
+                    count = 0;
+                    debugPrint('URL???NotINT! $code');
+                    sleep(Duration(seconds: 1));
+                    cameraController.start();
+                    debugPrint('URL???GPpppppp! $code');
+                  }
                 }
               },
             ),
