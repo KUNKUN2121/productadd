@@ -38,7 +38,8 @@ class _RegisterItemPageState extends State<RegisterItemPage> {
   File _image = File("");
   final picker = ImagePicker();
   var imgFlg = false;
-  String tempimg = "https://jmva.or.jp/wp-content/uploads/2018/07/noimage.png";
+  String tempimg =
+      "https://api-stoful.meiden-travel.jp/api/uploads/noimage.jpg";
   Future pictureChange() async {
     await getImage();
     // カメラキャンセルしたさいにreturn
