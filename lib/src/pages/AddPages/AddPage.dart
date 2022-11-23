@@ -55,10 +55,10 @@ class _MainAddPageState extends State {
               //   ),
               // ),
               // ),
-              SizedBox(height: 10),
+              SizedBox(height: 30),
               ElevatedButton(
                 child: Text(
-                  'スキャン2',
+                  'スキャン',
                   style: TextStyle(fontSize: 30),
                 ),
                 onPressed: () async {

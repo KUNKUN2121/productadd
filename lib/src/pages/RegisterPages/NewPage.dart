@@ -22,22 +22,10 @@ class _NewAddPageState extends State {
           Center(
             child: Column(
               children: [
-                SizedBox(
-                  height: 100.0,
-                  child: Center(
-                      // child: ElevatedButton(
-                      //   child: Text(
-                      //     'スキャン',
-                      //     style: TextStyle(fontSize: 30),
-                      //   ),
-                      //   onPressed: () => scanQrCode(),
-                      // ),
-                      ),
-                ),
-                SizedBox(height: 20),
+                SizedBox(height: 30),
                 ElevatedButton(
                   child: Text(
-                    'スキャン2',
+                    'スキャン',
                     style: TextStyle(fontSize: 30),
                   ),
                   onPressed: () async {
