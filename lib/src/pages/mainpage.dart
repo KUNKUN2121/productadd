@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:productadd/main.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -8,9 +7,6 @@ class MainPage extends StatefulWidget {
   @override
   State<MainPage> createState() => _MainPageState();
 }
-
-final Uri _url = Uri.parse(
-    'https://docs.google.com/forms/d/1iR-lx1i9i59KjJxXiCWxbWJznNb3x_F01iwqEmrQaaw/edit');
 
 class _MainPageState extends State<MainPage> {
   @override
@@ -49,21 +45,12 @@ class _MainPageState extends State<MainPage> {
             getCard(
               title: "在庫管理",
               description: "在庫状況、在庫削除などを行います。",
-              icon: Icons.table_rows,
+              icon: Icons.manage_search,
               key: const Key("mgt"),
               onPressed: () {
                 Navigator.of(context).pushNamed("/mgt");
               },
             ),
-            // getCard(
-            //   title: "お問い合わせ",
-            //   description: "バグ 改善点など なんでも入力してください",
-            //   icon: Icons.contact_phone_rounded,
-            //   key: const Key("help"),
-            //   onPressed: () {
-            //     _launchUrl();
-            //   },
-            // ),
             // getCard(
             //   title: "ヘルプ",
             //   description: "test",
@@ -150,11 +137,7 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
-  }
-}
+
 // class MainPage extends StatelessWidget {
 //   const MainPage({Key? key}) : super(key: key);
 
