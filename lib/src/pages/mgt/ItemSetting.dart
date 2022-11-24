@@ -88,8 +88,10 @@ class _ItemSettingState extends State<ItemSetting> {
                             AsyncSnapshot<Barcode> snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return Container(
                               child: CircularProgressIndicator(),
+                              width: 100,
+                              height: 100,
                             );
                           }
                           if (snapshot.hasError) {
@@ -100,9 +102,16 @@ class _ItemSettingState extends State<ItemSetting> {
                           }
                           if (snapshot.hasData) {
                             productname = snapshot.data!.name;
-                            return Text(
-                              snapshot.data!.name,
-                              style: TextStyle(fontSize: 30),
+                            return Container(
+                              child: Center(
+                                child: Text(
+                                  snapshot.data!.name,
+                                  style: TextStyle(fontSize: 27),
+                                ),
+                              ),
+                              margin:
+                                  const EdgeInsets.only(right: 10, left: 10),
+                              height: 100,
                             );
                           } else {
                             return Text("エラーが発生しました。",
