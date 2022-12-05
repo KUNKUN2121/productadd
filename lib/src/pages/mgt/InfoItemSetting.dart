@@ -30,6 +30,7 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
 
   int count = 10;
   int? isSelectedCategory = int.parse(category!);
+  int? isSelectedFav = 1;
   //barnum = 前の画面から
   //quantity = 0だよね追加だから
   String name = '';
@@ -212,7 +213,7 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
     print(barcode);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('商品登録'),
+        title: const Text('詳細設定'),
       ),
       body: SingleChildScrollView(
         child: Stack(children: [
@@ -305,6 +306,64 @@ class _InfoItemSettingState extends State<InfoItemSetting> {
                   },
                   //7
                   value: isSelectedCategory,
+                ),
+                Text('お気に入り'),
+                DropdownButton(
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black,
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      child: Text('設定しない'),
+                      value: 0,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆1'),
+                      value: 1,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆2'),
+                      value: 2,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆3'),
+                      value: 3,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆4'),
+                      value: 4,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆5'),
+                      value: 5,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆6'),
+                      value: 6,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆7'),
+                      value: 7,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆8'),
+                      value: 8,
+                    ),
+                    DropdownMenuItem(
+                      child: Text('☆9'),
+                      value: 9,
+                    ),
+                  ],
+                  //6
+                  onChanged: (int? value) {
+                    print(value);
+                    setState(() {
+                      isSelectedFav = value;
+                    });
+                  },
+                  //7
+                  value: isSelectedFav,
                 ),
 
                 ///https://flutter.keicode.com/basics/textcontroller.php

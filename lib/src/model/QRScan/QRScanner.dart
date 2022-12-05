@@ -21,7 +21,7 @@ class _MobilerScanerState extends State<MobilerScaner> {
       onWillPop: () => _willPopCallback(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Mobile Scanner'),
+          title: const Text('スキャン'),
           actions: [
             IconButton(
               color: Colors.white,
